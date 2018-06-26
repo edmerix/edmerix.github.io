@@ -1,1 +1,50 @@
-Hello World
+<!DOCTYPE html>
+<html>
+<head>
+	<title>$></title>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" type="text/css" href="http://csshake.surge.sh/csshake-slow.min.css" />
+	<style id="dynamic-cols">
+		.cmd-err { color: #e85555; }
+		.cmd-feedback { color: #9CF; }
+		.cmd-prompt a { color: #9CF; }
+		table { border-collapse: collapse; }
+		/*table td { border: 1px dashed #FFF; }*/
+		/* Need to update this so each terminal can have its own colors (they already do in their settings)*/
+	</style>
+</head>
+<body>
+	<center>all terminals closed</center>
+	<div id="term_0" class="termbox">
+		<div id="cmd-history_0" class="cmd-history"></div>
+		<div id="input-line_0" class="input-line">
+			<div class="cmd-prompt" id="cmd-prompt_0">$></div>
+			<div id="cmd-input_0" class="cmd-input"><input id="main-input_0" class="main-input" type="text" spellcheck="false" autocomplete="off" autofocus/></div>
+		</div>
+	</div>
+	<div id="term_1" class="termbox term_hidden">
+		<div id="cmd-history_1" class="cmd-history"></div>
+		<div id="input-line_1" class="input-line">
+			<div class="cmd-prompt" id="cmd-prompt_1">$></div>
+			<div id="cmd-input_1" class="cmd-input"><input id="main-input_1" class="main-input" type="text" spellcheck="false" autocomplete="off"/></div>
+		</div>
+	</div>
+	<div id="term_2" class="termbox term_hidden">
+		<div id="cmd-history_2" class="cmd-history"></div>
+		<div id="input-line_2" class="input-line">
+			<div class="cmd-prompt" id="cmd-prompt_2">$></div>
+			<div id="cmd-input_2" class="cmd-input"><input id="main-input_2" class="main-input" type="text" spellcheck="false" autocomplete="off"/></div>
+		</div>
+	</div>
+	<div id="term_3" class="termbox term_hidden">
+		<div id="cmd-history_3" class="cmd-history"></div>
+		<div id="input-line_3" class="input-line">
+			<div class="cmd-prompt" id="cmd-prompt_3">$></div>
+			<div id="cmd-input_3" class="cmd-input"><input id="main-input_3" class="main-input" type="text" spellcheck="false" autocomplete="off"/></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+	<script type="text/javascript" src="math.min.js"></script>   
+	<script type="text/javascript" src="functions.js?0"></script>   
+</body>
+</html>

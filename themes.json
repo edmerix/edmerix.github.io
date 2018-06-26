@@ -1,0 +1,86 @@
+{
+    "default": {
+        "bg": "#000",
+        "output": "#FFF",
+        "feedback": "#9CF",
+        "error": "#E85555"
+    },
+    "brackets": {
+        "bg": "#1d1f21",
+        "output": "#ddd",
+        "feedback": "#6c9ef8",
+        "error": "#dc322f"
+    },
+    "bsod": {
+        "bg": "#0D00A9",
+        "output": "#FFF",
+        "feedback": "#AAA",
+        "error": "#ff5010"
+    },
+    "contrast": {
+        "bg": "#000",
+        "output": "#FFF",
+        "feedback": "#00F",
+        "error": "#F00"
+    },
+    "dracula": {
+        "bg": "#282A36",
+        "output": "#FAFEFF",
+        "feedback": "#78FF9A",
+        "error": "#FBA7E9"
+    },
+    "energy": {
+        "bg": "#000",
+        "output": "#4b7c9b",
+        "feedback": "#84fcff",
+        "error": "#ff8ef0"
+    },
+    "funky": {
+        "bg": "#4B3974",
+        "output": "#01F740",
+        "feedback": "#9CF",
+        "error": "#E85555"
+    },
+    "lightsoda": {
+        "bg": "#c9c9c9",
+        "output": "#302d8b",
+        "feedback": "#632b9f",
+        "error": "#c40035"
+    },
+    "oldschool": {
+        "bg": "#000",
+        "output": "#2FFF11",
+        "feedback": "#6A6EF4",
+        "error": "#940008"
+    },
+    "orange": {
+        "bg": "#000",
+        "output": "#FA9918",
+        "feedback": "#8ECEEA",
+        "error": "#F3B99F"
+    },
+    "paper": {
+        "bg": "#EEE",
+        "output": "#444",
+        "feedback": "#00A3CC",
+        "error": "#EA006E"
+    },
+    "rubyblue": {
+        "bg": "#112435",
+        "output": "#d6e1ff",
+        "feedback": "#82C6E0",
+        "error": "#af2018"
+    },
+    "solarized": {
+        "bg": "#072B35",
+        "output": "#C8DEE2",
+        "feedback": "#58DD4D",
+        "error": "#F86057"
+    },
+    "tomorrow": {
+        "bg": "#1d1f21",
+        "output": "#c5c8c6",
+        "feedback": "#81a2be",
+        "error": "#cc6666"
+    }
+}

@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+body, .termbox {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	color: #FFF;
+	font-family: 'Inconsolata', 'Courier New', monospace;
+	font-size: 15px;
+	font-weight: normal;
+	cursor: default;
+	-webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+.termbox {
+	position: fixed;
+	overflow: auto;
+	width: 0;
+	height: 0;
+}
+#term_0 {
+	left: 0;
+	top: 0;
+	z-index: 1;
+}
+#term_1 {
+	right: 0;
+	top: 0;
+	border-left: 1px solid #888;
+	z-index: 2;
+}
+#term_2 {
+	right: 0;
+	bottom: 0;
+	border-top: 1px solid #888;
+	border-left: 1px solid #888;
+	z-index: 4;
+}
+#term_3 {
+	left: 0;
+	bottom: 0;
+	border-top: 1px solid #888;
+	z-index: 3;
+}
+input {
+	outline: none;
+	border: 0;
+	font-family: 'Inconsolata', 'Courier New', monospace;
+	font-size: 15px;
+	font-weight: normal;
+	color: #FFF;
+}
+.input-line, .output-line, #cmd-input input {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -o-user-select: text;
+    user-select: text;
+}
+.input-line, .output-line, .cmd-err {
+    position: relative;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-align: stretch;
+    display: box;
+    box-orient: horizontal;
+    box-align: stretch;
+    clear: both;
+    white-space: nowrap;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: calc(100% - 10px);
+}
+.input-line {
+    margin-bottom: 4px;
+}
+.cmd-prompt {
+    white-space: nowrap;
+    margin-right: 5px;
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-orient: vertical;
+    display: box;
+    box-pack: center;
+    box-orient: vertical;
+    -webkit-user-select: none;
+    user-select: none;
+}
+.cmd-input {
+    -webkit-box-flex: 1;    
+}
+.cmd-input input {
+    background: transparent;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inconsolata', 'Courier New', monospace;
+    font-size: 15px;
+    cursor: default;
+    width: 100%;
+}
+#cmd-history .cmd-err {
+    /*color: #e85555; This has been moved to an inline style in the head, to allow for dynamic changes */ 
+}
+#cmd-history .cmd-feedback {
+	/*color: #9CF; This has been moved to an inline style in the head, to allow for dynamic changes */
+}
+.cmd-prompt th {
+	text-align: left;
+}
+.cmd-prompt td {
+	padding-right: 20px;
+}
+.cmd-prompt .indented {
+	padding-left: 30px;
+}
+.cmd-prompt a {
+	/*color: #FFF; This has been moved to an inline style in the head, to allow for dynamic changes */
+}
+.cmd-prompt .mta {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	border-radius: 16px;
+	text-align: center;
+	color: #FFF;
+	font-family: Helvetica;
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 16px;
+}
+.mta_1, .mta_2, .mta_3 {
+	background: #EE352E;
+}
+.mta_4, .mta_5, .mta_6 {
+	background: #00933C;
+}
+.mta_7 {
+	background: #B933AD;
+}
+.mta_A, .mta_C, .mta_E {
+	background:  #0039A6;
+}
+.mta_B, .mta_D, .mta_F, .mta_M {
+	background:  #FF6319;
+}
+.mta_G {
+	background:  #6CBE45;
+}
+.mta_J, .mta_Z {
+	background:  #996633;
+}
+.mta_L {
+	background:  #A7A9AC;
+}
+.mta_N, .mta_Q, .mta_R, .mta_W {
+	background:  #FCCC0A;
+	color: #000;
+}
+.mta_S {
+	background:  #808183;
+}
+.term_hidden {
+	display: none;
+}
+.term_short {
+	height: calc(50% - 1px);
+}
+.term_wide {
+	width: 100%;
+	border-right: none;
+}
+.term_narrow {
+	width: calc(50% - 1px);
+}
+.term_tall {
+	border-top: none;
+	height: 100%;
+}
