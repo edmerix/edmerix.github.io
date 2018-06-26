@@ -3,7 +3,7 @@ pkgs.chuck = function(args,trmnl){
 	// we need to go async now.
 	trmnl.input_div.html("").hide();
 	$.ajax({
-		url: "http://api.icndb.com/jokes/random",
+		url: "https://api.icndb.com/jokes/random",
 		dataType: "json",
 		success: function(res){
 			try{ // always check if terminal.piping == true in async callbacks!

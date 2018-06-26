@@ -895,7 +895,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		// we need to go async now.
 		trmnl.input_div.html("").hide();
 		$.ajax({
-			url: "http://api.openweathermap.org/data/2.5/forecast?zip="+args[0]+"&units=metric&appid=2075d49b34d2618a3b73f7eaa58d97d8",
+			url: "https://api.openweathermap.org/data/2.5/forecast?zip="+args[0]+"&units=metric&appid=2075d49b34d2618a3b73f7eaa58d97d8",
 			dataType: "json",
 			success: function(res){
 				try{ // normally we should check if piping is true, but the weather table is just gonna async print.
