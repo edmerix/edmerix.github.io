@@ -650,7 +650,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
             return [0, "Recording will require "+load+" GB  per hour ("+Math.ceil(load*24)+" GB per day)"];
         }
     }
-    this.base.nsxload.help = '<b>nsxload</b> command: calculates how many gigabytes will be created<br/>per hour/day for specified number of electrodes and sampling rate with BlackRock nsx files<br />Specify number of electrodes by pre- or post-fixing with "ch"<br />e.g. nsxload 16ch 30k <i>or</i> nsxload 2000 ch64 (i.e. any order for arguments or "ch")';
+    this.base.nsxload.help = '<b>nsxload</b> command: calculates how many gigabytes will be created per hour/day for specified<br />number of electrodes and sampling rate with BlackRock nsx files<br />Specify number of electrodes by pre- or post-fixing with "ch"<br />e.g. nsxload 16ch 30k <i>or</i> nsxload 2000 ch64 (i.e. any order for arguments or "ch")';
     // PKG: (list available programs for install)
 	this.base.pkg = function(args,trmnl){
 		/* this is the static version of the site. No ajax to php files :(
