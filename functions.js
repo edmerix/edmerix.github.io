@@ -418,26 +418,6 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		mooster_cow += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\&nbsp;&nbsp;&nbsp;^__^<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\&nbsp;&nbsp;(oo)\\_______<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(__)\\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)\\/\\<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;||----w&nbsp;|<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;||';
 		return [0, mooster_cow];
 	}
-	// DANCE:
-	/*
-	this.base.dance = {};
-	this.base.dance.active = 0;
-	this.base.dance = function(args,trmnl){
-		var dance_res;
-		if(trmnl.base.dance.active){
-			trmnl.base.dance.active = 0;
-			dance_res = "Somebody turned the music off...";
-			$(".shake-slow").removeClass('shake-slow');
-			$(".shake-constant").removeClass('shake-constant');
-		}else{
-			trmnl.base.dance.active = 1;
-			$(trmnl.body).addClass('shake-slow shake-constant');
-			dance_res = "DANCE PARTY!";
-		}
-		return [0, dance_res];
-	};
-	this.base.dance.help = '<b>DANCE</b> command: Just type it and find out.<br />(But be warned - it\'s quite motion sickness inducing... Type it again to turn off.)';
-	*/
 	// DB:
 	this.base.db = function(args,trmnl){
 		trmnl.program = "db";
@@ -451,70 +431,6 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		return 0;
 	}
 	this.base.exit.help = '<b>EXIT</b> the current terminal window. Useful when using session.<br />Will result in blank screen if you exit the last terminal...';
-	// GOOGLE:
-	this.base.google = function(args,trmnl){
-		if(args[0] == undefined || args[0] == ""){
-			return [1, 'Need something to search for...'];
-		}
-		var key = "AIzaSyB0mTa4dryH9zAlqkjsBxS9ObiLkBo97zE"; // TODO: erm, hide these. Or just remove google cmd
-		var cx = "015250765681830679718:3izhuvu28ng";
-		//parse the args first to test for parameters, which start with a colon and must have an equals sign
-		var g_cmd = {}, g_pop, not_srch = [];
-		for(var a = 0; a < args.length; a++){ // can test for - as first char here too, and assign excludeTerms
-			if(args[a].charAt(0) == ":"){
-				not_srch.push(a);
-				g_pop = args[a].split("=");
-				// this only sets the g_cmd[name] if there's a value to set it to:
-				g_pop[1] && (g_cmd[g_pop[0]] = g_pop[1]); 
-			}
-		}
-		// remove the google command arguments from the search term
-		not_srch.sort(function(a,b){return b - a;}).forEach(function(index){
-			args.splice(index, 1);
-		});
-		var srchObj = {};
-		srchObj.q = args.join(" ");
-		srchObj.cx = cx;
-		srchObj.key = key;
-		// work out the commands given, and assign them if appropriate:
-		// could do as a test for if it's a field of srchObj instead, but don't want to allow cx or key access
-		var allowable = [':num',':start',':searchType',':siteSearch',':fileType',':imgDominantColor'];
-		for(var g in g_cmd){
-			if(allowable.indexOf(g) > -1){
-				srchObj[g.substring(1)] = g_cmd[g];
-			}
-		}
-		$.ajax({
-			url: "https://www.googleapis.com/customsearch/v1",
-			data: srchObj,
-			success: function(res){
-				try{ // always check if terminal.piping == true in async callbacks!
-					if(trmnl.piping){
-						trmnl.output("Yet to set up piping of google results. Returning for now.", 0);
-					}else{
-						var output = "Search for <span class='cmd-feedback'>"+res.queries.request[0].searchTerms+"</span><br />-- took "+res.searchInformation.searchTime+" seconds, found "+res.searchInformation.formattedTotalResults+" results:<br />";
-						output += "<div class='indented'>";
-						for(var i = 0; i < res.items.length; i++){
-							output += "["+(i-1+res.queries.request[0].startIndex)+"] -> <a href=\""+res.items[i].link+"\" title=\""+res.items[i].snippet+"\" target=\"_blank\">"+res.items[i].htmlTitle+" - <i>"+res.items[i].htmlFormattedUrl+"</i></a><br />"
-						}
-						output += "</div>";
-					}
-					trmnl.output(output,0);
-				}catch(err){
-					console.log(err.message);
-					trmnl.error("Could not parse received google data");
-				}
-				trmnl.input_div.show();
-			},
-			error: function(err){
-				console.log(err);
-				trmnl.error("Could not load google data:<br />"+err.responseJSON.error.message);
-				trmnl.input_div.show();
-			}
-		});
-		return [0, "Fetching google results..."];
-	};
-	this.base.google.help = '<b>GOOGLE</b> search. All arguments are treated as the search term, unless started with a colon,<br/>in which case arguments are written as name=value.<br />Allowable arguments are num (1 to 10), start, siteSearch, searchType, fileType and imgDominantColor<br />e.g. <span class="cmd-feedback">google testing the search :num=5 :start=30</span><br />Note that arguments can appear anywhere in the search, and the search terms will be collapsed around them.';
 	// HELP:
 	this.base.help = function(args,trmnl){
 		if(args[0] == undefined || args[0] == ""){ // 'help' on its own auto finds all the base commands and lists them
@@ -767,9 +683,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	// SUBWAY:
 	this.base.subway = function(args,trmnl){
 		// see https://github.com/aamaliaa/mta-gtfs/blob/master/lib/mta.js for an idea.
-		// note that that depends on all sorts of extra modules, not ideal.
-		// 4ebd894681d162d15b63069278daec43
-		// also http://web.mta.info/status/serviceStatus.txt but that doesn't like file:// origin.
+		// also http://web.mta.info/status/serviceStatus.txt
 		// http://wheresthefuckingtrain.com is awesome.
 		// also http://wheresthetrain.nyc/#1/119/false
 		// and official:  http://tripplanner.mta.info/mobileApps/serviceStatus/serviceStatusPage.aspx?mode=subway
@@ -887,7 +801,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		});
 		return [0, "Fetching MTA subway data..."];
 	}
-	this.base.subway.help = 'Subway status. Needs a station name as argument.<br />Currently accepts an odd subset of stations, mostly based on where we live and work.<br />Need to write this properly.';
+	this.base.subway.help = 'Subway status. Needs a station name as argument.<br />Currently accepts an odd subset of stations.<br />Need to write this properly.';
 	
 	// THEME:
 	this.base.theme = function(args,trmnl){
