@@ -18,4 +18,4 @@ pkgs.session = function(args,trmnl){
 	// append the new divs to body, and assign them to a new Terminal object.
 	return [0, "New terminal instance created (terminal:"+terminal[avail].ID+")"];
 };
-pkgs.session.help = "<b>SESSION</b> command opens a new terminal session/window in parallel";
+pkgs.session.help = "<b>session</b> command opens a new terminal session/window in parallel";

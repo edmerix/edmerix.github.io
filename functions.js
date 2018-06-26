@@ -207,17 +207,17 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		}
 		return [0,info];
 	}
-	this.base.science.help = '<b>SCIENCE</b> command: use to find some info about my scientific work.<br />science with no arguments will start the SCIENCE "program"<br />Using the argument "info" will just print the basic details to screen then return home.';
+	this.base.science.help = '<b>science</b> command: use to find some info about my scientific work.<br />science with no arguments will start the SCIENCE "program"<br />Using the argument "info" will just print the basic details to screen then return home.';
 	// ART:
 	this.base.art = function(args,trmnl){
 		return [0, "I am yet to code this bit in."]
 	}
-	this.base.art.help = '<b>ART</b> command: gives some details about my hobby painting/drawing';
+	this.base.art.help = '<b>art</b> command: gives some details about my hobby painting/drawing';
 	// MUSIC:
 	this.base.music = function(args,trmnl){
 		return [0, "I am yet to code this bit in."]
 	}
-	this.base.music.help = '<b>MUSIC</b> command: gives some details about my hobby making/producing music';
+	this.base.music.help = '<b>music</b> command: gives some details about my hobby making/producing music';
 	// ARGLIST: (list arguments, can be useful to determine piped function stuff or test argument parsing)
 	this.base.arglist = function(args,trmnl){
 		var arglist = "";
@@ -226,7 +226,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		}
 		return [0,arglist];
 	}
-	this.base.arglist.help = '<b>ARGLIST</b> command: prints supplied arguments to screen<br/>Can be useful in piped functions or testing your argument parsing in other functions';
+	this.base.arglist.help = '<b>arglist</b> command: prints supplied arguments to screen<br/>Can be useful in piped functions or testing your argument parsing in other functions';
     // BG: (background color)
     this.base.bg = function(args,trmnl){
         if(args.length > 1) args = args[0];
@@ -242,7 +242,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		trmnl.update_colors();
         return 0;
     }
-    this.base.bg.help = '<b>BG</b> command: change the background color to a specified hexadecimal color code<br />Use <i>bg reset</i> to return to default (not the default of current theme)';
+    this.base.bg.help = '<b>bg</b> command: change the background color to a specified hexadecimal color code<br />Use <i>bg reset</i> to return to default (not the default of current theme)';
 	// BITCONV:
 	this.base.bitconv = function(args,trmnl){
 		if(args.length != 2){
@@ -290,7 +290,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		var converted = amt * conv_amt;
 		return [0, val_in+' is '+converted+' '+units_out];
 	}
-	this.base.bitconv.help = '<b>BITCONV</b> command: convert between gigabytes, bits, megabits and kilobytes etc.';
+	this.base.bitconv.help = '<b>bitconv</b> command: convert between gigabytes, bits, megabits and kilobytes etc.';
 	// CLS:
     this.base.cls = function(args,trmnl){
         trmnl.output_div.html("");
@@ -362,7 +362,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		}
 		return [0, output];
 	}
-	this.base.colconv.help = '<b>COLCONV</b> command: supply a color code in either rgb(), hex (must include #) or [0:1,0:1,0:1] format<br/>and the same color in the other formats will be printed to screen.<br />Can supply as many colors as separate arguments as desired';
+	this.base.colconv.help = '<b>colconv</b> command: supply a color code in either rgb(), hex (must include #) or [0:1,0:1,0:1] format<br/>and the same color in the other formats will be printed to screen.<br />Can supply as many colors as separate arguments as desired';
 	// COLOR:
     this.base.color = function(args,trmnl){
 		var which, col;
@@ -390,7 +390,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
         trmnl.update_colors();
         return 0;
     }
-    this.base.color.help = '<b>COLOR</b> command: change the font color to a specified hexadecimal color code<br />Use <i>color reset</i> to return to default<br />feedback or error colors can be changed by passing in their name as first argument and the color as second';
+    this.base.color.help = '<b>color</b> command: change the font color to a specified hexadecimal color code<br />Use <i>color reset</i> to return to default<br />feedback or error colors can be changed by passing in their name as first argument and the color as second';
 	// COWSAY:
 	this.base.cowsay = function(args,trmnl){
 		var minL = 8, moostr = args[0], m = 0;
@@ -424,13 +424,13 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		trmnl.next_prompt = 'DB>';
 		return 0;
 	};
-	this.base.db.help = '<b>DB</b> program';
+	this.base.db.help = '<b>db</b> program';
 	// EXIT:
 	this.base.exit = function(args,trmnl){
 		trmnl.exit();
 		return 0;
 	}
-	this.base.exit.help = '<b>EXIT</b> the current terminal window. Useful when using session.<br />Will result in blank screen if you exit the last terminal...';
+	this.base.exit.help = '<b>exit</b> the current terminal window. Useful when using session.<br />Will result in blank screen if you exit the last terminal...';
 	// HELP:
 	this.base.help = function(args,trmnl){
 		if(args[0] == undefined || args[0] == ""){ // 'help' on its own auto finds all the base commands and lists them
@@ -466,7 +466,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
         }
         return 0;
 	};
-	this.base.help.help = '<b>HELP</b> command: help for the help command needs to be written here.';
+	this.base.help.help = '<b>help</b> command: help for the help command needs to be written here.';
 	// INSTALL:
 	this.base.install = function(args,trmnl){
 		if(args[0] == undefined || args[0] == ""){
@@ -526,7 +526,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		}
 		return [0, retval];
 	};
-	this.base.install.help = "<b>INSTALL</b> command: install the specified program<br />(Use <b>pkg</b> command to list available programs)";
+	this.base.install.help = "<b>install</b> command: install the specified program<br />(Use <b>pkg</b> command to list available programs)";
 	// KILL:
 	this.base.kill = function(args,trmnl){
 		if(args[0] == undefined || args[0] == ""){
@@ -544,7 +544,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		}
 		return [0, retval];
 	}
-	this.base.kill.help = '<b>KILL</b> the specified terminal window. Useful when using session.<br />Will result in blank screen if you kill the last terminal...';
+	this.base.kill.help = '<b>kill</b> the specified terminal window. Useful when using session.<br />Will result in blank screen if you kill the last terminal...';
 	// MATH:
 	this.base.math = function(args,trmnl){
 		trmnl.program = "math";
@@ -552,7 +552,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		//trmnl.reset('MATH>');
 		return 0;
 	};
-	this.base.math.help = '<b>MATH</b> program';
+	this.base.math.help = '<b>math</b> program';
 	// NOTE
 	this.base.note = function(args,trmnl){
 		// use localStorage for notes. Need to getItem first to append note to the array of notes.
@@ -577,7 +577,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		localStorage.setItem("notes",notes);
 		return [0, "New note created. You now have "+tot_notes+" notes stored"];
 	}
-	this.base.note.help = '<b>NOTE</b> command: make a new note. Use <b>NOTES</b> command to read notes<br /><b>NOTEBOOK</b> program allows for more advanced navigation of notes.<br />N.B. that notes are local to the machine, not across multiple terminal sessions on different devices.<br />Cloud notes will be added soon.';
+	this.base.note.help = '<b>note</b> command: make a new note. Use <b>notes</b> command to read notes<br /><b>notebook</b> program allows for more advanced navigation of notes.<br />N.B. that notes are local to the machine, not across multiple terminal sessions on different devices.<br />Cloud notes will be added soon.';
 	// NOTES:
 	this.base.notes = function(args,trmnl){
         // need to update the below to work with notes[n].text, notes[n].c and notes[n].m instead
@@ -623,8 +623,35 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		}
 		return [1, "Notes had an issue"]; // shouldn't ever reach this, but just in case
 	}
-	this.base.notes.help = '<b>NOTES</b> command: called with no arguments will list a snippet of all notes plus their IDs. Call NOTES with an ID to show that note in full.<br /><b>NOTEBOOK</b> program allows for more advanced navigation of notes.';
-	// PKG: (list available programs for install)
+	this.base.notes.help = '<b>notes</b> command: called with no arguments will list a snippet of all notes plus their IDs. Call <b>notes</b> with an ID to show that note in full.<br /><b>notebook</b> program allows for more advanced navigation of notes.';
+	// NSXLOAD: (how many GB per hour/day for blackrock recordings)
+    this.base.nsxload = function(args,trmnl){
+        if(args.length < 2 || args[0] == undefined || args[0] == "" || args[1] == undefined || args[1] == ""){
+            return [1, "Need 2 arguments, number of channels and sampling frequency, in either order (# channels denoted by ch)"];
+        }else{
+    		var chans, Fs, val;
+    		console.log('---nsxload debugging:---');
+    		for(var a = 0; a < args.length; a++){
+    			val = parseFloat(args[a].match( /[+-]?\d+(\.\d+)?/g));
+    			console.log('Value is '+val);
+    			if(args[a].toLowerCase().indexOf('ch') > -1){
+    				// channel
+    				console.log('It is number of channels');
+    				chans = val;
+    			}else{
+    				// Fs
+    				console.log('It is Fs');
+    				if(args[a].indexOf('k') > -1) val *= 1000;
+    				console.log('Interpretted value is '+val+' Hz');
+    				Fs = val;
+    			}
+    		}
+            var load = Math.ceil(100*((((chans * Fs * 16) / 8) / 1024 / 1024 / 1024) * 60 * 60))/100;
+            return [0, "Recording will require "+load+" GB  per hour ("+Math.ceil(load*24)+" GB per day)"];
+        }
+    }
+    this.base.nsxload.help = '<b>nsxload</b> command: calculates how many gigabytes will be created<br/>per hour/day for specified number of electrodes and sampling rate with BlackRock nsx files<br />Specify number of electrodes by pre- or post-fixing with "ch"<br />e.g. nsxload 16ch 30k <i>or</i> nsxload 2000 ch64 (i.e. any order for arguments or "ch")';
+    // PKG: (list available programs for install)
 	this.base.pkg = function(args,trmnl){
 		/* this is the static version of the site. No ajax to php files :(
 		trmnl.input_div.html("").hide();
@@ -662,12 +689,12 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		avail_pkg += "</tr></table>"; // will double up the </tr> if total commands is divisible by 5. Fix.
 		return [0, avail_pkg];
 	}
-	this.base.pkg.help = '<b>PKG</b> command: list available programs for install (cannot work in local mode)';
+	this.base.pkg.help = '<b>pkg</b> command: list available programs for install (cannot work in local mode)';
 	// RANDCOL: (random color, using to test piping output to other command functionality (e.g. randcol | color))
 	this.base.randcol = function(args,trmnl){
 		return [0, '#' + ("000000" + Math.random().toString(16).slice(2, 8).toUpperCase()).slice(-6)];
 	}
-	this.base.randcol.help = '<b>RANDCOL</b> command: return a random hexadecimal color code';
+	this.base.randcol.help = '<b>randcol</b> command: return a random hexadecimal color code';
 	// SHOWCOL: (show text in the requested hex color code)
 	this.base.showcol = function(args,trmnl){
 		if(args[0] == undefined || args[0] == ""){
@@ -678,18 +705,10 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		}
 		return [0, '<font style="color: '+args[0]+'">'+args[0]+'<font>'];
 	}
-	this.base.showcol.help = '<b>SHOWCOL</b> command: print the given hexadecimal color code in its color';
+	this.base.showcol.help = '<b>showcol</b> command: print the given hexadecimal color code in its color';
 	
 	// SUBWAY:
 	this.base.subway = function(args,trmnl){
-		// see https://github.com/aamaliaa/mta-gtfs/blob/master/lib/mta.js for an idea.
-		// also http://web.mta.info/status/serviceStatus.txt
-		// http://wheresthefuckingtrain.com is awesome.
-		// also http://wheresthetrain.nyc/#1/119/false
-		// and official:  http://tripplanner.mta.info/mobileApps/serviceStatus/serviceStatusPage.aspx?mode=subway
-		
-		// http://wheresthetrain.nyc/svc/subway-api/v1/next-trains/1/119
-		// https://api.wheresthefuckingtrain.com/by-route/1
 		if(args[0] == undefined || args[0] == ""){
 			return [1, 'Need a station name to search for (e.g. 103)'];
 		}
@@ -820,7 +839,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		trmnl.update_colors();
 		return 0;
 	}
-	this.base.theme.help = '<b>THEME</b> command: change terminal to a different theme. Available themes will be populated once specified theme file has been loaded.'; 
+	this.base.theme.help = '<b>theme</b> command: change terminal to a different theme. Available themes will be populated once specified theme file has been loaded.'; 
 	// TRANSWAIT: 
 	this.base.transwait = function(args,trmnl){
 		if(args.length != 2){
@@ -882,11 +901,11 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		}
 		return [0, delay+' left'];
 	}
-	this.base.transwait.help = '<b>TRANSWAIT</b> command: calculate how long a transfer will take<br />Requires 2 input arguments, the rate and the amount to transfer. Note that calculation is bit/byte specific using b/B notation!<br />e.g. <i>transwait 12.34GB 123Mbps</i><br />(Arguments can come in either order. Only <u>B</u>yte vs <u>b</u>it is case sensitive.)';
+	this.base.transwait.help = '<b>transwait</b> command: calculate how long a transfer will take<br />Requires 2 input arguments, the rate and the amount to transfer. Note that calculation is bit/byte specific using b/B notation!<br />e.g. <i>transwait 12.34GB 123Mbps</i><br />(Arguments can come in either order. Only <u>B</u>yte vs <u>b</u>it is case sensitive.)';
 	this.base.version = function(args,trmnl){
 		return [0, "<span class=\"cmd-feedback\">emerix terminal v"+trmnl.version+"<br /><i>Release date: "+trmnl.releaseDate+"</i></span>"]
 	}
-	this.base.version.help = "<b>VERSION</b> command shows details about the current version of the emerix terminal";
+	this.base.version.help = "<b>version</b> command shows details about the current version of the emerix terminal";
 	// WEATHER:
 	this.base.weather = function(args,trmnl){
 		if(args[0] == undefined || isNaN(parseFloat(args[0]))){
@@ -925,7 +944,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		});
 		return [0, "loading weather data..."]
 	};
-	this.base.weather.help = '<b>WEATHER</b> command: get forecast for a given ZIP code<br />e.g. "weather 10025"';
+	this.base.weather.help = '<b>weather</b> command: get forecast for a given ZIP code<br />e.g. "weather 10025"';
 	// WHOAMI:
 	this.base.whoami = function(args,trmnl){
 		/* this is the static version of the site. No ajax to php files.
@@ -961,7 +980,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		*/
 		return [0, "Browsing as guest"]; // always, since this is the static version. Bit rubbish.
 	};
-	this.base.whoami.help = '<b>WHOAMI</b> command: tells you who you are logged in as, if any';
+	this.base.whoami.help = '<b>whoami</b> command: tells you who you are logged in as, if any';
 	/****************************************************************/
 	/*** write in further functions here: (this.base.function = ) ***/
 	/****************************************************************/

@@ -50,7 +50,7 @@ pkgs.nano = function(args,trmnl){
 	return [0, "<span class='cmd-feedback'>Opening nano</span>"];
 };
 
-pkgs.nano.help = "<b>NANO</b>-inspired text editor";
+pkgs.nano.help = "<b>nano</b>-inspired text editor";
 
 var Nano = function(trmnl){
 	// see https://www.nano-editor.org/dist/v2.2/nano.html for info on what to code here.
