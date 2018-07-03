@@ -908,8 +908,21 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.base.version.help = "<b>version</b> command shows details about the current version of the emerix terminal";
 	// WEATHER:
 	this.base.weather = function(args,trmnl){
+		var flags = [],
+			longprint = false;
+		[args,flags] = trmnl.parse_flags(args);
 		if(args[0] == undefined || isNaN(parseFloat(args[0]))){
 			return [1, args[0]+" is not a valid ZIP code"];
+		}
+		for(var f = 0; f < flags.length; f++){
+			switch(flags[f]){
+				case 'f':
+				case 'full':
+					longprint = true;
+					break;
+				default:
+					trmnl.output("Unknown flag: "+flags[f]+", ignoring");
+			}
 		}
 		// we need to go async now.
 		trmnl.input_div.html("").hide();
@@ -920,7 +933,11 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 				try{ // normally we should check if piping is true, but the weather table is just gonna async print.
 					var weather = "<span class=\"cmd-feedback\">Weather data for "+res.city.name+", "+res.city.country+":</span><br /><table>";
 					weather += "<tr><th>Date</th><th>Hour</th><th>Condition</th><th>Temp</th><th>Cloudiness</th><th>Humidity</th></tr>";
-					for(var r = 0, dt, hr; r < res.cnt; r++){
+					var count_to = 5;
+					if(longprint){
+						count_to = res.cnt;
+					}
+					for(var r = 0, dt, hr; r < count_to; r++){
 						dt = new Date(res.list[r].dt*1000);
 						hr = "0"+dt.getHours();
 						weather += "<tr><td>"+(dt.getMonth()+1)+"/"+dt.getDate()+"</td>";
@@ -945,7 +962,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		});
 		return [0, "loading weather data..."]
 	};
-	this.base.weather.help = '<b>weather</b> command: get forecast for a given ZIP code<br />e.g. "weather 10025"';
+	this.base.weather.help = '<b>weather</b> command: get forecast for a given ZIP code<br />e.g. "weather 10025"<br />Defaults to displaying results for next 5 hours, use -f or --full flag to display all results"';
 	// WHOAMI:
 	this.base.whoami = function(args,trmnl){
 		/* this is the static version of the site. No ajax to php files.
@@ -1268,6 +1285,26 @@ Terminal.prototype.reset = function(new_prompt){
 		this.set_prompt(new_prompt);
 	}
     this.input_div.val("");
+}
+Terminal.prototype.parse_flags = function(args){
+	//[args,flags] = trmnl.flag_parse(args);
+	var flags = [],
+		params = [];
+	for(var a = 0; a < args.length; a++){
+		if(args[a].charAt(0) == '-'){
+			if(args[a].charAt(1) == '-'){
+				flags.push(args[a].substr(2));
+			}else{
+				for(var b = 1; b < args[a].length; b++){
+					flags.push(args[a][b]);
+				}
+			}
+		}else{
+			params.push(args[a]);
+		}
+	}
+	console.log(flags);
+	return [params, flags];
 }
 Terminal.prototype.set_prompt = function(new_prompt){
     if(typeof(new_prompt) == 'undefined' || new_prompt == null || new_prompt == ""){
