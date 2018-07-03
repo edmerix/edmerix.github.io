@@ -919,7 +919,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 			success: function(res){
 				try{ // normally we should check if piping is true, but the weather table is just gonna async print.
 					var weather = "<span class=\"cmd-feedback\">Weather data for "+res.city.name+", "+res.city.country+":</span><br /><table>";
-					weather += "<tr><th>Date</th><th>Hour</th><th>Condition</th><th>Temp</th><th>Cloudiness</th></tr>";
+					weather += "<tr><th>Date</th><th>Hour</th><th>Condition</th><th>Temp</th><th>Cloudiness</th><th>Humidity</th></tr>";
 					for(var r = 0, dt, hr; r < res.cnt; r++){
 						dt = new Date(res.list[r].dt*1000);
 						hr = "0"+dt.getHours();
@@ -927,7 +927,8 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 						weather += "<td>"+hr.substr(-2)+":00</td>";
 						weather += "<td>"+res.list[r].weather[0].description+"</td>";
 						weather += "<td>"+Math.round(res.list[r].main.temp)+"&deg;C</td>";
-						weather += "<td>"+res.list[r].clouds.all+"%</td></tr>";
+						weather += "<td>"+res.list[r].clouds.all+"%</td>";
+						weather += "<td>"+res.list[r].main.humidity+"%</td></tr>";
 					}
 					weather += "</table>";
 					trmnl.output(weather,0);
