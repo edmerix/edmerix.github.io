@@ -15,9 +15,20 @@ pkgs.tedit = function(args,trmnl){
 	$(trmnl.running.tedit.screen).keydown(function(e){
 		var code = e.keyCode || e.which;
 		if(e.ctrlKey){
+			console.log(code);
 			if(code == 88){ // '^X' // change this to ^W or maybe ^Q
 				// check if the contents have been saved first, then the below (actually do that within the exit function to make sure we never accidentally exit without checking)
 				trmnl.running.tedit.exit();
+			}else if(code == 192){ // '^~' (bring up console)
+				$(trmnl.running.tedit.console).show();
+				$("#teditconsole").focus();
+				$("#teditconsole").keydown(function(e){
+					var code = e.keyCode || e.which;
+					if(code == 13){
+						e.preventDefault();
+						//trmnl.running.tedit.find($(this).val()); // this is search. We will parse input instead
+					}
+				});
 			}
 		}
 	});
@@ -67,10 +78,18 @@ var TEdit = function(trmnl){
 	
 	// status bar:
 	this.statusbar = document.createElement("div");
-	styleString = "position: absolute; bottom: 0px; left: 0; height: "+lineHeight+"px;";
+	styleString = "position: absolute; bottom: "+(2*(lineHeight+pad))+"px; left: 0; height: "+lineHeight+"px;";
 	styleString += " line-height: "+lineHeight+"px; right: 0; color: "+this.color+"; font-size: "+lineHeight+"px; padding-bottom: "+pad+"px;";
 	this.statusbar.style = styleString;
 	$(this.main).append(this.statusbar);
+	
+	// console:
+	this.console = document.createElement("div");
+	styleString = "display: none; position: absolute; bottom: 0px; left: 0; height: "+(2*lineHeight)+"px;";
+	styleString += " line-height: "+lineHeight+"px; right: 0; color: "+this.high_bg+"; padding-bottom: "+(2*pad)+"px;";
+	this.console.style = styleString;
+	$(this.console).html("<table style='width: 100%;'><tr><td style='width: 1px; white-space: nowrap;'>TEDit>></td><td><input id='teditconsole' style='width: 100%; background: transparent; border: none; outline: none;'/></td></tr></table>");
+	$(this.main).append(this.console);
 }
 
 // methods:
@@ -96,13 +115,22 @@ TEdit.prototype.writeout = function(){
 }
 TEdit.prototype.find = function(srch){
 	var data = $(this.screen).val().toLowerCase();
-	ind = data.indexOf(srch.toLowerCase()); // actually, ought to search for next instance from cursor, and tell you if wraps.
-	// i.e. data = data.substring(caretpos,end)+data.substring(0,caretpos-1) in pseudocode, then search, and if result is greater than end-caretpos, say search wrapped.
+	var curPos = this.getCaretPosition();
+	var postdata = data.substr(curPos.end);
+	var predata = data.substring(0,curPos.end);
+	ind = postdata.indexOf(srch.toLowerCase());
 	if(ind > -1){
-		this.setSelectionRange(ind,ind+srch.length);
-		$(this.statusbar).html(""); // unless we need to say how many instances, or if search wrapped.
+		this.setSelectionRange(ind+curPos.end,ind+curPos.end+srch.length);
+		$(this.statusbar).html("");
 	}else{
-		$(this.statusbar).html("<span>\""+srch+"\" not found in file</span>")
+		// not in the text after current caret position, try before and alert that wrapped
+		ind = predata.indexOf(srch.toLowerCase());
+		if(ind > -1){
+			this.setSelectionRange(ind,ind+srch.length);
+			$(this.statusbar).html("<span>\"Search wrapped\"</span>");
+		}else{
+			$(this.statusbar).html("<span>\""+srch+"\" not found in file</span>");
+		}
 	}
 }
 TEdit.prototype.setSelectionRange = function(start,end){
@@ -117,5 +145,21 @@ TEdit.prototype.setSelectionRange = function(start,end){
 		range.moveEnd('character', end);
 		range.moveStart('character', start);
 		range.select();
+	}
+}
+TEdit.prototype.getCaretPosition = function(){
+	if(document.selection){
+		// IE < 9 Support
+		this.screen.focus();
+		var range = document.selection.createRange();
+		var rangelen = range.text.length;
+		range.moveStart ('character', -this.screen.value.length);
+		var start = range.text.length - rangelen;
+		return {'start': start, 'end': start + rangelen };
+	}else if(this.screen.selectionStart || this.screen.selectionStart == '0'){
+		// IE >=9 and other browsers
+		return {'start': this.screen.selectionStart, 'end': this.screen.selectionEnd };
+	}else{
+		return {'start': 0, 'end': 0};
 	}
 }
