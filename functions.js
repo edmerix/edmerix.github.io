@@ -1,5 +1,7 @@
 window.jQuery || document.write('<script src="jquery.min.js"><\/script>');
 
+var greeting = false;
+
 var terminal = [],
 	instances;
 var table_border = false; // move this into a settings object later, to be loaded externally.
@@ -17,20 +19,21 @@ $(document).ready(function(){
 	
 	update_positions();
 	
-	//WELCOME message immediate output: 
-	terminal[instances].output('&nbsp;_____&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;__&nbsp;&nbsp;__&nbsp;__&nbsp;&nbsp;__&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;&nbsp;');
-	terminal[instances].output('|&nbsp;____|__|&nbsp;|_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;_&nbsp;_&nbsp;__&nbsp;__|&nbsp;|&nbsp;&nbsp;\\/&nbsp;&nbsp;|&nbsp;&nbsp;\\/&nbsp;&nbsp;|&nbsp;___&nbsp;_&nbsp;__&nbsp;_&nbsp;__(_)&nbsp;___|&nbsp;|&nbsp;_____&nbsp;&nbsp;|&nbsp;&nbsp;_&nbsp;\\|&nbsp;|__&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;_&nbsp;\\&nbsp;&nbsp;');
-	terminal[instances].output('|&nbsp;&nbsp;_|&nbsp;/&nbsp;_`&nbsp;\\&nbsp;\\&nbsp;/\\&nbsp;/&nbsp;/&nbsp;_`&nbsp;|&nbsp;\'__/&nbsp;_`&nbsp;|&nbsp;|\\/|&nbsp;|&nbsp;|\\/|&nbsp;|/&nbsp;_&nbsp;\\&nbsp;\'__|&nbsp;\'__|&nbsp;|/&nbsp;__|&nbsp;|/&nbsp;/&nbsp;__|&nbsp;|&nbsp;|_)&nbsp;|&nbsp;\'_&nbsp;\\&nbsp;&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;');
-	terminal[instances].output('|&nbsp;|__|&nbsp;(_|&nbsp;|\\&nbsp;V&nbsp;&nbsp;V&nbsp;/&nbsp;(_|&nbsp;|&nbsp;|&nbsp;|&nbsp;(_|&nbsp;|&nbsp;|&nbsp;&nbsp;|&nbsp;|&nbsp;|&nbsp;&nbsp;|&nbsp;|&nbsp;&nbsp;__/&nbsp;|&nbsp;&nbsp;|&nbsp;|&nbsp;&nbsp;|&nbsp;|&nbsp;(__|&nbsp;&nbsp;&nbsp;<\\__&nbsp;\\_|&nbsp;&nbsp;__/|&nbsp;|&nbsp;|&nbsp;|_|&nbsp;|_|&nbsp;|&nbsp;');
-	terminal[instances].output('|_____\\__,_|&nbsp;\\_/\\_/&nbsp;\\__,_|_|&nbsp;&nbsp;\\__,_|_|&nbsp;&nbsp;|_|_|&nbsp;&nbsp;|_|\\___|_|&nbsp;&nbsp;|_|&nbsp;&nbsp;|_|\\___|_|\\_\\___(&nbsp;)_|&nbsp;&nbsp;&nbsp;|_|&nbsp;|_(_)____(_)');
-	terminal[instances].output('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|/');
-	
-	terminal[instances].output('Welcome to the geeky version of the website');
-	terminal[instances].output('To go to the version designed for people who aren\'t massive dweebs use the "<span class="cmd-feedback">GUI</span>" command, or <a href="gui">click here</a>');
-	terminal[instances].output('Ed is a scientist. He also sometimes does art, and plays a bit of music');
-	terminal[instances].output('To find out more about each topic, try their commands below ("<span class="cmd-feedback">science</span>", "<span class="cmd-feedback">art</span>", "<span class="cmd-feedback">music</span>")');
-	terminal[instances].output('To get more help, type "<span class="cmd-feedback">help</span>" and hit enter')
-	
+    if(greeting){
+        //WELCOME message immediate output: 
+        terminal[instances].output('&nbsp;_____&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;__&nbsp;&nbsp;__&nbsp;__&nbsp;&nbsp;__&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;&nbsp;');
+        terminal[instances].output('|&nbsp;____|__|&nbsp;|_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;_&nbsp;_&nbsp;__&nbsp;__|&nbsp;|&nbsp;&nbsp;\\/&nbsp;&nbsp;|&nbsp;&nbsp;\\/&nbsp;&nbsp;|&nbsp;___&nbsp;_&nbsp;__&nbsp;_&nbsp;__(_)&nbsp;___|&nbsp;|&nbsp;_____&nbsp;&nbsp;|&nbsp;&nbsp;_&nbsp;\\|&nbsp;|__&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;_&nbsp;\\&nbsp;&nbsp;');
+        terminal[instances].output('|&nbsp;&nbsp;_|&nbsp;/&nbsp;_`&nbsp;\\&nbsp;\\&nbsp;/\\&nbsp;/&nbsp;/&nbsp;_`&nbsp;|&nbsp;\'__/&nbsp;_`&nbsp;|&nbsp;|\\/|&nbsp;|&nbsp;|\\/|&nbsp;|/&nbsp;_&nbsp;\\&nbsp;\'__|&nbsp;\'__|&nbsp;|/&nbsp;__|&nbsp;|/&nbsp;/&nbsp;__|&nbsp;|&nbsp;|_)&nbsp;|&nbsp;\'_&nbsp;\\&nbsp;&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;');
+        terminal[instances].output('|&nbsp;|__|&nbsp;(_|&nbsp;|\\&nbsp;V&nbsp;&nbsp;V&nbsp;/&nbsp;(_|&nbsp;|&nbsp;|&nbsp;|&nbsp;(_|&nbsp;|&nbsp;|&nbsp;&nbsp;|&nbsp;|&nbsp;|&nbsp;&nbsp;|&nbsp;|&nbsp;&nbsp;__/&nbsp;|&nbsp;&nbsp;|&nbsp;|&nbsp;&nbsp;|&nbsp;|&nbsp;(__|&nbsp;&nbsp;&nbsp;<\\__&nbsp;\\_|&nbsp;&nbsp;__/|&nbsp;|&nbsp;|&nbsp;|_|&nbsp;|_|&nbsp;|&nbsp;');
+        terminal[instances].output('|_____\\__,_|&nbsp;\\_/\\_/&nbsp;\\__,_|_|&nbsp;&nbsp;\\__,_|_|&nbsp;&nbsp;|_|_|&nbsp;&nbsp;|_|\\___|_|&nbsp;&nbsp;|_|&nbsp;&nbsp;|_|\\___|_|\\_\\___(&nbsp;)_|&nbsp;&nbsp;&nbsp;|_|&nbsp;|_(_)____(_)');
+        terminal[instances].output('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|/');
+
+        terminal[instances].output('Welcome to the geeky version of the website');
+        terminal[instances].output('To go to the version designed for people who aren\'t massive dweebs use the "<span class="cmd-feedback">GUI</span>" command, or <a href="gui">click here</a>');
+        terminal[instances].output('Ed is a scientist. He also sometimes does art, and plays a bit of music');
+        terminal[instances].output('To find out more about each topic, try their commands below ("<span class="cmd-feedback">science</span>", "<span class="cmd-feedback">art</span>", "<span class="cmd-feedback">music</span>")');
+        terminal[instances].output('To get more help, type "<span class="cmd-feedback">help</span>" and hit enter')
+    }
 	// load local settings here
 	/*
 	//save example:
@@ -1287,7 +1290,7 @@ Terminal.prototype.reset = function(new_prompt){
     this.input_div.val("");
 }
 Terminal.prototype.parse_flags = function(args){
-	//[args,flags] = trmnl.flag_parse(args);
+	//e.g. [args,flags] = trmnl.parse_flags(args);
 	var flags = [],
 		params = [];
 	for(var a = 0; a < args.length; a++){
@@ -1303,7 +1306,7 @@ Terminal.prototype.parse_flags = function(args){
 			params.push(args[a]);
 		}
 	}
-	console.log(flags);
+	//console.log(flags);
 	return [params, flags];
 }
 Terminal.prototype.set_prompt = function(new_prompt){
