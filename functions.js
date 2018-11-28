@@ -59,8 +59,10 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.prompt = prmpt;
 	this.base_prompt = prmpt;
 	this.next_prompt = prmpt;
-	this.cmd_hist = []; // TODO: maybe use localStorage (limit it to last 50 commands)
+	this.cmd_hist = [];
     this.cmd_hist_pos = 0;
+	this.cmd_hist_size = 100; // limit for history storage (allows more during a session, but limits in localstorage)
+	// TODO: hist_size resets to 100 at each new load. Should be stored as a localstorage setting (as should others)
 	this.input_div = $(input_div);
 	this.output_div = $(output_div);
 	this.prompt_div = $(prompt_div);
@@ -99,6 +101,17 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		}
 	});})(this);
 	
+	// load locally stored command history, if present (localstorage, i.e. computer-specific)
+	var localhist = JSON.parse(localStorage.getItem("history"));
+	if(localhist !== null){
+		// check if it's the appropriate data and format for this.cmd_hist and apply it if so
+		if(localhist.constructor === Array){ // it's an array...
+			if(localhist.every(function(i){ return typeof i === "string" })){ // they're all strings :)
+				this.cmd_hist = localhist;
+			}
+		}
+	}
+
 	var trmnl = this;
 	
 	this.output_div.html("");
@@ -470,8 +483,23 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
         return 0;
 	};
 	this.base.help.help = '<b>help</b> command: help for the help command needs to be written here.';
+	// HISTSIZE:
+	this.base.histsize = function(args,trmnl){
+		if(args[0] == undefined || args[0] == ""){
+			return [0, "Command history size: "+trmnl.cmd_hist_size];
+		}
+		if(args.length > 1) trmnl.output("Only need 1 input, ignoring subsequent parameters...");
+		var n = parseInt(args[0]);
+		trmnl.cmd_hist_size = n;
+		return [0, "Set command history size to "+n];
+	};
+	this.base.histsize.help = '<b>histsize</b>: with no argument, prints current command history size to screen,<br />with exactly 1 argument – sets the number of items to store in the local storage command history';
 	// INSTALL:
 	this.base.install = function(args,trmnl){
+		// TODO: parse flags out of args, and set -p/--permanent flag to add the program to the local settings of permanently installed functions/programs, which will be silently auto-installed at start up.
+		// beginning of that:
+		[args,flags] = trmnl.parse_flags(args);
+
 		if(args[0] == undefined || args[0] == ""){
 			return [1, "Need to specify a program to install"];
 		}
@@ -1147,6 +1175,10 @@ Terminal.prototype.parse_command = function(cmd,printing){
         if(this.piping) cmdOut += "|"+this.pipe_function;
         if(printing){
             this.cmd_hist.push(cmdOut);
+			// localstorage version of the history:
+			var tempHist = this.cmd_hist.slice(Math.max(this.cmd_hist.length - this.cmd_hist_size, 0));
+			tempHist = JSON.stringify(tempHist);
+			localStorage.setItem("history",tempHist);
             this.output(cmdOut,1); 
         }
     }
@@ -1271,8 +1303,13 @@ Terminal.prototype.output = function(output,prompted){
         this.output_div.append("<div class=\"output-line\"><div class=\"cmd-prompt\">"+output+"</div></div>");
     }
 	//this.update_colors(); // I don't like calling this after every output/error.
-    var d = $(this.body);
+	setTimeout(this.scrollDown(),1000);
+}
+Terminal.prototype.scrollDown = function(){
+	var d = $(this.body);
 	d.scrollTop(d.prop("scrollHeight"));
+	// having issues with the above. Below doesn't seem to fix it though.
+	//this.input_div[0].scrollIntoView();
 }
 Terminal.prototype.error = function(precursor,val){
     var out = precursor;
@@ -1280,8 +1317,7 @@ Terminal.prototype.error = function(precursor,val){
         out += ", '"+val+"'";
     }
     this.output_div.append("<div class=\"cmd-err\">ERROR: "+out+"</div>");
-    var d = $(this.body);
-	d.scrollTop(d.prop("scrollHeight"));
+    setTimeout(this.scrollDown(),200);
 }
 Terminal.prototype.reset = function(new_prompt){
 	if(typeof(new_prompt) != 'undefined' || new_prompt != null || new_prompt != ""){

@@ -68,6 +68,9 @@ var TEdit = function(trmnl){
 	this.bg = trmnl.cols.bg;
 	this.high_bg = trmnl.cols.feedback;
 	this.color = trmnl.cols.output;
+	// some settings for functionality:
+	this.savetime = 0;
+	this.modified = false; //TODO: code this stuff in
 	
 	// actual screen:
 	this.main = document.createElement("div");
@@ -139,6 +142,9 @@ TEdit.prototype.exit = function(){
 	
 	terminal[this.termID].input_div.focus();
 }
+TEdit.prototype.localsave = function(){
+	// update this.savetime and this.modified here. Use this.modified to doublecheck exiting tedit during this.exit();
+};
 TEdit.prototype.writeout = function(fname){
 	if(fname == undefined || fname == "" || fname == null){
 		fname = 'tedit.txt';
