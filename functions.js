@@ -60,7 +60,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.base_prompt = prmpt;
 	this.next_prompt = prmpt;
 	this.cmd_hist = [];
-    this.cmd_hist_pos = 0;
+	this.cmd_hist_pos = 0;
 	this.cmd_hist_size = 100; // limit for history storage (allows more during a session, but limits in localstorage)
 	// TODO: hist_size resets to 100 at each new load. Should be stored as a localstorage setting (as should others)
 	this.input_div = $(input_div);
