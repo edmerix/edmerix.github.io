@@ -1,3 +1,4 @@
+/*global $, jQuery, alert*/
 window.jQuery || document.write('<script src="jquery.min.js"><\/script>');
 
 var greeting = false;
