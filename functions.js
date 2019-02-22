@@ -17,11 +17,11 @@ $(document).ready(function(){
 	});
 	instances = terminal.length;
 	terminal[instances] = new Terminal(instances,"$>","#main-input_"+instances,"#cmd-history_"+instances,"#cmd-prompt_"+instances,"#term_"+instances,"themes.json");
-	
+
 	update_positions();
-	
+
     if(greeting){
-        //WELCOME message immediate output: 
+        //WELCOME message immediate output:
         terminal[instances].output('&nbsp;_____&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;__&nbsp;&nbsp;__&nbsp;__&nbsp;&nbsp;__&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;&nbsp;');
         terminal[instances].output('|&nbsp;____|__|&nbsp;|_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;_&nbsp;_&nbsp;__&nbsp;__|&nbsp;|&nbsp;&nbsp;\\/&nbsp;&nbsp;|&nbsp;&nbsp;\\/&nbsp;&nbsp;|&nbsp;___&nbsp;_&nbsp;__&nbsp;_&nbsp;__(_)&nbsp;___|&nbsp;|&nbsp;_____&nbsp;&nbsp;|&nbsp;&nbsp;_&nbsp;\\|&nbsp;|__&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;_&nbsp;\\&nbsp;&nbsp;');
         terminal[instances].output('|&nbsp;&nbsp;_|&nbsp;/&nbsp;_`&nbsp;\\&nbsp;\\&nbsp;/\\&nbsp;/&nbsp;/&nbsp;_`&nbsp;|&nbsp;\'__/&nbsp;_`&nbsp;|&nbsp;|\\/|&nbsp;|&nbsp;|\\/|&nbsp;|/&nbsp;_&nbsp;\\&nbsp;\'__|&nbsp;\'__|&nbsp;|/&nbsp;__|&nbsp;|/&nbsp;/&nbsp;__|&nbsp;|&nbsp;|_)&nbsp;|&nbsp;\'_&nbsp;\\&nbsp;&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;');
@@ -40,14 +40,14 @@ $(document).ready(function(){
 	//save example:
 	settings = JSON.stringify(settings);
 	localStorage.setItem("settings",settings);
-	
+
 	//load example:
 	var settings = JSON.parse(localStorage.getItem("settings"))
 	if(settings === null){
 		return [0, "<i>You currently have no settings stored</i>"];
 	}
 	*/
-	
+
 	terminal[instances].input_div.focus();
 });
 
@@ -56,7 +56,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.title = "emerix";
 	this.version = 0.1;
 	this.releaseDate = "2018-06-25";
-	
+
 	this.prompt = prmpt;
 	this.base_prompt = prmpt;
 	this.next_prompt = prmpt;
@@ -72,13 +72,13 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.program = "base";		// what program we're currently in (base is normal commands)
 	this.piping = false; 		// used to "pipe" command outputs to another command ("|" symbol)
 	this.pipe_function = null;	// what command to pass the output to if "piping" (assigned automatically with whatever is after the | symbol)
-	
+
 	this.cols = {};
 	this.cols.output = '#FFF';
 	this.cols.feedback = '#9CF';
 	this.cols.error = '#E85555';
 	this.cols.bg = '#000';
-	
+
 	this.theme_file = theme_file;
 	this.themes = {};
 	(function(trmnl){$.ajax({
@@ -101,7 +101,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 			console.log(err);
 		}
 	});})(this);
-	
+
 	// load locally stored command history, if present (localstorage, i.e. computer-specific)
 	var localhist = JSON.parse(localStorage.getItem("history"));
 	if(localhist !== null){
@@ -114,13 +114,13 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	}
 
 	var trmnl = this;
-	
+
 	this.output_div.html("");
     if(this.title != undefined && this.title != null){
         this.output_div.append("<div class='cmd-feedback output-line'>"+this.title+" v"+this.version+" || terminal:"+this.ID+"<br /><i>[release: "+this.releaseDate+"]</i></div>");
     }
     this.prompt_div.html(this.prompt.replace("[d]","").replace("[t]",""));
-	
+
 	this.input_div.keydown(function(e){
 		if(trmnl.active){
 			var code = (e.keyCode ? e.keyCode : e.which);
@@ -191,7 +191,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 			}
 		}
 	});
-	
+
 	this.base = {};
 	this.base.protected = {}; // used to write the fallback function, without adding it to the user accessible commands
 	this.base.protected.fallback = function(cmd,fn,args,trmnl){
@@ -200,7 +200,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		// TODO: update this so that it checks available installation packages and prompts to install if it exists?
 	}
 	/** BASE FUNCTIONS START: **/
-	/* 	
+	/*
 	*	Normal functions are in alphabetical order below,
 	*	but these first ones are the webiste ones (science,
 	*	art, music, any others I think of)
@@ -738,7 +738,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		return [0, '<font style="color: '+args[0]+'">'+args[0]+'<font>'];
 	}
 	this.base.showcol.help = '<b>showcol</b> command: print the given hexadecimal color code in its color';
-	
+
 	// SUBWAY:
 	this.base.subway = function(args,trmnl){
 		if(args[0] == undefined || args[0] == ""){
@@ -853,7 +853,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		return [0, "Fetching MTA subway data..."];
 	}
 	this.base.subway.help = 'Subway status. Needs a station name as argument.<br />Currently accepts an odd subset of stations.<br />Need to write this properly.';
-	
+
 	// THEME:
 	this.base.theme = function(args,trmnl){
         if(args[0] == undefined || args[0] == ""){
@@ -871,8 +871,8 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		trmnl.update_colors();
 		return 0;
 	}
-	this.base.theme.help = '<b>theme</b> command: change terminal to a different theme. Available themes will be populated once specified theme file has been loaded.'; 
-	// TRANSWAIT: 
+	this.base.theme.help = '<b>theme</b> command: change terminal to a different theme. Available themes will be populated once specified theme file has been loaded.';
+	// TRANSWAIT:
 	this.base.transwait = function(args,trmnl){
 		if(args.length != 2){
 			return [1, 'Requires exactly 2 arguments: a rate, and an amount'];
@@ -1010,7 +1010,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 						trmnl.parse_command(trmnl.pipe_function+"("+res.user+")",0);
 					}else{
 						if(res.id >= 0){
-							trmnl.output("Logged in as "+res.user,0);	
+							trmnl.output("Logged in as "+res.user,0);
 						}else{
 							trmnl.output("Browsing as guest",0);
 						}
@@ -1034,16 +1034,16 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	/****************************************************************/
 	/*** write in further functions here: (this.base.function = ) ***/
 	/****************************************************************/
-	
+
 	// Note, though, that extra functions that aren't programs (see below)
-	// can be added in their own files in ./pkg/ This allows them to be 
-	// "installed" with the builtin install command, though they won't 
+	// can be added in their own files in ./pkg/ This allows them to be
+	// "installed" with the builtin install command, though they won't
 	// be available at "startup"
-	
+
 	/****************************************************************/
 	/***       programs go here (i.e. non "base" commands):       ***/
 	/****************************************************************/
-	
+
 	/* DB */ // haven't actually done anything with this one yet.
 	this.db = {};
 	this.db.protected = {};
@@ -1076,7 +1076,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		avail_commands += '</tr></table>'; // will double up the </tr> if total commands is divisible by 5. Fix.
         return [0, avail_commands];
 	}
-	
+
 	/* MATH */
 	this.math = {};
 	this.math.protected = {}; // used to write the fallback function, without adding it to the user accessible commands
@@ -1150,7 +1150,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		avail_commands += '</tr></table>'; // will double up the </tr> if total commands is divisible by 5. Fix.
         return [0, avail_commands];
 	}
-	
+
 	/***** AUTOCOMPLETES: *****/
     var auto_progs = ['base','math','db','science'];
 	for(var a = 0; a < auto_progs.length; a++){
@@ -1180,7 +1180,7 @@ Terminal.prototype.parse_command = function(cmd,printing){
 			var tempHist = this.cmd_hist.slice(Math.max(this.cmd_hist.length - this.cmd_hist_size, 0));
 			tempHist = JSON.stringify(tempHist);
 			localStorage.setItem("history",tempHist);
-            this.output(cmdOut,1); 
+            this.output(cmdOut,1);
         }
     }
     var separate_cmds = cmd.split('&&'); // logical command sequence, i.e. only keep performing while response less than 1
@@ -1229,7 +1229,7 @@ Terminal.prototype.parse_command = function(cmd,printing){
                 if(this.piping) cmdOut += "|"+this.pipe_function;
                 if(printing){
                     this.cmd_hist.push(cmdOut);
-                    this.output(cmdOut,1); 
+                    this.output(cmdOut,1);
                 }
                 */
                 var response;
@@ -1304,7 +1304,8 @@ Terminal.prototype.output = function(output,prompted){
         this.output_div.append("<div class=\"output-line\"><div class=\"cmd-prompt\">"+output+"</div></div>");
     }
 	//this.update_colors(); // I don't like calling this after every output/error.
-	setTimeout(this.scrollDown(),1000);
+	var trmnl = this;
+	setTimeout(function(){trmnl.scrollDown();},10);
 }
 Terminal.prototype.scrollDown = function(){
 	var d = $(this.body);
@@ -1318,7 +1319,8 @@ Terminal.prototype.error = function(precursor,val){
         out += ", '"+val+"'";
     }
     this.output_div.append("<div class=\"cmd-err\">ERROR: "+out+"</div>");
-    setTimeout(this.scrollDown(),200);
+	var trmnl = this;
+	setTimeout(function(){trmnl.scrollDown();},10);
 }
 Terminal.prototype.reset = function(new_prompt){
 	if(typeof(new_prompt) != 'undefined' || new_prompt != null || new_prompt != ""){
@@ -1387,7 +1389,7 @@ Terminal.prototype.exit = function(callingID){
 	delete terminal[w];
 	$("#term_"+w).html("<div id=\"cmd-history_"+w+"\" class=\"cmd-history\"></div>\n\t\t<div id=\"input-line_"+w+"\" class=\"input-line\">\n\t\t\t<div class=\"cmd-prompt\" id=\"cmd-prompt_"+w+"\">$></div>\n\t\t\t<div id=\"cmd-input_"+w+"\" class=\"cmd-input\"><input id=\"main-input_"+w+"\" class=\"main-input\" type=\"text\" spellcheck=\"false\"/></div>"); // reset the terminal container
 	instances--;
-	
+
 	// attempt to change focus to the screen closest to the closed one.
 	// N.B. that this shouldn't be done if this was called as a kill command
 	// from another terminal, in which case we don't want to change focus.
