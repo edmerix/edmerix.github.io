@@ -1,13 +1,13 @@
 /*global $, jQuery, alert*/
 window.jQuery || document.write('<script src="jquery.min.js"><\/script>');
 
-var greeting = false;
+var greeting = true;
 
 var terminal = [],
 	instances;
 var table_border = false; // move this into a settings object later, to be loaded externally.
 
-$(document).ready(function(){
+document.addEventListener("DOMContentLoaded", function(){
 
 	$(".termbox").click(function(ev){
 		var wh = $(this).attr("id").replace("term_","");
@@ -30,10 +30,19 @@ $(document).ready(function(){
         terminal[instances].output('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|/');
 
         terminal[instances].output('Welcome to the geeky version of the website');
-        terminal[instances].output('To go to the version designed for people who aren\'t massive dweebs use the "<span class="cmd-feedback">GUI</span>" command, or <a href="gui">click here</a>');
-        terminal[instances].output('Ed is a scientist. He also sometimes does art, and plays a bit of music');
-        terminal[instances].output('To find out more about each topic, try their commands below ("<span class="cmd-feedback">science</span>", "<span class="cmd-feedback">art</span>", "<span class="cmd-feedback">music</span>")');
-        terminal[instances].output('To get more help, type "<span class="cmd-feedback">help</span>" and hit enter')
+        terminal[instances].output('A version designed for people who aren\'t massive dweebs is soon to be uploaded.'); //  "<span class="cmd-feedback">GUI</span>" command, or <a href="gui">click here</a>
+        terminal[instances].output('Ed is a scientist. He also sometimes does art, and plays a bit of music.');
+        //terminal[instances].output('To find out more about each topic, try their commands below ("<span class="cmd-feedback">science</span>", "<span class="cmd-feedback">art</span>", "<span class="cmd-feedback">music</span>")');
+		terminal[instances].output('To find out more about the science, try its command below ("<span class="cmd-feedback">science</span>").');
+		terminal[instances].output('Art and music info will be added at a later date...');
+        terminal[instances].output('To get more help, type "<span class="cmd-feedback">help</span>" and hit enter');
+		terminal[instances].linesep();
+		terminal[instances].output('Note there are some cool things that aren\'t installed by default...');
+		terminal[instances].output('Try <span class="cmd-feedback">install session</span>, followed by <span class="cmd-feedback">session</span>, then <span class="cmd-feedback">theme orange</span>');
+		terminal[instances].output('After that, try out <span class="cmd-feedback">install tedit</span>, then <span class="cmd-feedback">tedit</span> for a (super) minimal text editor.');
+		terminal[instances].output('When in tedit, hit cmd/ctrl+~ to open the console, and type <span class="cmd-feedback">save</span> to save your file.');
+		terminal[instances].linesep();
+		terminal[instances].output('If you made it this far, perhaps check out my <a href="https://www.github.com/edmerix" target="_blank">GitHub</a>');
     }
 	// load local settings here
 	/*
@@ -214,27 +223,35 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 				quick_release = true;
 			}
 		}
-		trmnl.output("Ed is currently a Post-Doctoral Research Scientist at Columbia University Medical Center");
-		trmnl.output("His research focuses on the activity of populations of single neurons in epilepsy patients during seizures.");
-		trmnl.output("I will write this section properly in a bit, with links &amp; feedback colors &amp; stuff...");
+		trmnl.linesep();
+		trmnl.output("Ed is currently a Post-Doctoral Research Scientist at <a target='_blank' href='https://www.cuimc.columbia.edu'>Columbia University Medical Center</a> in the <a target='_blank' href='http://www.columbianeurology.org'>Dept. of Neurology</a>");
+		trmnl.output("His research focuses on the activity of populations of single neurons in epilepsy patients during seizures,<br />especially the activity of individual inhibitory cells at seizure onset, and alterations to firing patterns<br />in what's known as the '<i>post-ictal</i>' period.");
+		trmnl.linesep();
+		trmnl.output("Click to go to his <a target='_blank' href='https://scholar.google.com/citations?user=PnKpxtIAAAAJ&hl=en&oi=ao'>Google Scholar page</a>, <a target='_blank' href='https://www.ncbi.nlm.nih.gov/pubmed/?term=(merricks+em%5Bauthor%5D)'>publications</a>, <a target='_blank' href='https://github.com/edmerix/'>GitHub</a>, or <a target='_blank' href='https://www.researchgate.net/profile/Edward_Merricks'>ResearchGate</a>");
+		trmnl.output("He has code to open <a target='_blank' href='https://github.com/edmerix/openNSx-swift'>NSx neural data files in Swift</a>, do the <a target='_blank' href='https://github.com/edmerix/SplitMerge'>manual stage of spike sorting</a>, or<br /><a target='_blank' href='https://github.com/edmerix/NeuroClass'>analyze populations of single unit data</a>, among others (ask for more).")
 		if(!quick_release){
 			trmnl.program = "science";
 			trmnl.next_prompt = 'SCIENCE>';
-			info = "Entering SCIENCE info program... Type help for more info, and exit to return home.";
+			info = "<hr />Entering SCIENCE info program... Type help for more info, and exit to return home.";
+			info += "<br />Yet to actually add anything to this \"program\", it's a proof-of-concept.";
 		}
 		return [0,info];
 	}
 	this.base.science.help = '<b>science</b> command: use to find some info about my scientific work.<br />science with no arguments will start the SCIENCE "program"<br />Using the argument "info" will just print the basic details to screen then return home.';
 	// ART:
+	/*
 	this.base.art = function(args,trmnl){
 		return [0, "I am yet to code this bit in."]
 	}
 	this.base.art.help = '<b>art</b> command: gives some details about my hobby painting/drawing';
+	*/
 	// MUSIC:
+	/*
 	this.base.music = function(args,trmnl){
 		return [0, "I am yet to code this bit in."]
 	}
 	this.base.music.help = '<b>music</b> command: gives some details about my hobby making/producing music';
+	*/
 	// ARGLIST: (list arguments, can be useful to determine piped function stuff or test argument parsing)
 	this.base.arglist = function(args,trmnl){
 		var arglist = "";
@@ -1129,7 +1146,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		return 0;
 	}
 	this.science.help = function(args,trmnl){
-        var avail_commands = 'Commands in the SCIENCE section:<hr /><span class="cmd-feedback"><table><tr>';
+        var avail_commands = 'Commands in the SCIENCE section (none at present really, this is a proof-of-concept):<hr /><span class="cmd-feedback"><table><tr>';
 		if(trmnl.science.hasOwnProperty('autocomplete')){
 			// make use of the autocomplete data if it has been populated
 			for(var c = 0; c < trmnl.science.autocomplete.length; c++){
@@ -1286,6 +1303,9 @@ Terminal.prototype.parse_command = function(cmd,printing){
 		}
     }
 }
+Terminal.prototype.linesep = function(){
+	this.output_div.append("<div class=\"output-line\"><hr /></div>");
+};
 Terminal.prototype.output = function(output,prompted){
     if(prompted){
         var now = new Date(),

@@ -16,6 +16,11 @@ body, .termbox {
     -o-user-select: none;
     user-select: none;
 }
+hr {
+	width: 40%;
+	border-color: #888;
+	opacity: 0.1;
+}
 .termbox {
 	position: fixed;
 	overflow: auto;

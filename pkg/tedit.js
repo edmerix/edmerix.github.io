@@ -277,7 +277,7 @@ TEdit.prototype.parse_command = function(cmd){
 		if(typeof(this.fn[fn]) == 'function'){
 			response = this.fn[fn](args,this);
 		}else{
-			response = [1, fn + "&nbsp;<--&nbsp;unknown&nbsp;command"];
+			response = [1, fn + " <-- unknown command"];
 		}
 		//this.input_div.val(""); // moved to outside the post && split loop
 		//this.cmd_hist_pos = 0; // moved to outside the post && split loop
