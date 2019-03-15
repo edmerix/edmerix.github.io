@@ -21,6 +21,10 @@ hr {
 	border-color: #888;
 	opacity: 0.1;
 }
+ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
 .termbox {
 	position: fixed;
 	overflow: auto;
@@ -137,6 +141,9 @@ input {
 	font-weight: bold;
 	font-size: 12px;
 	line-height: 16px;
+}
+.inset {
+	margin-left: 20px;
 }
 .mta_1, .mta_2, .mta_3 {
 	background: #EE352E;

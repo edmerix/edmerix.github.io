@@ -233,7 +233,6 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 			trmnl.program = "science";
 			trmnl.next_prompt = 'SCIENCE>';
 			info = "<hr />Entering SCIENCE info program... Type help for more info, and exit to return home.";
-			info += "<br />Yet to actually add anything to this \"program\", it's a proof-of-concept.";
 		}
 		return [0,info];
 	}
@@ -1145,8 +1144,30 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		trmnl.next_prompt = trmnl.base_prompt;
 		return 0;
 	}
+	this.science.projects = function(args,trml){
+		var blurb = "<b>Currently under-way projects</b>:<br />";
+		blurb += "<div class='cmd-feedback inset'>The role of interneurons at seizure onset</div>";
+		blurb += "<ul class='inset'><li>Inhibitory interneurons have been insinuated in ictal propagation - we're showing that's like suggesting fire-fighters cause fires.</li></ul>";
+		blurb += "<div class='cmd-feedback inset'>The effect of seizures on individual neurons</div>";
+		blurb += "<ul class='inset'>";
+		blurb += "<li>We previously showed that spike sorting fails when the cortical tissue is recruited to the actual seizure (<a href='https://doi.org/10.1093/brain/awv208'>article</a>)</li>";
+		blurb += "<li>We are now delving into what's actually happening to the neurons intracellularly, and what that means for seizure propagation</li>";
+		blurb += "</ul>";
+		blurb += "<div class='cmd-feedback inset'>Neural substrates of consciousness - recovery of awareness in the post-ictal state</div>";
+		blurb += "<ul class='inset'>";
+		blurb += "<li>Patients continue to show symptoms after a seizure has passed, but the post-ictal period is little-studied</li>";
+		blurb += "<li>Analyses of neuronal firing during this period highlight a unique state of cortical processing, and a window into awareness</li>";
+		blurb += "</ul>";
+		blurb += "<div class='cmd-feedback inset'>Tracking of neuron identities over days to weeks</div>";
+		blurb += "<ul class='inset'>";
+		blurb += "<li>I've developed algorithms to track individual cells over many days in humans, showing neurons can be followed despite alterations to wave shape</li>";
+		blurb += "<li>Importantly, cognition research in humans frequently reports the activity of single units as separate neurons across sessions</li>";
+		blurb += "<li>This over-represents the stereotypy of neuronal responses to stimuli, but doesn't do justice to the stability of individual cell's responses</li>";
+		blurb += "</ul>";
+		return [0, blurb];
+	}
 	this.science.help = function(args,trmnl){
-        var avail_commands = 'Commands in the SCIENCE section (none at present really, this is a proof-of-concept):<hr /><span class="cmd-feedback"><table><tr>';
+        var avail_commands = 'Commands in the SCIENCE section (this is a proof-of-concept, so there aren\'t many):<hr /><span class="cmd-feedback"><table><tr>';
 		if(trmnl.science.hasOwnProperty('autocomplete')){
 			// make use of the autocomplete data if it has been populated
 			for(var c = 0; c < trmnl.science.autocomplete.length; c++){
