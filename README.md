@@ -5,4 +5,4 @@ This is the static version of the site, and so multiple features have been remov
 
 ### Screenshot
 
-![Emerix Terminal in action with multiple sessions](Screenshots/EmerixTerminalScreenshot.png?raw=true "Emerix Terminal in action with multiple sessions")
+![Emerix Terminal in action with multiple sessions](screenshots/EmerixTerminalScreenshot.png?raw=true "Emerix Terminal in action with multiple sessions")
