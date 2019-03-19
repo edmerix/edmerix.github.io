@@ -253,9 +253,14 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	*/
 	// ARGLIST: (list arguments, can be useful to determine piped function stuff or test argument parsing)
 	this.base.arglist = function(args,trmnl){
+		var flags;
+		[args,flags] = trmnl.parse_flags(args);
 		var arglist = "";
 		for(var a in args){
-			arglist += "["+a+"] --> "+args[a]+"<br />";
+			arglist += "["+a+"]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--> "+args[a]+"<br />";
+		}
+		for(var f in flags){
+			arglist += "[flag_"+f+"]&nbsp;--> "+flags[f]+"<br />";
 		}
 		return [0,arglist];
 	}
@@ -1150,7 +1155,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		blurb += "<ul class='inset'><li>Inhibitory interneurons have been insinuated in ictal propagation - we're showing that's like suggesting fire-fighters cause fires.</li></ul>";
 		blurb += "<div class='cmd-feedback inset'>The effect of seizures on individual neurons</div>";
 		blurb += "<ul class='inset'>";
-		blurb += "<li>We previously showed that spike sorting fails when the cortical tissue is recruited to the actual seizure (<a href='https://doi.org/10.1093/brain/awv208'>article</a>)</li>";
+		blurb += "<li>We previously showed that spike sorting fails when the cortical tissue is recruited to the actual seizure (<a href='https://doi.org/10.1093/brain/awv208' target='_blank'>article</a>)</li>";
 		blurb += "<li>We are now delving into what's actually happening to the neurons intracellularly, and what that means for seizure propagation</li>";
 		blurb += "</ul>";
 		blurb += "<div class='cmd-feedback inset'>Neural substrates of consciousness - recovery of awareness in the post-ictal state</div>";
