@@ -7,6 +7,8 @@ var terminal = [],
 	instances;
 var table_border = false; // move this into a settings object later, to be loaded externally.
 
+var stations = {};
+
 document.addEventListener("DOMContentLoaded", function(){
 
 	$(".termbox").click(function(ev){
@@ -58,6 +60,19 @@ document.addEventListener("DOMContentLoaded", function(){
 	*/
 
 	terminal[instances].input_div.focus();
+	
+	// load up the JSON file of subway station data (yes, the data format seems weird, but it's the simplest way of going from inaccurate station name and subway line to a station code):
+	$.ajax({
+		url: 'stations.json',
+		dataType: 'json',
+		success: function(res){
+			stations = res;
+		},
+		error: function(err){
+			stations = -1;
+			console.log("Couldn't load subway station data, subway function will not work");
+		}
+	})
 });
 
 function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_file){
@@ -762,47 +777,46 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 
 	// SUBWAY:
 	this.base.subway = function(args,trmnl){
+		if(stations == -1){
+			return [1, 'Subway station data failed to load correctly'];
+		}
+		
 		if(args[0] == undefined || args[0] == ""){
-			return [1, 'Need a station name to search for (e.g. 103)'];
+			return [1, 'Need a station name to search for (e.g. 103_st)'];
 		}
+		
 		var s_id;
-		// let's move this into a JSON file, this is gonna be silly.
-		// the info is coming from https://github.com/jonthornton/MTAPI/blob/master/data/stations.json
-		switch(args[0].toLowerCase()){
-			case "96th":
-			case "96":
-				s_id = "da4f";
-				break;
-			case "116th":
-			case "116":
-			case "columbia":
-				s_id = "0d51";
-				break;
-			case "103rd":
-			case "103":
-				s_id = "07e1";
-				break;
-			case "168th":
-			case "168":
-				s_id = "e467";
-				break;
-			case "42nd":
-			case "42":
-			case "timessq":
-			case "timessquare":
-				s_id = "84ac";
-				break;
-			case "59":
-			case "59th":
-			case "columbuscircle":
-				s_id = "7a18";
-				break;
-			case "grandcentral": // note how the user could have put 42nd meaning here. Need to work a better system.
-				s_id = "87d2";
-				break;
-			default:
-				return [1, args[0]+" station hasn't been added yet."];
+		
+		var stationName = args[0].toLowerCase().trim();
+		stationName = stationName.split("-")[0].trim();
+		stationName = stationName.split("/")[0].trim();
+		stationName = stationName.split(" ").join("_");
+		
+		if(!(stationName in stations)){
+			return [1, "Couldn't find "+args[0]+" in station data. Note "]
 		}
+		
+		if(args.length > 1 && typeof(args[1]) !== 'undefined'){
+			lineCode = args[1].toUpperCase();
+		}else{
+			lineCode = -1;
+		}
+		
+		if(lineCode == -1){
+			if(stations[stationName]._unique.length > 1 && lineCode == -1){
+				return [1, stations[stationName]._unique.length+" different stations matched "+stationName+": please add a line number/letter to the query"]
+			}
+			s_id = stations[stationName]._unique[0];
+		}else{
+			if(!(lineCode in stations[stationName])){
+				return [1, lineCode+" doesn't appear to run through "+stationName];
+			}
+			s_id = stations[stationName][lineCode];
+		}
+		if(typeof(s_id) === 'undefined'){
+			return [1, "Couldn't get a station code for "+stationName+" with line "+lineCode];
+		}
+		
 		// we need to go async now.
 		trmnl.input_div.html("").hide();
 		$.ajax({
@@ -873,7 +887,12 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		});
 		return [0, "Fetching MTA subway data..."];
 	}
-	this.base.subway.help = 'Subway status. Needs a station name as argument.<br />Currently accepts an odd subset of stations.<br />Need to write this properly.';
+	this.base.subway.help = 'Subway status. Needs a station name as argument, and if there are multiple stations with that name,';
+	this.base.subway.help += '<br />a subway line should be the second argument to differentiate.';
+	this.base.subway.help += '<br />All stations now work, but the naming can be quirky...';
+	this.base.subway.help += '<br />The station name should correspond to the official MTA name for that station, and replace spaces with underscores.';
+	this.base.subway.help += '<br />Note that station names are auto-abbreviated at the first hyphen or slash, which simplifies, but also causes odd ones';
+	this.base.subway.help += '<br />e.g. 47-50 Sts - Rockefeller Ctr becomes just "47"';
 
 	// THEME:
 	this.base.theme = function(args,trmnl){
