@@ -793,7 +793,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		stationName = stationName.split(" ").join("_");
 		
 		if(!(stationName in stations)){
-			return [1, "Couldn't find "+args[0]+" in station data. Note "]
+			return [1, "Couldn't find "+args[0]+" in station data. Note we use the official MTA naming, but replace spaces with underscores."]
 		}
 		
 		if(args.length > 1 && typeof(args[1]) !== 'undefined'){
