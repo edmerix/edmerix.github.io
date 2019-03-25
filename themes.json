@@ -41,12 +41,12 @@
         "feedback": "#9CF",
         "error": "#E85555"
     },
-	"legalpad": {
-		"bg": "#EDE990",
-		"output": "#165284",
-		"feedback": "#191919",
-		"error": "#c7475f"
-	},
+    "legalpad": {
+	"bg": "#EDE990",
+	"output": "#165284",
+	"feedback": "#191919",
+	"error": "#c7475f"
+    },
     "lightsoda": {
         "bg": "#c9c9c9",
         "output": "#302d8b",
