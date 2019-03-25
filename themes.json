@@ -42,10 +42,10 @@
         "error": "#E85555"
     },
     "legalpad": {
-	"bg": "#EDE990",
-	"output": "#165284",
-	"feedback": "#191919",
-	"error": "#c7475f"
+        "bg": "#EDE990",
+        "output": "#165284",
+        "feedback": "#191919",
+        "error": "#c7475f"
     },
     "lightsoda": {
         "bg": "#c9c9c9",
