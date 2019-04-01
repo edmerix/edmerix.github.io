@@ -1,0 +1,96 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	color: #12202e;
+}
+
+a {
+	color: #2e7ec1;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #165284;
+}
+
+article {
+	margin: 20px;
+}
+
+section {
+	margin-left: 10px;
+	clear: both;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+figure {
+	margin: 5px 10px;
+}
+
+figure img {
+	max-width: 65%;
+}
+
+figcaption {
+	float: right;
+	border-left: 1px solid #bfc2db;
+	padding: 0 10px;
+	margin: 0;
+	width: 27%;
+	font-size: 13px;
+}
+
+.citation {
+	padding: 5px 10px;
+	font-size: 14px;
+}
+
+.cite-authors {
+	margin-left: 5px;
+	font-size: 13px;
+}
+
+.cite-metadata {
+	margin-left: 5px;
+	font-size: 12px;
+	font-style: italic;
+}
+
+.cite-journal {
+	font-style: normal;
+}
+
+.cite-journal, .cite-volume {
+	font-weight: bold;
+}
+
+h3 {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 200;
+}
+
+h1 {
+	margin-bottom: 10px;
+}
+
+#aside {
+	position: fixed;
+	top: 0;
+	right: 0;
+	font-size: 13px;
+	font-style: italic;
+	padding: 5px;
+	background: #fff;
+	background: rgba(255,255,255,0.7);
+}
+
+.desc {
+	font-weight: 200;
+	margin-left: 10px;
+}
+
+h2 {
+	margin-top: 0;
+}

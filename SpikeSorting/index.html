@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Brief spike sorting documentation</title>
+		<link type="text/css" rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<article>
+			<h1>Brief spike sorting info</h1>
+			<div id="aside">Figures/data from <a href="https://theses.ncl.ac.uk/dspace/handle/10443/3181" target="_blank">Merricks, EM (2016)</a> or <a href="https://academic.oup.com/brain/article-lookup/doi/10.1093/brain/awv208" target="_blank">Merricks et al. (2015)</a> unless otherwise noted</div>
+			<section>
+				<h3>The main metrics for assessing the quality of single units comes from:</h3>
+				<div class="citation">
+					<div class="cite-title"><a href="http://www.jneurosci.org/content/31/24/8699" target="_blank">Quality Metrics to Accompany Spike Sorting of Extracellular Signals</a></div>  
+					<div class="cite-authors">Daniel N. Hill, Samar B. Mehta, David Kleinfeld</div>
+					<div class="cite-metadata">
+						<span class="cite-journal">Journal of Neuroscience, </span>
+						<span class="cite-volume">31 </span>
+						<span class="cite-issue">(24) 8699-8705</span>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Brief overview of major metrics:</h3>
+				<figure>
+					<img src="img/metrics.png" alt="Spike sorting metrics"/>
+					<figcaption>
+						<b>Single unit metrics</b>
+						<br />
+						<b>A.</b> Projection of clusters onto the Fisher linear discriminant, showing (i) two units from the same channel that are well isolated from one another, and (ii) a unit that has likely been incorrectly split into two clusters.
+						<b>B.</b> A measure of the estimated number of false negatives from a given unit. Histograms of the voltage at the detected trough of each waveform in the cluster, divided by the threshold for detection, with a Gaussian curve fitted.
+						<b>C.</b> Histogram of the Mahalanobis distance for each waveform principal component score from that unit's centroid in principal component space. For a normal distribution, the Mahalanobis distances form a chi-squared distribution (blue line), which can be used to detect outliers.
+						<b>D.</b> Standard deviation through time (deep blue line, top) for all waveforms from a given unit (bottom). The standard deviation of the full signal during that epoch is shown (red, dashed line), along with the 95% confidence intervals derived from the chi-squared distribution, given the number of spikes within the unit (red shading). Scale bars are 20 &mu;V and 0.2 ms throughout the figure.
+					</figcaption>
+				</figure>
+			</section>
+			<section>
+				<h3>What you're up against:</h3>
+				<figure>
+					<img src="img/longterm.png" alt="Drifting single unit over 48 hours"/>
+					<figcaption>
+						<b>Ability to follow drifting clusters in principal component space over a prolonged period.</b>
+						<br />
+						An example putative single unit that showed a large alteration in waveform over a 40 hour period, but could be traced through time as a cluster in principal component space. 
+						<b>A.</b> First principal component scores versus time, from 180 second epochs taken every hour, with background noise from distal cells in grey, and a well isolated single unit in blue. Highlighted (grey background) epochs are shown in more detail in <i>B</i> and <i>C</i>.
+						<b>B.</b> First versus second principal component scores for epochs highlighted in <i>A</i>, showing the maintained separation throughout. <b>C.</b> All waveforms from highlighted epochs, showing change in extracellular action potential shape.
+					</figcaption>
+				</figure>
+			</section>
+			<section>
+				<h3>That said, stability is in there:</h3>
+				<figure>
+					<img src="img/stable.png" alt="3 stable single units through time"/>
+					<figcaption>
+						<b>Stability of single unit features over 24 hours</b>
+						<br />
+						Tracking units by wave shape, PC score, and importantly, cell-intrinsic autocorrelation patterns.<br />
+						Tracking units with 180 s epochs every 6 hours showed:<br />
+						<ul>
+							<li>76 single units identified total</li>
+							<li>54 (71%) visible in each epoch</li>
+							<li>1 visible in just a single epoch</li>
+							<li>12 (16%) gained</li>
+							<li>4 (5%) lost</li>
+							<li>5 (6.5%) lost temporarily</li>
+						</ul>
+					</figcaption>
+				</figure>
+			</section>
+			<section>
+				<h3>Tracking unit identities:</h3>
+				<figure>
+					<img src="img/tracking.png" alt="Tracking unit IDs using PC drift and ISI distance"/>
+					<figcaption>
+						<b>Single unit stability metrics</b>
+						<br />
+						To check units are the same, we can assess the drift of their centroid in cluster space (<b>A</b> and <b>B</b>) and their ISI distance, which captures a cell-intrinsic feature and thus doesn't change as a function of physical movement (<b>C</b> and <b>D</b>).
+						<br /><br />
+						To confirm these identities, we can build a "null" distribution by comparing across units from different electrodes (assuming electrodes are distal enough to be sure single neurons can only be captured on one at a time), and then compare values using a Mann-Whitney U test.
+					</figcaption>
+				</figure>
+			</section>
+			<section>
+				<h3>Watch out for:</h3>
+				<figure>
+					<img src="img/lookout.png" alt="Sudden shift in single neuron waveform"/>
+					<figcaption>
+						<b>Sudden alteration in isolated single unit waveform</b>
+						<br />
+						Stability in one metric doesn't require stability in the others!
+						<br /><br />
+						Here we see two apparently very distinct clusters in <b>A.</b> PC space and <b>B.</b> waveform (red and blue), but checking <b>C.</b> autocorrelations, <b>D.</b> PC score through time, and <b>E.</b> firing rate, we can clearly see it's one unit with a sudden waveform alteration.
+					</figcaption>
+				</figure>
+			</section>
+			<section>
+				<h2>Unit subclassification</h2>
+				<div class="desc">
+					For a Matlab tool for simple(-ish) unit subclassification by cell type, check out my <a href="https://github.com/edmerix/UnitSubclassify" target="_blank">UnitSubclassify tool on GitHub</a>, which also includes screenshots of an exemplary putative fast-spiking interneuron and regular spiking pyramidal cell.
+					<br /><br />
+					It also touches on some caveats and references on why we should be careful subclassifying in neocortical data.
+				</div>
+			</section>
+			<section>
+				<h2>Toolboxes worth checking out</h2>
+				<div class="desc">
+					Three modern spike sorting toolboxes that I'm keen to try out after I publish current work:
+					<ul>
+						<li><a href="https://github.com/MouseLand/Kilosort2" target="_blank">Kilosort</a> (version 2 just released)</li>
+						<li><a href="https://github.com/flatironinstitute/mountainsort_examples/blob/master/README.md" target="_blank">MountainSort</a></li>
+						<li><a href="https://github.com/jamesjun/ironclust" target="_blank">ironclust</a></li>
+					</ul>
+				</div>
+			</section>
+		</article>
+	</body>
+</html>
