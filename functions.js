@@ -245,7 +245,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		trmnl.output("Click to go to his <a target='_blank' href='https://scholar.google.com/citations?user=PnKpxtIAAAAJ&hl=en&oi=ao'>Google Scholar page</a>, <a target='_blank' href='https://www.ncbi.nlm.nih.gov/pubmed/?term=(merricks+em%5Bauthor%5D)'>publications</a>, <a target='_blank' href='https://github.com/edmerix/'>GitHub</a>, or <a target='_blank' href='https://www.researchgate.net/profile/Edward_Merricks'>ResearchGate</a>");
 		trmnl.output("He has code to open <a target='_blank' href='https://github.com/edmerix/openNSx-swift'>NSx neural data files in Swift</a>, do the <a target='_blank' href='https://github.com/edmerix/SplitMerge'>manual stage of spike sorting</a>, or<br /><a target='_blank' href='https://github.com/edmerix/NeuroClass'>analyze populations of single unit data</a>, among others (ask for more).");
 		trmnl.output("There have been a lot of questions about spike sorting through time recently...");
-		trmnl.output("Click <a href='SpikeSorting' targe='_blank'>here</a> for a (very) quick overview of spike sorting through time");
+		trmnl.output("Click <a href='SpikeSorting' target='_blank'>here</a> for a (very) quick overview of spike sorting through time");
 		
 		if(!quick_release){
 			trmnl.program = "science";
