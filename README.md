@@ -2,7 +2,8 @@
 My "terminal-esque" personal website.
 Very much in alpha stage, various things not functioning.
 This is the static version of the site, and so multiple features have been removed.
-This needs to be updated to my new version of Terminal.js, using ES5/6 concepts and no dependencies (no jQuery!)
+
+__This needs to be updated to my new version of Terminal.js, using ES5/6 concepts and no dependencies (no jQuery!)__
 
 ### Screenshot
 
