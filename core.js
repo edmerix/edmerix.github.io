@@ -296,55 +296,56 @@ core.install = function(args,trmnl){
 		// test if it's already installed first here!
 		let app = args[a];
 		if(trmnl.base.hasOwnProperty(app)){
-			return [1, app+" is already installed"];
-		}
-		// we need to go async now.
-		trmnl.input_div.innerHTML = "";
-		trmnl.input_div.style.display = "none";
-		var d = new Date();
-		
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', "pkg/"+app+".js?d="+d.getTime());
-		
-		xhr.onload = function(){
-			try{ // always check if terminal.piping == true in async callbacks!
-				if(trmnl.piping){
-					trmnl.output("Cannot pipe installation. Actually you can, but it'll just pass success or error. Yet to code that in though.",0);
-				}
-				if(trmnl.base.hasOwnProperty(app)){
-					// worth rechecking as we might have duplicated within this request of multiple apps...
-					trmnl.output(app+" is already installed",0);
-				}else{
-					// install here by creating a script element then deleting it.
-					var s = document.createElement("script");
-					s.type = "text/javascript";
-					// wait, do I need to ajax at all here?! I could just s.src = "pkg/"+app+".js" instead...
-					s.innerHTML = this.responseText;
-					document.body.appendChild(s);
+			trmnl.error(app+" is already installed, skipping");
+		}else{
+			// we need to go async now.
+			trmnl.input_div.innerHTML = "";
+			trmnl.input_div.style.display = "none";
+			var d = new Date();
 
-					trmnl.base[app] = pkgs[app];
-					trmnl.base.autocomplete.push(app);
-					trmnl.base.autocomplete.sort();
-					// test to see if the program has a "window" set of functions, and if so, add to terminal:
-					if(typeof baseWindow !== 'undefined' && baseWindow.hasOwnProperty(app)){
-						trmnl[app] = baseWindow[app];
-						trmnl.update_autocomplete(app);// add this program to the autocomplete
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', "pkg/"+app+".js?d="+d.getTime());
+
+			xhr.onload = function(){
+				try{ // always check if terminal.piping == true in async callbacks!
+					if(trmnl.piping){
+						trmnl.output("Cannot pipe installation. Actually you can, but it'll just pass success or error. Yet to code that in though.",0);
 					}
-					s.innerHTML = ""; // just in case
-					document.body.removeChild(s);
-					trmnl.output(app+" program installed",0);
+					if(trmnl.base.hasOwnProperty(app)){
+						// worth rechecking as we might have duplicated within this request of multiple apps...
+						trmnl.error(app+" is already installed, skipping");
+					}else{
+						// install here by creating a script element then deleting it.
+						var s = document.createElement("script");
+						s.type = "text/javascript";
+						// wait, do I need to ajax at all here?! I could just s.src = "pkg/"+app+".js" instead...
+						s.innerHTML = this.responseText;
+						document.body.appendChild(s);
+
+						trmnl.base[app] = pkgs[app];
+						trmnl.base.autocomplete.push(app);
+						trmnl.base.autocomplete.sort();
+						// test to see if the program has a "window" set of functions, and if so, add to terminal:
+						if(typeof baseWindow !== 'undefined' && baseWindow.hasOwnProperty(app)){
+							trmnl[app] = baseWindow[app];
+							trmnl.update_autocomplete(app);// add this program to the autocomplete
+						}
+						s.innerHTML = ""; // just in case
+						document.body.removeChild(s);
+						trmnl.output(app+" program installed",0);
+					}
+				}catch(err){
+					console.log(err.message);
+					trmnl.error("Could not parse received program data");
 				}
-			}catch(err){
-				console.log(err.message);
-				trmnl.error("Could not parse received program data");
+				trmnl.input_div.style.display = "block";
+			};
+			xhr.onerror = function(err){
+				trmnl.error("Could not find program");
+				trmnl.input_div.style.display = "block";
 			}
-			trmnl.input_div.style.display = "block";
-		};
-		xhr.onerror = function(err){
-			trmnl.error("Could not find program");
-			trmnl.input_div.style.display = "block";
+			xhr.send(null);
 		}
-		xhr.send(null);
 	}
 	var retval = "Attempting install of "+args.length+" program";
 	if(args.length != 1) retval += "s";
