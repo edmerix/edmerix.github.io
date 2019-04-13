@@ -4,7 +4,7 @@
 | 			All programs in programs.js are auto-loaded at terminal start-up.	|
 \*-----------------------------------------------------------------------------*/
 
-let programs = {};
+const programs = {};
 
 /*---- DB ----*/
 programs.db = {};

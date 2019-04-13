@@ -12,7 +12,7 @@
 // "installed" with the builtin install command, though they won't
 // be available at "startup"
 
-let core = {};
+const core = {};
 
 /*---- ARGLIST ----*/
 core.arglist = function(args,trmnl){
@@ -286,16 +286,17 @@ core.install = function(args,trmnl){
 	// TODO: parse flags out of args, and set -p/--permanent flag to add the program to the local settings of permanently installed functions/programs, which will be silently auto-installed at start up.
 	// beginning of that:
 	[args,flags] = trmnl.parse_flags(args);
-
+	if(flags.indexOf('basic') > -1 || flags.indexOf('b') > -1){
+		args.push('session','tedit','display');
+	}
 	if(args[0] == undefined || args[0] == ""){
 		return [1, "Need to specify a program to install"];
 	}
-	
 	for(var a in args){
 		// test if it's already installed first here!
 		let app = args[a];
 		if(trmnl.base.hasOwnProperty(app)){
-			return [1, args[a]+" is already installed"];
+			return [1, app+" is already installed"];
 		}
 		// we need to go async now.
 		trmnl.input_div.innerHTML = "";
@@ -310,24 +311,29 @@ core.install = function(args,trmnl){
 				if(trmnl.piping){
 					trmnl.output("Cannot pipe installation. Actually you can, but it'll just pass success or error. Yet to code that in though.",0);
 				}
-				// install here by creating a script element then deleting it.
-				var s = document.createElement("script");
-				s.type = "text/javascript";
-				// wait, do I need to ajax at all here?! I could just s.src = "pkg/"+app+".js" instead...
-				s.innerHTML = this.responseText;
-				document.body.appendChild(s);
-				
-				trmnl.base[app] = pkgs[app];
-				trmnl.base.autocomplete.push(app);
-				trmnl.base.autocomplete.sort();
-				// test to see if the program has a "window" set of functions, and if so, add to terminal:
-				if(typeof baseWindow !== 'undefined' && baseWindow.hasOwnProperty(app)){
-					trmnl[app] = baseWindow[app];
-					trmnl.update_autocomplete(app);// add this program to the autocomplete
+				if(trmnl.base.hasOwnProperty(app)){
+					// worth rechecking as we might have duplicated within this request of multiple apps...
+					trmnl.output(app+" is already installed",0);
+				}else{
+					// install here by creating a script element then deleting it.
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					// wait, do I need to ajax at all here?! I could just s.src = "pkg/"+app+".js" instead...
+					s.innerHTML = this.responseText;
+					document.body.appendChild(s);
+
+					trmnl.base[app] = pkgs[app];
+					trmnl.base.autocomplete.push(app);
+					trmnl.base.autocomplete.sort();
+					// test to see if the program has a "window" set of functions, and if so, add to terminal:
+					if(typeof baseWindow !== 'undefined' && baseWindow.hasOwnProperty(app)){
+						trmnl[app] = baseWindow[app];
+						trmnl.update_autocomplete(app);// add this program to the autocomplete
+					}
+					s.innerHTML = ""; // just in case
+					document.body.removeChild(s);
+					trmnl.output(app+" program installed",0);
 				}
-				s.innerHTML = ""; // just in case
-				document.body.removeChild(s);
-				trmnl.output(app+" program installed",0);
 			}catch(err){
 				console.log(err.message);
 				trmnl.error("Could not parse received program data");
@@ -347,7 +353,7 @@ core.install = function(args,trmnl){
 	}
 	return [0, retval];
 };
-core.install.help = "<b>install</b> command: install the specified program<br />(Use <b>pkg</b> command to list available programs)";
+core.install.help = "<b>install</b> command: install the specified program<br /><small>(Use <b>pkg</b> command to list available programs)<br />Accepts flags for collections of functions. Currently only --basic/-b for my commonly used ones</small>";
 /*---- KILL ----*/
 core.kill = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
@@ -677,17 +683,21 @@ core.nsxload = function(args,trmnl){
 core.nsxload.help = '<b>nsxload</b> command: calculates how many gigabytes will be created per hour/day for specified<br />number of electrodes and sampling rate with BlackRock nsx files<br />Specify number of electrodes by pre- or post-fixing with "ch"<br />e.g. nsxload 16ch 30k <i>or</i> nsxload 2000 ch64 (i.e. any order for arguments or "ch")';
 /*---- PKG ----*/
 core.pkg = function(args,trmnl){
-	/* this is the static version of the site. No ajax to php files :(
+	/* this is the static version of the site. No xhr to local php files :(
 	trmnl.input_div.innerHTML = "";
 	trmnl.input_div.style.display = "none";
 	// Previously called pkg/available.php here to auto-build available pkgs
 	return [0, "Retrieving available packages..."];
 	*/
 	// static version of the website, so need to hard-code available packages:
-	var res = ['display','localstore','nano','notebook','session','tedit'];
-	var avail_pkg = 'Available programs to install:<hr /><span class="cmd-feedback"><table><tr>';
-	for(var c = 0; c < res.length; c++){
-		avail_pkg += '<td>'+res[c]+'</td>';
+	const res = ['display','localstore','nano','notebook','session','tedit'];
+	let avail_pkg = 'Available programs to install:<hr /><span class="cmd-feedback"><table><tr>';
+	for(let c = 0; c < res.length; c++){
+		avail_pkg += '<td><span ';
+		if(trmnl.base.hasOwnProperty(res[c])){
+			avail_pkg += "style='opacity: 0.5; font-style: oblique;' title='"+res[c]+" is already installed'";
+		}
+		avail_pkg += '>'+res[c]+'</span></td>';
 		if((c+1)%6 == 0 && c != 1) avail_pkg += '</tr><tr>';
 	}
 	avail_pkg += "</tr></table>"; // will double up the </tr> if total commands is divisible by 5. Fix.
