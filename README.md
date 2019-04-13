@@ -11,7 +11,7 @@ It is entirely class-based, so multiple terminals can run side-by-side with thei
 
 ![Emerix Terminal in action with multiple sessions](screenshots/EmerixTerminalScreenshot.png?raw=true "Emerix Terminal in action with multiple sessions")
 
-### Misc
+### Credits
 
 - Subway times are making use of [MTAPI](https://github.com/jonthornton/MTAPI)
 - Weather forecast is making use of [OpenWeatherMap API](https://api.openweathermap.org)
