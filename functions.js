@@ -689,7 +689,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 					let innings = "<tr><th></th>";
 					let homeScore = "<tr><td><i>"+game.home_team_name+"</i></td>";
 					let awayScore = "<tr><td><i>"+game.away_team_name+"</i></td>";
-					for(let i = 0, thisHome, thisAway; i < 9; i++){
+					for(let i = 0, thisHome, thisAway; i < Math.max(9,game.linescore.inning.length); i++){
 						innings += "<th>"+(i+1)+"</th>";
 						if(game.linescore.inning.length <= i){
 							homeScore += "<td>-</td>";
