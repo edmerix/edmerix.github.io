@@ -193,3 +193,6 @@ input {
 	border-top: none;
 	height: 100%;
 }
+.no-margin {
+	margin: 0;
+}

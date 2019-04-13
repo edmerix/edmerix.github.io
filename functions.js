@@ -624,10 +624,202 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		return 0;
 	};
 	this.base.math.help = '<b>math</b> program';
+	// MLB:
+	this.base.mlb = function(args,trmnl){
+		// TODO: add in extra arguments to allow for querying results from other days
+		if(args[0] == undefined || args[0] == ""){
+			return [1, "Need to specify a team to look up (2 or 3 digit code)"];
+		}
+		let acceptable = ['ARI', 'ATL', 'BAL', 'BOS', 'CHC', 'CWS', 'CIN', 'CLE', 'COL', 'DET', 'FLA', 'HOU', 'KAN', 'LAA', 'LAD', 'MIL', 'MIN', 'NYM', 'NYY', 'OAK', 'PHI', 'PIT', 'SD', 'SF', 'SEA', 'STL', 'TB', 'TEX', 'TOR', 'WAS'];
+		let teamCode = args[0].toUpperCase();
+		if(acceptable.indexOf(teamCode) < 0){
+			return [1, "Cannot find team by code "+teamCode];
+		}
+		const today = new Date();
+		let offset = 0;
+		if(today.getHours() < 3){
+			offset = -1;
+		}
+		const day = ("0" + (today.getDate()+offset)).slice(-2);
+		const month = ("0" + (today.getMonth() + 1)).slice(-2);
+		const year = today.getFullYear();
+		let url = "http://gd2.mlb.com/components/game/mlb/year_"+year+"/month_"+month+"/day_"+day+"/master_scoreboard.json?now="+today.getTime();
+		
+		//TODO: update this to use a promise rather than just returning and leaving it to go async...
+		
+		// TODO: move parsing the results into a separate function, this is getting even more bloated.
+		// we need to go async now.
+		trmnl.input_div.html("").hide();
+		$.ajax({
+			url: url,
+			dataType: "json",
+			success: function(res){
+				let data = res.data.games;
+				let retVal = "";
+				
+				const awayTeams = data.game.map(a => a.away_name_abbrev);
+				const homeTeams = data.game.map(a => a.home_name_abbrev);
+				let homeaway = '';
+				let n = -1;
+				if(awayTeams.indexOf(teamCode) > -1){
+					homeaway = 'away';
+					n = awayTeams.indexOf(teamCode);
+				}
+				if(homeTeams.indexOf(teamCode) > -1){
+					homeaway = 'home';
+					n = homeTeams.indexOf(teamCode);
+				}
+				
+				if(homeaway == "" || n < 0){
+					trmnl.output("No game found for "+teamCode+" today");
+					trmnl.input_div.show();
+					return;
+				}
+				
+				const game = data.game[n];
+				
+				console.log(game);
+				
+				let scoreBoard = "";
+				if(game.hasOwnProperty("linescore") && game.linescore.hasOwnProperty("inning")){
+					let innings = "<tr><th></th>";
+					let homeScore = "<tr><td><i>"+game.home_team_name+"</i></td>";
+					let awayScore = "<tr><td><i>"+game.away_team_name+"</i></td>";
+					for(let i = 0, thisHome, thisAway; i < 9; i++){
+						innings += "<th>"+(i+1)+"</th>";
+						if(game.linescore.inning.length <= i){
+							homeScore += "<td>-</td>";
+							awayScore += "<td>-</td>";
+						}else{
+							thisHome = game.linescore.inning[i].home;
+							thisAway = game.linescore.inning[i].away;
+							homeScore += "<td "
+							if(thisHome > 0) homeScore += "class='cmd-feedback'";
+							thisHome=thisHome==''?'-':thisHome;
+							homeScore += ">"+thisHome+"</td>";
+							awayScore += "<td ";
+							if(thisAway > 0) awayScore += "class='cmd-feedback'";
+							thisAway=thisAway==''?'-':thisAway;
+							awayScore += ">"+thisAway+"</td>";
+						}
+					}
+					
+					//TODO: the empty <th> & <td> stuff is hacky and temporary. Clean up.
+					innings += "<th></th><th>R</th><th>H</th><th>E</th>";
+					homeScore += "<td></td><td ";
+					awayScore += "<td></td><td ";
+					if(game.linescore.r.away > game.linescore.r.home){
+						awayScore += "class='cmd-feedback'";
+					}else if(game.linescore.r.home > game.linescore.r.away){
+						homeScore += "class='cmd-feedback'";
+					}
+					homeScore += ">"+game.linescore.r.home+"</td><td ";
+					awayScore += ">"+game.linescore.r.away+"</td><td ";
+					if(game.linescore.h.away > game.linescore.h.home){
+						awayScore += "class='cmd-feedback'";
+					}else if(game.linescore.h.home > game.linescore.h.away){
+						homeScore += "class='cmd-feedback'";
+					}
+					homeScore += ">"+game.linescore.h.home+"</td><td ";
+					awayScore += ">"+game.linescore.h.away+"</td><td ";
+					if(game.linescore.e.away > game.linescore.e.home){
+						awayScore += "class='cmd-err no-margin'";
+					}else if(game.linescore.e.home > game.linescore.e.away){
+						homeScore += "class='cmd-err no-margin'";
+					}
+					homeScore += ">"+game.linescore.e.home+"</td>";
+					awayScore += ">"+game.linescore.e.away+"</td>";
+					
+					innings += "</tr>";
+					homeScore += "</tr>";
+					awayScore += "</tr>";
+					
+					scoreBoard = "<table>"+innings+awayScore+homeScore+"</table>";
+				}
+				
+				if(game.status.status == "In Progress"){
+					let state = game.status.inning_state;
+					let battingTeam = false;
+					switch(state){
+						case "Top":
+							state = "&#x2191;"
+							battingTeam = game.away_team_name+ " batting";
+							break;
+						case "Bottom":
+							state = "&#x2193;"
+							battingTeam = game.home_team_name+ " batting";
+							break;
+						case "Middle":
+							state = "&#x21C6;";
+							break;
+							// no need for default, it just sticks to what it already is
+					}
+					retVal = "<font class='cmd-feedback'><b>LIVE</b></font>: "+state+" of the "+game.status.inning+"<sup>";
+					switch(game.status.inning){
+						case 1:
+							retVal += "st";
+							break;
+						case 2:
+							retVal += "nd";
+							break;
+						case 3:
+							retVal += "rd";
+							break;
+						default:
+							retVal += "th";
+					}
+					retVal += "</sup>";
+					if(battingTeam) retVal += " (<i>"+battingTeam+"</i>)";
+					retVal += "<br /><b>"+game.away_team_name+"</b> <font class='cmd-feedback'>"+game.linescore.r.away+"</font> - <font class='cmd-feedback'>"+game.linescore.r.home+"</font> <b>"+game.home_team_name+"</b>";
+					// is anyone on base?
+					let bases = ["<sub>&#x25C7;</sub>","<sup>&#x25C7;</sup>","<sub>&#x25C7;</sub>"]
+					if(game.runners_on_base.hasOwnProperty("runner_on_1b")){
+						bases[2] = "<sub class='cmd-feedback' title='"+game.runners_on_base.runner_on_1b.last+" on 1st'>&#x25c6;</sub>";
+					}
+					if(game.runners_on_base.hasOwnProperty("runner_on_2b")){
+						bases[1] = "<sup class='cmd-feedback' title='"+game.runners_on_base.runner_on_2b.last+" on 2nd'>&#x25c6;</sup>";
+					}
+					if(game.runners_on_base.hasOwnProperty("runner_on_3b")){
+						bases[0] = "<sub class='cmd-feedback' title='"+game.runners_on_base.runner_on_3b.last+" on 3rd'>&#x25c6;</sub>";
+					}
+					retVal += "<br />"+bases.join("");
+					retVal += " B: "+game.status.b+" | S: "+game.status.s+" | "+game.status.o+" out";
+					retVal += "<hr />"+scoreBoard;
+					retVal += "<hr />";
+					retVal += "Pitching: <i>"+game.pitcher.last+"</i> <small>(ERA: "+game.pitcher.era+")</small>";
+					retVal += "<br />Batting: <i>"+game.batter.last+"</i> <small>(AVG: "+game.batter.avg+")</small>";
+				}else if(game.status.status == "Preview" || game.status.status == "Pre-Game"){
+					retVal = game.away_name_abbrev+" @ "+game.home_name_abbrev+" at "+game[homeaway+'_time']+" "+game[homeaway+'_ampm']+" ("+game.venue+")";
+					retVal += "<br />"+game.home_team_name+": "+game.home_win+"-"+game.home_loss;
+					retVal += "<br />"+game.away_team_name+": "+game.away_win+"-"+game.away_loss;
+					retVal += "<br />TV: "+game.broadcast[homeaway].tv+", Radio: "+game.broadcast[homeaway].radio;
+				}else if(game.status.status == "Warmup"){
+					retVal += "Game status: warmup. Gettin' ready...";
+				}else if(game.status.status == "Final" || game.status.status == "Game Over"){
+					retVal = "<b>FINAL</b>:<br />";
+					retVal += "<small>(<i>"+game.away_win+"-"+game.away_loss+"</i>)</small> "+game.away_team_name+" <font class='cmd-feedback'>"+game.linescore.r.away+"</font> - <font class='cmd-feedback'>"+game.linescore.r.home+"</font> "+game.home_team_name+"<small> (<i>"+game.home_win+"-"+game.home_loss+"</i>)</small>";
+					retVal += "<br />"+scoreBoard;					
+				}else{
+					retVal = "Unknown game state: "+game.status.status;
+					retVal += "<br />"+scoreBoard; // just in case
+				}
+				trmnl.output(retVal);
+				trmnl.input_div.show();
+			},
+			error: function(err){
+				console.log(err);
+				trmnl.error("Couldn't retrieve master game list from MLB");
+				trmnl.input_div.show();
+			}
+		});
+		
+		return [0, "<i>Querying MLB gamelist...</i>"];
+	};
+	this.base.mlb.help = '<b>mlb</b> command: pass in the 2 or 3 digit code for a MLB team to see live info about any game being played today';
 	// NOTE
 	this.base.note = function(args,trmnl){
 		// use localStorage for notes. Need to getItem first to append note to the array of notes.
-		// MAKE SURE TO SANITIZE THE NOTE FIRST
+		//TODO: (MAJOR) MAKE SURE TO SANITIZE THE NOTE FIRST
 		if(args[0] == undefined || args[0] == ""){
 			return [1, "Need to write a note to save"];
 		}
