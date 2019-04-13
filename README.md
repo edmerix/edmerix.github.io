@@ -13,6 +13,6 @@ __This needs to be updated to my new version of Terminal.js, using ES5/6 concept
 
 This has become a bloated version of my core Terminal.js class. Need to split some superfluous functions out of the core Terminal object and into an extending.js file, like in the core class files.
 
-Subway times are making use of [MTAPI](https://github.com/jonthornton/MTAPI)
-
-Weather forecast is making use of [OpenWeatherMap API](https://api.openweathermap.org)
+- Subway times are making use of [MTAPI](https://github.com/jonthornton/MTAPI)
+- Weather forecast is making use of [OpenWeatherMap API](https://api.openweathermap.org)
+- MLB live scores and data are using [MLB's shared data](https://gd2.mlb.com/components/game/mlb/)
