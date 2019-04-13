@@ -290,10 +290,11 @@ core.install = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
 		return [1, "Need to specify a program to install"];
 	}
-	if(args.length > 1) trmnl.output("Cannot install multiple programs in one swoop at present due to async calls.<br />This will end up installing the last program each time, most likely.<br />Proceeding regardless...");
+	
 	for(var a in args){
 		// test if it's already installed first here!
-		if(trmnl.base.hasOwnProperty(args[a])){
+		let app = args[a];
+		if(trmnl.base.hasOwnProperty(app)){
 			return [1, args[a]+" is already installed"];
 		}
 		// we need to go async now.
@@ -302,7 +303,7 @@ core.install = function(args,trmnl){
 		var d = new Date();
 		
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', "pkg/"+args[a]+".js?d="+d.getTime());
+		xhr.open('GET', "pkg/"+app+".js?d="+d.getTime());
 		
 		xhr.onload = function(){
 			try{ // always check if terminal.piping == true in async callbacks!
@@ -312,22 +313,21 @@ core.install = function(args,trmnl){
 				// install here by creating a script element then deleting it.
 				var s = document.createElement("script");
 				s.type = "text/javascript";
-				s.setAttribute("ID","pkg_install");
-				// wait, do I need to ajax at all here?! I could just s.src = "pkg/"+args[0]+".js" instead...
+				// wait, do I need to ajax at all here?! I could just s.src = "pkg/"+app+".js" instead...
 				s.innerHTML = this.responseText;
 				document.body.appendChild(s);
-				//console.log(pkgs);
-				trmnl.base[args[a]] = pkgs[args[a]];
-				trmnl.base.autocomplete.push(args[a]);
+				
+				trmnl.base[app] = pkgs[app];
+				trmnl.base.autocomplete.push(app);
 				trmnl.base.autocomplete.sort();
 				// test to see if the program has a "window" set of functions, and if so, add to terminal:
-				if(typeof window !== 'undefined' && window.hasOwnProperty(args[a])){
-					trmnl[args[a]] = window[args[a]];
-					trmnl.update_autocomplete(args[a]);// add this program to the autocomplete
+				if(typeof baseWindow !== 'undefined' && baseWindow.hasOwnProperty(app)){
+					trmnl[app] = baseWindow[app];
+					trmnl.update_autocomplete(app);// add this program to the autocomplete
 				}
 				s.innerHTML = ""; // just in case
 				document.body.removeChild(s);
-				trmnl.output(args[a]+" program installed",0);
+				trmnl.output(app+" program installed",0);
 			}catch(err){
 				console.log(err.message);
 				trmnl.error("Could not parse received program data");

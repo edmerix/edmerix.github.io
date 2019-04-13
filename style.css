@@ -144,6 +144,9 @@ input {
 .inset {
 	margin-left: 20px;
 }
+.mta {
+	color: #FFF;
+}
 .mta_1, .mta_2, .mta_3 {
 	background: #EE352E;
 }

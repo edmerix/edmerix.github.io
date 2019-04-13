@@ -10,19 +10,19 @@ pkgs.notebook.help = "<b>notebook</b> program: use to navigate your locally stor
 The window override bit: (use this to write functions that divert to a separate prompt window within the terminal)
 *****/
 // haven't actually done anything with this one yet. Notes have been implemented though.
-var window = window || {};
+var baseWindow = baseWindow || {};
 
-window.notebook = {};
-window.notebook.protected = {};
-window.notebook.protected.fallback = function(cmd,fn,args,trmnl){
+baseWindow.notebook = {};
+baseWindow.notebook.protected = {};
+baseWindow.notebook.protected.fallback = function(cmd,fn,args,trmnl){
 	return [1, "Unknown NOTEBOOK command: "+fn];
 }
-window.notebook.exit = function(args,trmnl){
+baseWindow.notebook.exit = function(args,trmnl){
 	trmnl.program = "base";
 	trmnl.next_prompt = trmnl.base_prompt;
 	return 0;
 }
-window.notebook.help = function(args,trmnl){
+baseWindow.notebook.help = function(args,trmnl){
 	var avail_commands = 'Available NOTEBOOK commands:<hr /><span class="cmd-feedback"><table><tr>';
 	if(trmnl.notebook.hasOwnProperty('autocomplete')){ // make use of the autocomplete data if populated
 		for(var c = 0; c < trmnl.notebook.autocomplete.length; c++){

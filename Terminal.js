@@ -1,8 +1,8 @@
 function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_file){
 	this.ID = cmdID;
 	this.title = "emerix";
-	this.version = 0.1;
-	this.releaseDate = "2018-06-25";
+	this.version = 0.2;
+	this.releaseDate = "2019-04-13";
 
 	this.prompt = prmpt;
 	this.base_prompt = prmpt;
@@ -19,7 +19,6 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.program = "base";		// what program we're currently in (base is normal commands)
 	this.piping = false; 		// used to "pipe" command outputs to another command ("|" symbol)
 	this.pipe_function = null;	// what command to pass the output to if "piping" (assigned automatically with whatever is after the | symbol)
-	this.active = true;
 	
 	this.cols = {};
 	this.cols.output = '#FFF';
@@ -27,6 +26,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.cols.error = '#E85555';
 	this.cols.bg = '#000';
 	
+	// Load up the themes.json file:
 	this.theme_file = theme_file;
 	this.themes = {};
 	let me = this;
@@ -417,14 +417,34 @@ Terminal.prototype.update_colors = function(){
 	
 	var col_setup = "";
 	for(var t in terminal){
-		col_setup += '#term_'+terminal[t].ID+' .cmd-prompt {color:'+terminal[t].cols.output+';}\n';
-		col_setup += '#term_'+terminal[t].ID+' .cmd-err {color:'+terminal[t].cols.error+';}\n';
-		col_setup += '#term_'+terminal[t].ID+' .cmd-feedback {color:'+terminal[t].cols.feedback+';}\n';
-		col_setup += '#term_'+terminal[t].ID+' a {color:'+terminal[t].cols.feedback+';}\n';
+		col_setup += '#'+terminal[t].body.getAttribute("id")+' .cmd-prompt {color:'+terminal[t].cols.output+';}\n';
+		col_setup += '#'+terminal[t].body.getAttribute("id")+' .cmd-err {color:'+terminal[t].cols.error+';}\n';
+		col_setup += '#'+terminal[t].body.getAttribute("id")+' .cmd-feedback {color:'+terminal[t].cols.feedback+';}\n';
+		col_setup += '#'+terminal[t].body.getAttribute("id")+' a {color:'+terminal[t].cols.feedback+';}\n';
 	}
 	document.getElementById('dynamic-cols').innerHTML = col_setup;
 	// I do not like the feel of the method above (with the inline style in the head), but it allows for future elements to have their css altered also.
 }
+//TODO: start using the below xhrPromise method!
+// New method to use to replace all xhr calls that hide and re-show the terminal:
+// 		e.g. let response = await me.xhrPromise(url);
+Terminal.prototype.xhrPromise = function(url, method='GET'){
+	//TODO: could open this up to different responseType too (i.e. function(url, method='GET', type='json'))
+	return new Promise(function(resolve, reject){
+		let xhr = new XMLHttpRequest();
+		xhr.open(method, url, true);
+		xhr.onload = function(){
+			resolve(this.responseText);
+		};
+		xhr.onerror = function(err){
+			reject({
+				status: this.status,
+				statusText: xhr.statusText
+			});
+		};
+		xhr.send(null);
+	});
+};
 Terminal.prototype.exit = function(callingID){
 	var w = this.ID;
 	// work out which are open based on which terminal[n] is an object, e.g. 0,1,3

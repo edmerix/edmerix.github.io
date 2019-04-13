@@ -5,7 +5,7 @@ This is the static version of the site, and so multiple features have been remov
 
 Core functions are auto-loaded from [core.js](core.js), while base programs are loaded from [programs.js](programs.js), and extra functions that can be installed during use are in the [pkg](pkg/) directory.
 
-It is entirely class-based, so multiple terminals can run side-by-side with their own installations, and all functionality is easily extensible.
+It is entirely class-based, so multiple terminals can run side-by-side with their own installations, and all functionality is easily extensible. See [notebook.js](pkg/notebook.js) for an example of how to code a "program" that can be installed, rather than just a function.
 
 ### Screenshot
 
