@@ -3,14 +3,7 @@
 <head>
 	<title>$></title>
 	<link type="text/css" rel="stylesheet" href="style.css" />
-	<style id="dynamic-cols">
-		.cmd-err { color: #e85555; }
-		.cmd-feedback { color: #9CF; }
-		.cmd-prompt a { color: #9CF; }
-		table { border-collapse: collapse; }
-		/*table td { border: 1px dashed #FFF; }*/
-		/* Need to update this so each terminal can have its own colors (they already do in their settings)*/
-	</style>
+	<style id="dynamic-cols"></style>
 </head>
 <body>
 	<center>all terminals closed</center>
@@ -42,10 +35,11 @@
 			<div id="cmd-input_3" class="cmd-input"><input id="main-input_3" class="main-input" type="text" spellcheck="false" autocomplete="off"/></div>
 		</div>
 	</div>
-	<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>-->
-    <!-- temporary for offline coding -->
-    <script type="text/javascript" src="jquery.min.js"></script>
+	
 	<script type="text/javascript" src="math.min.js"></script>
+	<script type="text/javascript" src="programs.js?0"></script>   
+	<script type="text/javascript" src="core.js?0"></script>   
+	<script type="text/javascript" src="Terminal.js?0"></script>   
 	<script type="text/javascript" src="functions.js?0"></script>   
 </body>
 </html>
