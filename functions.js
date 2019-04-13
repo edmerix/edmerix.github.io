@@ -649,7 +649,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		const day = ("0" + (today.getDate()+offset)).slice(-2);
 		const month = ("0" + (today.getMonth() + 1)).slice(-2);
 		const year = today.getFullYear();
-		let url = "http://gd2.mlb.com/components/game/mlb/year_"+year+"/month_"+month+"/day_"+day+"/master_scoreboard.json?now="+today.getTime();
+		let url = "https://gd2.mlb.com/components/game/mlb/year_"+year+"/month_"+month+"/day_"+day+"/master_scoreboard.json?now="+today.getTime();
 		
 		//TODO: update this to use a promise rather than just returning and leaving it to go async...
 		
