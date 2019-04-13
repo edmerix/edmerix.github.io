@@ -627,7 +627,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	// MLB:
 	this.base.mlb = function(args,trmnl){
 		// TODO: add in extra arguments to allow for querying results from other days
-		if(args[0] == undefined || args[0] == ""){
+		if(typeof(args[0]) === "undefined" || args[0] == ""){
 			return [1, "Need to specify a team to look up (2 or 3 digit code)"];
 		}
 		let acceptable = ['ARI', 'ATL', 'BAL', 'BOS', 'CHC', 'CWS', 'CIN', 'CLE', 'COL', 'DET', 'FLA', 'HOU', 'KAN', 'LAA', 'LAD', 'MIL', 'MIN', 'NYM', 'NYY', 'OAK', 'PHI', 'PIT', 'SD', 'SF', 'SEA', 'STL', 'TB', 'TEX', 'TOR', 'WAS'];
@@ -635,7 +635,13 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		if(acceptable.indexOf(teamCode) < 0){
 			return [1, "Cannot find team by code "+teamCode];
 		}
-		const today = new Date();
+		let today = new Date();
+		if(args.length > 1 && typeof(args[1]) !== "undefined" && args[1] != ""){
+			today = new Date(args[1]+" 12:00:00");
+			if(today == "Invalid Date"){
+				return [1, "Couldn't parse the submitted date"];
+			}
+		}
 		let offset = 0;
 		if(today.getHours() < 3){
 			offset = -1;
@@ -677,8 +683,6 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 				}
 				
 				const game = data.game[n];
-				
-				console.log(game);
 				
 				let scoreBoard = "";
 				if(game.hasOwnProperty("linescore") && game.linescore.hasOwnProperty("inning")){
@@ -815,7 +819,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		
 		return [0, "<i>Querying MLB gamelist...</i>"];
 	};
-	this.base.mlb.help = '<b>mlb</b> command: pass in the 2 or 3 digit code for a MLB team to see live info about any game being played today';
+	this.base.mlb.help = '<b>mlb</b> command: pass in the 2 or 3 digit code for a MLB team to see live info about any game being played today<br />Pass in a date to check games from a different day, e.g. 4/12/19';
 	// NOTE
 	this.base.note = function(args,trmnl){
 		// use localStorage for notes. Need to getItem first to append note to the array of notes.
