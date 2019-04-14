@@ -265,7 +265,8 @@ Terminal.prototype.parse_command = function(cmd,printing){
 				const repeatReg = /!\d+/g; // it's global so we can remove them all, but we'll only parse the first result
 				let repeatVal = cmd.match(repeatReg);
 				if(repeatVal != null){
-					if(Array.isArray(repeatVal)) repeatVal = repeatVal[0].replace(/!/g,'');
+					if(Array.isArray(repeatVal)) repeatVal = repeatVal[0];
+					repeatVal = repeatVal.replace(/!/g,'');
 					cmd = cmd.replace(repeatReg,'');
 					for(let r = 0; r < parseInt(repeatVal); r++){ //TODO: see the comment below, and fix this parser so whole things can be repeated or pushed to another terminal, a la {command | command2} ::1 or {randcol | showcol} !10
 						separate_cmds.push(cmd); // re-add the command this many times to the separate_cmds to be parsed through in this loop (note this means we cannot repeat both sides of a pipe at once currently)
