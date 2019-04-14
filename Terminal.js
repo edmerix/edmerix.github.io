@@ -262,45 +262,65 @@ Terminal.prototype.parse_command = function(cmd,printing){
                     this.output(cmdOut,1);
                 }
                 */
-                var response;
-                if(typeof(this[this.program][fn]) == 'function'){
-                    response = this[this.program][fn](args,this);
-                }else{
-                    // attempt via the protected.fallback function if exists, else throw error:
-                    if(typeof(this[this.program].protected.fallback) == 'function'){
-                        response = this[this.program].protected.fallback(cmd,fn,args,this); // NOTE that we pass the original command here, as well as fn and args after!
-                    }else{
-                        response = [1, "Unknown command "+fn];
-                    }
-                }
-                if(response[0]){
-                    if(response[0] > -1){
-                        if(response[1] == undefined || response[1] == "" || response[1] == null){
-                            this.error("unknown command",cmd);
-                        }else{
-                            this.error(response[1]);
-                        }
-                    }
-                }else{
-                    if(response[1] != undefined && response[1] != "" && response[1] != null){
-                        if(this.piping){ // passing response onto another function rather than immediate output
-                            response[1] = response[1].replace(/,/g,'&comma;');
-                            this.parse_command(this.pipe_function+"("+response[1]+")",0);
-                            // use bracket notation to avoid spaces in output breaking the arguments. But this means we need to sanitize commas out of the output (done above hastily, but need to debug.)
-                        }else{
-                            this.output(response[1],0);
-                        }
-                    }
-                    // success.
-                }
-                if(this.next_prompt != this.prompt){
-                    this.set_prompt(this.next_prompt);
-                }
-                if(typeof(response) !== "object"){
-                    resCode = response;
-                }else{
-                    resCode = response[0];
-                }
+				// check for :: in the args, which is used to push the command to a different terminal (if open):
+				let whoTo = this;
+				let noProp = false;
+				if(cmd.indexOf('::') > -1){
+					let boom = cmd.split('::')[1];
+					boom = boom.split(' ')[0];
+					if(boom >= 0 && boom < terminal.length){
+						if(typeof(terminal[boom]) === "object"){
+							whoTo = terminal[boom];
+						}else{
+							noProp = true;
+						}
+					}else{
+						noProp = true;
+					}
+				}
+				if(!noProp){
+					var response;
+					if(typeof(whoTo[whoTo.program][fn]) == 'function'){
+						response = whoTo[whoTo.program][fn](args,whoTo);
+					}else{
+						// attempt via the protected.fallback function if exists, else throw error:
+						if(typeof(whoTo[whoTo.program].protected.fallback) == 'function'){
+							response = whoTo[whoTo.program].protected.fallback(cmd,fn,args,whoTo); // NOTE that we pass the original command here, as well as fn and args after!
+						}else{
+							response = [1, "Unknown command "+fn];
+						}
+					}
+					if(response[0]){
+						if(response[0] > -1){
+							if(response[1] == undefined || response[1] == "" || response[1] == null){
+								this.error("unknown command",cmd);
+							}else{
+								this.error(response[1]);
+							}
+						}
+					}else{
+						if(response[1] != undefined && response[1] != "" && response[1] != null){
+							if(this.piping){ // passing response onto another function rather than immediate output
+								response[1] = response[1].replace(/,/g,'&comma;');
+								this.parse_command(this.pipe_function+"("+response[1]+")",0);
+								// use bracket notation to avoid spaces in output breaking the arguments. But this means we need to sanitize commas out of the output (done above hastily, but need to debug.)
+							}else{
+								this.output(response[1],0);
+							}
+						}
+						// success.
+					}
+					if(this.next_prompt != this.prompt){
+						this.set_prompt(this.next_prompt);
+					}
+					if(typeof(response) !== "object"){
+						resCode = response;
+					}else{
+						resCode = response[0];
+					}
+				}else{
+					this.output("Terminal does not exist, cannot push "+fn+" to it.");
+				}
             }
         }else{
             this.output("Previous command ("+separate_cmds[s-1].trim()+") did not complete: not continuing command sequence",0);

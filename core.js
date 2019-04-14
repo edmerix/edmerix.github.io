@@ -256,6 +256,7 @@ core.help = function(args,trmnl){
 		avail_commands += '</tr></table>'; // will double up the </tr> if total commands is divisible by 5. Fix.
 		avail_commands += '</span>Use help <i>function name</i> for more info';
 		avail_commands += '<br /><small>Commands can be piped to one another with | (e.g. randcol | showcol) or run sequentially if the previous command was successful with &&</small>';
+		avail_commands += '<br /><small>Commands can be pushed to a different terminal by appending its ID after :: at the end of the command</small>';
 		return [0, avail_commands];
 	}else{
 		if(typeof(trmnl.base[args[0]]) !== 'function'){
@@ -292,60 +293,71 @@ core.install = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
 		return [1, "Need to specify a program to install"];
 	}
-	for(var a in args){
+	// can set flags to say which terminal to install to (or multiple), this parses them out:
+	let installTo = []; 
+	for(let f in flags){
+		if(flags[f] >= 0 && flags[f] < 4){
+			if(typeof(terminal[parseInt(flags[f])]) == "object"){
+				installTo.push(parseInt(flags[f]));
+			}else{
+				trmnl.error("Skipping install to terminal "+flags[f]+" because it cannot be found");
+			}
+		}
+	}
+	if(installTo.length < 1) installTo = [trmnl.ID];
+	
+	for(let a in args){
 		// test if it's already installed first here!
 		let app = args[a];
-		if(trmnl.base.hasOwnProperty(app)){
-			trmnl.error(app+" is already installed, skipping");
-		}else{
-			// we need to go async now.
-			trmnl.input_div.innerHTML = "";
-			trmnl.input_div.style.display = "none";
-			var d = new Date();
+		// we need to go async now.
+		trmnl.input_div.innerHTML = "";
+		trmnl.input_div.style.display = "none";
+		var d = new Date();
 
-			var xhr = new XMLHttpRequest();
-			xhr.open('GET', "pkg/"+app+".js?d="+d.getTime());
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', "pkg/"+app+".js?d="+d.getTime());
 
-			xhr.onload = function(){
-				try{ // always check if terminal.piping == true in async callbacks!
-					if(trmnl.piping){
-						trmnl.output("Cannot pipe installation. Actually you can, but it'll just pass success or error. Yet to code that in though.",0);
-					}
-					if(trmnl.base.hasOwnProperty(app)){
+		xhr.onload = function(){
+			try{ // always check if terminal.piping == true in async callbacks!
+				if(trmnl.piping){
+					trmnl.output("Cannot pipe installation. Actually you can, but it'll just pass success or error. Yet to code that in though.",0);
+				}
+				// install here by creating a script element then deleting it.
+				var s = document.createElement("script");
+				s.type = "text/javascript";
+				// wait, do I need to ajax at all here?! I could just s.src = "pkg/"+app+".js" instead...
+				s.innerHTML = this.responseText;
+				document.body.appendChild(s);
+				for(let i in installTo){
+					if(terminal[installTo[i]].base.hasOwnProperty(app)){
 						// worth rechecking as we might have duplicated within this request of multiple apps...
-						trmnl.error(app+" is already installed, skipping");
+						terminal[installTo[i]].error(app+" is already installed, skipping");
 					}else{
-						// install here by creating a script element then deleting it.
-						var s = document.createElement("script");
-						s.type = "text/javascript";
-						// wait, do I need to ajax at all here?! I could just s.src = "pkg/"+app+".js" instead...
-						s.innerHTML = this.responseText;
-						document.body.appendChild(s);
-
-						trmnl.base[app] = pkgs[app];
-						trmnl.base.autocomplete.push(app);
-						trmnl.base.autocomplete.sort();
+						terminal[installTo[i]].base[app] = pkgs[app];
+						terminal[installTo[i]].base.autocomplete.push(app);
+						terminal[installTo[i]].base.autocomplete.sort();
 						// test to see if the program has a "window" set of functions, and if so, add to terminal:
 						if(typeof baseWindow !== 'undefined' && baseWindow.hasOwnProperty(app)){
-							trmnl[app] = baseWindow[app];
-							trmnl.update_autocomplete(app);// add this program to the autocomplete
+							terminal[installTo[i]][app] = baseWindow[app];
+							terminal[installTo[i]].update_autocomplete(app);// add this program to the autocomplete
 						}
-						s.innerHTML = ""; // just in case
-						document.body.removeChild(s);
-						trmnl.output(app+" program installed",0);
+						terminal[installTo[i]].output(app+" program installed",0);
 					}
-				}catch(err){
-					console.log(err.message);
-					trmnl.error("Could not parse received program data");
 				}
-				trmnl.input_div.style.display = "block";
-			};
-			xhr.onerror = function(err){
-				trmnl.error("Could not find program");
-				trmnl.input_div.style.display = "block";
+				s.innerHTML = ""; // just in case
+				document.body.removeChild(s);
+				pkgs = {}; // just in case
+			}catch(err){
+				console.log(err.message);
+				trmnl.error("Could not parse received program data");
 			}
-			xhr.send(null);
+			trmnl.input_div.style.display = "block";
+		};
+		xhr.onerror = function(err){
+			trmnl.error("Could not find program");
+			trmnl.input_div.style.display = "block";
 		}
+		xhr.send(null);
 	}
 	var retval = "Attempting install of "+args.length+" program";
 	if(args.length != 1) retval += "s";
