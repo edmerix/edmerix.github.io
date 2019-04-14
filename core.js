@@ -256,7 +256,7 @@ core.help = function(args,trmnl){
 		avail_commands += '</tr></table>'; // will double up the </tr> if total commands is divisible by 5. Fix.
 		avail_commands += '</span>Use help <i>function name</i> for more info';
 		avail_commands += '<br /><small>Commands can be piped to one another with | (e.g. randcol | showcol) or run sequentially if the previous command was successful with &&</small>';
-		avail_commands += '<br /><small>Commands can be pushed to a different terminal by appending its ID after :: at the end of the command</small>';
+		avail_commands += '<br /><small>Commands can be pushed to a different terminal by appending its ID after :: anywhere in the command, which can be repeated multiple times</small>';
 		return [0, avail_commands];
 	}else{
 		if(typeof(trmnl.base[args[0]]) !== 'function'){

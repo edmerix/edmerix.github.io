@@ -215,6 +215,7 @@ Terminal.prototype.parse_command = function(cmd,printing){
     }
     var separate_cmds = cmd.split('&&'); // logical command sequence, i.e. only keep performing while response less than 1
     var resCode = 0;
+	//TODO: this parsing is getting messy, separate things into functions, e.g. trmnl.getPushes(cmd); trmnl.sendCommand(cmd); trmnl.etc();
     for(var s = 0; s < separate_cmds.length; s++){
         if(resCode < 1){
             cmd = separate_cmds[s];
@@ -222,104 +223,113 @@ Terminal.prototype.parse_command = function(cmd,printing){
                 this.input_div.style.display = "none";
                 this.prompt_div.style.display = "none";
                 cmd = cmd.trim();
-                if(cmd.indexOf('|') > -1){
-                    this.piping = true;
-                    var pipe_split = cmd.split("|");
-                    cmd = pipe_split[0];
-                    this.pipe_function = pipe_split[1];
-                }else{
-                    this.piping = false;
-                    this.pipe_function = null;
-                }
-                if(cmd.indexOf('(') > -1 && (cmd.indexOf(' ') < 0 || cmd.indexOf(' ') > cmd.indexOf('('))){ // commands can be passed as either "command(arguments)" or "command arguments". Note that if a space came first, then it's not command(args)
-                    var args = cmd.split("(");
-                    var fn = args[0].trim();
-
-                    if(args.length > 1){
-                        args.splice(0,1);
-                        args = args[0].slice(0,args[0].length-1).split(",");
-                        for(var a = 0; a < args.length; a++) args[a] = args[a].trim();
-                    }else{
-                        args = '';
-                    }
-                }else{
-                    var args = cmd.split(" ");
-                    var fn = args[0].trim();
-                    if(args.length > 1){
-                        args.splice(0,1);
-                        //args = args.join(' ').split(";");
-                        for(var a = 0; a < args.length; a++) args[a] = args[a].trim();
-                    }else{
-                        args = '';
-                    }
-                }
-                /* // moved to the complete command rather than post && split commands
-                this.cmd_counter++;
-                var cmdOut = escapeHTML(cmd);
-                if(this.piping) cmdOut += "|"+this.pipe_function;
-                if(printing){
-                    this.cmd_hist.push(cmdOut);
-                    this.output(cmdOut,1);
-                }
-                */
+				// check for | in the command, which is used to pipe output from first to input of next command:
+				if(cmd.indexOf('|') > -1){
+					this.piping = true;
+					var pipe_split = cmd.split("|");
+					cmd = pipe_split[0];
+					this.pipe_function = pipe_split[1];
+				}else{
+					this.piping = false;
+					this.pipe_function = null;
+				}
 				// check for :: in the args, which is used to push the command to a different terminal (if open):
-				let whoTo = this;
+				let whoTo = [this];
 				let noProp = false;
-				if(cmd.indexOf('::') > -1){
-					let boom = cmd.split('::')[1];
-					boom = boom.split(' ')[0];
-					if(boom >= 0 && boom < terminal.length){
-						if(typeof(terminal[boom]) === "object"){
-							whoTo = terminal[boom];
-						}else{
-							noProp = true;
+				//
+				const pushReg = /::\d+/g;
+				const pushLoc = cmd.match(pushReg);
+				if(pushLoc != null){
+					let pop;
+					whoTo = []; // don't auto-include the calling terminal
+					for(let p in pushLoc){
+						pop = pushLoc[p].replace(/::/g,'');
+						if(typeof(terminal[pop]) === "object"){
+							whoTo.push(terminal[pop]);
+						}else{// mention that it cannot find the requested terminal
+							this.output("<font class='cmd-feedback'>Terminal "+pop+" does not exist, skipping...</font>");
 						}
-					}else{
+					}
+					// remove all push requests from the command:
+					cmd = cmd.replace(pushReg,'');
+					// if whoTo is empty, show an error and set noProp = true;
+					if(whoTo.length < 1){
+						this.error("None of the requested terminals exist, cannot proceed");
 						noProp = true;
 					}
 				}
 				if(!noProp){
-					var response;
-					if(typeof(whoTo[whoTo.program][fn]) == 'function'){
-						response = whoTo[whoTo.program][fn](args,whoTo);
-					}else{
-						// attempt via the protected.fallback function if exists, else throw error:
-						if(typeof(whoTo[whoTo.program].protected.fallback) == 'function'){
-							response = whoTo[whoTo.program].protected.fallback(cmd,fn,args,whoTo); // NOTE that we pass the original command here, as well as fn and args after!
+					if(cmd.indexOf('(') > -1 && (cmd.indexOf(' ') < 0 || cmd.indexOf(' ') > cmd.indexOf('('))){ // commands can be passed as either "command(arguments)" or "command arguments". Note that if a space came first, then it's not command(args)
+						var args = cmd.split("(");
+						var fn = args[0].trim();
+
+						if(args.length > 1){
+							args.splice(0,1);
+							args = args[0].slice(0,args[0].length-1).split(",");
+							for(var a = 0; a < args.length; a++) args[a] = args[a].trim();
 						}else{
-							response = [1, "Unknown command "+fn];
-						}
-					}
-					if(response[0]){
-						if(response[0] > -1){
-							if(response[1] == undefined || response[1] == "" || response[1] == null){
-								this.error("unknown command",cmd);
-							}else{
-								this.error(response[1]);
-							}
+							args = '';
 						}
 					}else{
-						if(response[1] != undefined && response[1] != "" && response[1] != null){
-							if(this.piping){ // passing response onto another function rather than immediate output
-								response[1] = response[1].replace(/,/g,'&comma;');
-								this.parse_command(this.pipe_function+"("+response[1]+")",0);
-								// use bracket notation to avoid spaces in output breaking the arguments. But this means we need to sanitize commas out of the output (done above hastily, but need to debug.)
+						var args = cmd.split(" ");
+						var fn = args[0].trim();
+						if(args.length > 1){
+							args.splice(0,1);
+							// trim each one:
+							for(var a = 0; a < args.length; a++){
+								args[a] = args[a].trim();
+							}
+							// remove empty arguments (often happens while pushing to another terminal)
+							args = args.filter(function(item){ return item != ""}); 
+						}else{
+							args = '';
+						}
+					}
+					let response, who;
+					for(let w = 0; w < whoTo.length; w++){
+						who = whoTo[w];
+						if(typeof(who[who.program][fn]) == 'function'){
+							response = who[who.program][fn](args,who);
+						}else{
+							// attempt via the protected.fallback function if exists, else throw error:
+							if(typeof(who[who.program].protected.fallback) == 'function'){
+								response = who[who.program].protected.fallback(cmd,fn,args,who); // NOTE that we pass the original command here, as well as fn and args after!
 							}else{
-								this.output(response[1],0);
+								response = [1, "Unknown command "+fn];
 							}
 						}
-						// success.
-					}
-					if(this.next_prompt != this.prompt){
-						this.set_prompt(this.next_prompt);
-					}
-					if(typeof(response) !== "object"){
-						resCode = response;
-					}else{
-						resCode = response[0];
+						if(response[0]){
+							if(response[0] > -1){
+								if(response[1] == undefined || response[1] == "" || response[1] == null){
+									this.error("unknown command",cmd);
+								}else{
+									this.error(response[1]);
+								}
+							}
+						}else{
+							if(response[1] != undefined && response[1] != "" && response[1] != null){
+								if(this.piping){ // passing response onto another function rather than immediate output
+									response[1] = response[1].replace(/,/g,'&comma;');
+									this.parse_command(this.pipe_function+"("+response[1]+")",0);
+									// use bracket notation to avoid spaces in output breaking the arguments. But this means we need to sanitize commas out of the output (done above hastily, but need to debug.)
+								}else{
+									this.output(response[1],0);
+								}
+							}
+							// success.
+						}
+						if(this.next_prompt != this.prompt){
+							this.set_prompt(this.next_prompt);
+						}
+						if(typeof(response) !== "object"){
+							resCode = response;
+						}else{
+							resCode = response[0];
+						}
 					}
 				}else{
 					this.output("Terminal does not exist, cannot push "+fn+" to it.");
+					resCode = 1;
 				}
             }
         }else{
