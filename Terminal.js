@@ -200,7 +200,10 @@ Terminal.prototype.update_autocomplete = function(prog){
 }
 Terminal.prototype.parse_command = function(cmd,printing){
 	// should do the actual parsing with regex. Check out http://regexlib.com/Search.aspx?k=command+line&c=-1&m=-1&ps=20&AspxAutoDetectCookieSupport=1 for ideas.
-    if(cmd.replace(/ /g,'') != ""){
+	if(cmd == '!!'){ // as per bash.
+		cmd = this.cmd_hist[this.cmd_hist.length-1];
+	}
+	if(cmd.replace(/ /g,'') != ""){
         this.cmd_counter++;
         var cmdOut = escapeHTML(cmd);
         if(this.piping) cmdOut += "|"+this.pipe_function;
@@ -238,12 +241,12 @@ Terminal.prototype.parse_command = function(cmd,printing){
 				let noProp = false;
 				//
 				const pushReg = /::\d+/g;
-				const pushLoc = cmd.match(pushReg);
-				if(pushLoc != null){
+				const pushVal = cmd.match(pushReg);
+				if(pushVal != null){
 					let pop;
 					whoTo = []; // don't auto-include the calling terminal
-					for(let p in pushLoc){
-						pop = pushLoc[p].replace(/::/g,'');
+					for(let p in pushVal){
+						pop = pushVal[p].replace(/::/g,'');
 						if(typeof(terminal[pop]) === "object"){
 							whoTo.push(terminal[pop]);
 						}else{// mention that it cannot find the requested terminal
@@ -256,6 +259,16 @@ Terminal.prototype.parse_command = function(cmd,printing){
 					if(whoTo.length < 1){
 						this.error("None of the requested terminals exist, cannot proceed");
 						noProp = true;
+					}
+				}
+				// allow repeating the same command multiple times with !n
+				const repeatReg = /!\d+/g; // it's global so we can remove them all, but we'll only parse the first result
+				let repeatVal = cmd.match(repeatReg);
+				if(repeatVal != null){
+					if(Array.isArray(repeatVal)) repeatVal = repeatVal[0].replace(/!/g,'');
+					cmd = cmd.replace(repeatReg,'');
+					for(let r = 0; r < parseInt(repeatVal); r++){ //TODO: see the comment below, and fix this parser so whole things can be repeated or pushed to another terminal, a la {command | command2} ::1 or {randcol | showcol} !10
+						separate_cmds.push(cmd); // re-add the command this many times to the separate_cmds to be parsed through in this loop (note this means we cannot repeat both sides of a pipe at once currently)
 					}
 				}
 				if(!noProp){
