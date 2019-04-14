@@ -520,7 +520,7 @@ core.mlb = function(args,trmnl){
 					// no need for default, it just sticks to what it already is
 			}
 			retVal = "<font class='cmd-feedback'><b>LIVE</b></font>: "+state+" of the "+game.status.inning+"<sup>";
-			switch(game.status.inning){
+			switch(parseFloat(game.status.inning)){
 				case 1:
 					retVal += "st";
 					break;

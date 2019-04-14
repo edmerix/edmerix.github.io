@@ -59,7 +59,7 @@ programs.math.exit = function(args,trmnl){
 	return 0;
 }
 programs.math.help = function(args,trmnl){
-	var avail_commands = 'Available math commands:<hr /><span class="cmd-feedback"><table><tr>';
+	var avail_commands = 'Math evaluates your mathematical inputs. Beyond that, available math commands are:<hr /><span class="cmd-feedback"><table><tr>';
 	if(trmnl.math.hasOwnProperty('autocomplete')){ // make use of the autocomplete data if it has been populated
 		for(var c = 0; c < trmnl.math.autocomplete.length; c++){
 			avail_commands += '<td>'+trmnl.math.autocomplete[c]+'</td>';
