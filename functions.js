@@ -7,13 +7,13 @@ var table_border = false; // move this into a settings object later, to be loade
 var stations = {};
 
 document.addEventListener("DOMContentLoaded", function(){
-	
+
 	instances = terminal.length;
 	terminal[instances] = new Terminal(instances,"$>","main-input_"+instances,"cmd-history_"+instances,"cmd-prompt_"+instances,"term_"+instances,"themes.json");
 
 	update_positions();
 
-    if(greeting){
+    if(greeting){ // The use of onclick="javascript::..." is a little manky, but is a quick fix until I update
         //WELCOME message immediate output:
         terminal[instances].output('&nbsp;_____&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;__&nbsp;&nbsp;__&nbsp;__&nbsp;&nbsp;__&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;&nbsp;');
         terminal[instances].output('|&nbsp;____|__|&nbsp;|_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;_&nbsp;_&nbsp;__&nbsp;__|&nbsp;|&nbsp;&nbsp;\\/&nbsp;&nbsp;|&nbsp;&nbsp;\\/&nbsp;&nbsp;|&nbsp;___&nbsp;_&nbsp;__&nbsp;_&nbsp;__(_)&nbsp;___|&nbsp;|&nbsp;_____&nbsp;&nbsp;|&nbsp;&nbsp;_&nbsp;\\|&nbsp;|__&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;_&nbsp;\\&nbsp;&nbsp;');
@@ -26,13 +26,13 @@ document.addEventListener("DOMContentLoaded", function(){
         terminal[instances].output('A version designed for people who aren\'t massive dweebs is soon to be uploaded.'); //  "<span class="cmd-feedback">GUI</span>" command, or <a href="gui">click here</a>
         terminal[instances].output('Ed is a scientist. He also sometimes does art, and plays a bit of music.');
         //terminal[instances].output('To find out more about each topic, try their commands below ("<span class="cmd-feedback">science</span>", "<span class="cmd-feedback">art</span>", "<span class="cmd-feedback">music</span>")');
-		terminal[instances].output('To find out more about the science, try its command below ("<span class="cmd-feedback">science</span>").');
-		terminal[instances].output('Art and music info will be added at a later date...');
-        terminal[instances].output('To get more help, type "<span class="cmd-feedback">help</span>" and hit enter');
+		terminal[instances].output('To find out more about the science, try its command below ("<span class="cmd-feedback" onclick="javascript:terminal[0].parse_command(\'science info\',terminal[0]);">science</span>").');
+		//terminal[instances].output('Art and music info will be added at a later date...');
+        terminal[instances].output('To get more help, type "<span class="cmd-feedback" onclick="javascript:terminal[0].parse_command(\'help\',terminal[0]);">help</span>" and hit enter');
 		terminal[instances].linesep();
-		terminal[instances].output('Note there are some cool things that aren\'t installed by default...');
-		terminal[instances].output('Try <span class="cmd-feedback">install session</span>, followed by <span class="cmd-feedback">session</span>, then <span class="cmd-feedback">theme orange</span>');
-		terminal[instances].output('After that, try out <span class="cmd-feedback">install tedit</span>, then <span class="cmd-feedback">tedit</span> for a (super) minimal text editor.');
+		terminal[instances].output('Note there are some cool things that aren\'t installed by default... Use <span class="cmd-feedback" onclick="javascript:terminal[0].parse_command(\'pkg\',terminal[0]);">pkg</span> command to see available packages');
+		terminal[instances].output('Try <span class="cmd-feedback" onclick="javascript:terminal[0].parse_command(\'install session\',terminal[0]);">install session</span>, followed by <span class="cmd-feedback" onclick="javascript:terminal[0].parse_command(\'session\',terminal[0]);">session</span>, then <span class="cmd-feedback" onclick="javascript:terminal[0].parse_command(\'theme orange\',terminal[0]);">theme orange</span>');
+		terminal[instances].output('After that, try out <span class="cmd-feedback" onclick="javascript:terminal[0].parse_command(\'install tedit\',terminal[0]);">install tedit</span>, then <span class="cmd-feedback" onclick="javascript:terminal[0].parse_command(\'tedit\',terminal[0]);">tedit</span> for a (super) minimal text editor.');
 		terminal[instances].output('When in tedit, hit cmd/ctrl+~ to open the console, and type <span class="cmd-feedback">save</span> to save your file.');
 		terminal[instances].linesep();
 		terminal[instances].output('If you made it this far, perhaps check out my <a href="https://www.github.com/edmerix" target="_blank">GitHub</a>');
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	*/
 
 	terminal[instances].input_div.focus();
-	
+
 	// load up the JSON file of subway station data (yes, the data format seems weird, but it's the simplest way of going from inaccurate station name and subway line to a station code):
 	let xhr = new XMLHttpRequest();
 	xhr.open('GET', 'stations.json', true);
@@ -83,10 +83,10 @@ function update_positions(){
 		}
 	}
 	const b = parseInt(open,2); // parse as base 2.
-	
+
 	const half = 'calc(50% - 1px)';
 	const full = '100%';
-	
+
 	switch(b){
 		case 0: // binary: 0000
 			// None open, should all have been hidden above.

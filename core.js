@@ -255,8 +255,16 @@ core.help = function(args,trmnl){
 		}
 		avail_commands += '</tr></table>'; // will double up the </tr> if total commands is divisible by 5. Fix.
 		avail_commands += '</span>Use help <i>function name</i> for more info';
-		avail_commands += '<br /><small>Commands can be piped to one another with | (e.g. randcol | showcol) or run sequentially if the previous command was successful with &&</small>';
-		avail_commands += '<br /><small>Commands can be pushed to a different terminal by appending its ID after :: anywhere in the command, which can be repeated multiple times</small>';
+		avail_commands += '<br /><small>Commands can be:<br /><ul>';
+		avail_commands += '<li>piped to one another with | (e.g. randcol | showcol)</li>';
+		avail_commands += '<li>run sequentially (if the previous command was successful) with &&';
+		avail_commands += '<li>pushed to a different terminal by appending its ID after :: anywhere in the arguments, which can be repeated multiple times</li>';
+		avail_commands += '<li>repeated multiple times with !<i>n</i> anywhere in the arguments, where <i>n</i> is the number of times to run the command</li>';
+		avail_commands += '<li>the previous command can be re-run with !!</li>';
+		avail_commands += '</ul>';
+		avail_commands += 'e.g. To open 3 extra terminals once session is installed, run: session -& !3';
+		avail_commands += '<br />and to install the basic package to all terminals run: install -b0123</small>';
+
 		return [0, avail_commands];
 	}else{
 		if(typeof(trmnl.base[args[0]]) !== 'function'){
@@ -270,7 +278,7 @@ core.help = function(args,trmnl){
 	}
 	return 0;
 };
-core.help.help = '<b>help</b> command: help for the help command needs to be written here.';
+core.help.help = '<b>help</b> command: in-depth help for the help command needs to be written here.';
 /*---- HISTSIZE ----*/
 core.histsize = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
@@ -294,7 +302,7 @@ core.install = function(args,trmnl){
 		return [1, "Need to specify a program to install"];
 	}
 	// can set flags to say which terminal to install to (or multiple), this parses them out:
-	let installTo = []; 
+	let installTo = [];
 	for(let f in flags){
 		if(flags[f] >= 0 && flags[f] < 4){
 			if(typeof(terminal[parseInt(flags[f])]) == "object"){
@@ -305,7 +313,7 @@ core.install = function(args,trmnl){
 		}
 	}
 	if(installTo.length < 1) installTo = [trmnl.ID];
-	
+
 	for(let a in args){
 		// test if it's already installed first here!
 		let app = args[a];
@@ -428,7 +436,7 @@ core.mlb = function(args,trmnl){
 	// we need to go async now.
 	trmnl.input_div.innerHTML = "";
 	trmnl.input_div.style.display = "none";
-	
+
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url, true);
 	xhr.responseType = 'json';
@@ -578,7 +586,7 @@ core.mlb = function(args,trmnl){
 		}else if(game.status.status == "Final" || game.status.status == "Game Over"){
 			retVal = "<b>FINAL</b>:<br />";
 			retVal += "<small>(<i>"+game.away_win+"-"+game.away_loss+"</i>)</small> "+game.away_team_name+" <font class='cmd-feedback'>"+game.linescore.r.away+"</font> - <font class='cmd-feedback'>"+game.linescore.r.home+"</font> "+game.home_team_name+"<small> (<i>"+game.home_win+"-"+game.home_loss+"</i>)</small>";
-			retVal += "<br />"+scoreBoard;					
+			retVal += "<br />"+scoreBoard;
 		}else{
 			retVal = "Unknown game state: "+game.status.status;
 			retVal += "<br />"+scoreBoard; // just in case
@@ -804,7 +812,7 @@ core.subway = function(args,trmnl){
 	// we need to go async now.
 	trmnl.input_div.innerHTML = "";
 	trmnl.input_div.style.display = "none";
-	
+
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', "https://api.wheresthefuckingtrain.com/by-id/"+s_id, true);
 	xhr.responseType = 'json';
@@ -872,7 +880,7 @@ core.subway = function(args,trmnl){
 		trmnl.input_div.style.display = "block";
 	};
 	xhr.send(null);
-	
+
 	return [0, "Fetching MTA subway data..."];
 };
 core.subway.help = 'Subway status. Needs a station name as argument, and if there are multiple stations with that name,';
@@ -987,7 +995,7 @@ core.weather = function(args,trmnl){
 	// we need to go async now.
 	trmnl.input_div.innerHTML = "";
 	trmnl.input_div.style.display = "none";
-	
+
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', "https://api.openweathermap.org/data/2.5/forecast?zip="+args[0]+"&units=metric&appid=2075d49b34d2618a3b73f7eaa58d97d8", true);
 	xhr.responseType = 'json';
@@ -1020,10 +1028,10 @@ core.weather = function(args,trmnl){
 	};
 	xhr.onerror = function(err){
 		trmnl.error("Could not load data");
-		trmnl.input_div.style.display = "block";	
+		trmnl.input_div.style.display = "block";
 	};
 	xhr.send(null);
-	
+
 	return [0, "loading weather data..."]
 };
 core.weather.help = '<b>weather</b> command: get forecast for a given ZIP code<br />e.g. "weather 10025"<br />Defaults to displaying results for next 5 hours, use -f or --full flag to display all results"';
@@ -1033,7 +1041,7 @@ core.whoami = function(args,trmnl){
 	// we need to go async now.
 	trmnl.input_div.innerHTML = "";
 	trmnl.input_div.style.display = "none";
-	
+
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url, true);
 	xhr.responseType = 'json';
@@ -1061,7 +1069,7 @@ core.whoami = function(args,trmnl){
 		trmnl.input_div.style.display = "block";
 	};
 	xhr.send(null);
-	
+
 	return 0;
 	*/
 	return [0, "Browsing as guest"]; // always, since this is the static version. Bit rubbish.
