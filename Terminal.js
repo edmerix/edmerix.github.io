@@ -19,13 +19,13 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.program = "base";		// what program we're currently in (base is normal commands)
 	this.piping = false; 		// used to "pipe" command outputs to another command ("|" symbol)
 	this.pipe_function = null;	// what command to pass the output to if "piping" (assigned automatically with whatever is after the | symbol)
-	
+
 	this.cols = {};
 	this.cols.output = '#FFF';
 	this.cols.feedback = '#9CF';
 	this.cols.error = '#E85555';
 	this.cols.bg = '#000';
-	
+
 	// Load up the themes.json file:
 	this.theme_file = theme_file;
 	this.themes = {};
@@ -162,9 +162,9 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		return [1, "Unknown command "+fn];
 		// TODO: update this so that it checks available installation packages and prompts to install if it exists?
 	}
-	
+
 	let auto_progs = ['base']; // for autocomplete compilation (a few lines below)
-	
+
 	/**************************************************************/
 	/***       base functions (i.e. commands):			        ***/
 	/**************************************************************/
@@ -172,7 +172,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 		//TODO: check for duplicates here!
 		this.base[command] = core[command];
 	}
-	
+
 	/********************************************************/
 	/***       programs (i.e. non "base" commands):       ***/
 	/********************************************************/
@@ -268,7 +268,7 @@ Terminal.prototype.parse_command = function(cmd,printing){
 					if(Array.isArray(repeatVal)) repeatVal = repeatVal[0];
 					repeatVal = repeatVal.replace(/!/g,'');
 					cmd = cmd.replace(repeatReg,'');
-					for(let r = 0; r < parseInt(repeatVal); r++){ //TODO: see the comment below, and fix this parser so whole things can be repeated or pushed to another terminal, a la {command | command2} ::1 or {randcol | showcol} !10
+					for(let r = 0; r < parseInt(repeatVal)-1; r++){ //TODO: see the comment below, and fix this parser so whole things can be repeated or pushed to another terminal, a la {command | command2} ::1 or {randcol | showcol} !10
 						separate_cmds.push(cmd); // re-add the command this many times to the separate_cmds to be parsed through in this loop (note this means we cannot repeat both sides of a pipe at once currently)
 					}
 				}
@@ -294,7 +294,7 @@ Terminal.prototype.parse_command = function(cmd,printing){
 								args[a] = args[a].trim();
 							}
 							// remove empty arguments (often happens while pushing to another terminal)
-							args = args.filter(function(item){ return item != ""}); 
+							args = args.filter(function(item){ return item != ""});
 						}else{
 							args = '';
 						}
@@ -458,7 +458,7 @@ Terminal.prototype.update_colors = function(){
     this.input_div.style.color = this.cols.output;
     this.output_div.style.color = this.cols.output;
     this.prompt_div.style.color = this.cols.output;
-	
+
 	var col_setup = "";
 	for(var t in terminal){
 		col_setup += '#'+terminal[t].body.getAttribute("id")+' .cmd-prompt {color:'+terminal[t].cols.output+';}\n';
