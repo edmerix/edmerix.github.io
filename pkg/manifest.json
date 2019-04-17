@@ -1,0 +1,51 @@
+{
+    "source": "apps",
+    "description": "Available applications from edmerix.github.io base source",
+    "version": "0.1",
+	"lastbuild": "2019-04-03 00:27:43",
+    "manifest_version": 2,
+    "apps": {
+        "display": {
+            "name": "Display",
+            "version": "0.2",
+            "tag": "display",
+            "description": "Show images in the terminal",
+            "help": "<b>display</b> command displays an image at the address specified as the first argument.<br />Optional following arguments are values for maximum width, height and the alpha (opacity) of the image:<br /><i>w</i>,<i>h</i>, and <i>a</i> respectively<br />e.g. to display an image at address \"test.png\" with maximum width of 50% the window, at 70% opacity, type:<br />display test.png 50w 0.7a"
+        },
+        "localstore": {
+            "name": "Local Store",
+            "version": "0.1",
+            "tag": "localstore",
+            "description": "Basic storage of variables in the browser's localstorage",
+            "help": ""
+        },
+        "nano": {
+            "name": "Nano Text Editor",
+            "version": "0.1",
+            "tag": "nano",
+            "description": "The beginnings of a nano-like text editor (WIP)",
+            "help": ""
+        },
+        "notebook": {
+            "name": "Notebook",
+            "version": "0.1",
+            "tag": "notebook",
+            "description": "A program to view/edit/delete your notes from the note function (WIP)",
+            "help": ""
+        },
+        "session": {
+            "name": "Session",
+            "version": "0.1",
+            "tag": "session",
+            "description": "Manage multiple terminal sessions in one window",
+            "help": ""
+        },
+        "tedit": {
+            "name": "TEdit",
+            "version": "0.1",
+            "tag": "tedit",
+            "description": "Text EDITor (WIP)",
+            "help": ""
+        }
+    }
+}

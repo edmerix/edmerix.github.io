@@ -704,13 +704,7 @@ core.nsxload = function(args,trmnl){
 core.nsxload.help = '<b>nsxload</b> command: calculates how many gigabytes will be created per hour/day for specified<br />number of electrodes and sampling rate with BlackRock nsx files<br />Specify number of electrodes by pre- or post-fixing with "ch"<br />e.g. nsxload 16ch 30k <i>or</i> nsxload 2000 ch64 (i.e. any order for arguments or "ch")';
 /*---- PKG ----*/
 core.pkg = function(args,trmnl){
-	/* this is the static version of the site. No xhr to local php files :(
-	trmnl.input_div.innerHTML = "";
-	trmnl.input_div.style.display = "none";
-	// Previously called pkg/available.php here to auto-build available pkgs
-	return [0, "Retrieving available packages..."];
-	*/
-	// static version of the website, so need to hard-code available packages:
+	/*
 	const res = ['display','localstore','nano','notebook','session','tedit'];
 	let avail_pkg = 'Available programs to install:<hr /><span class="cmd-feedback"><table><tr>';
 	for(let c = 0; c < res.length; c++){
@@ -723,8 +717,44 @@ core.pkg = function(args,trmnl){
 	}
 	avail_pkg += "</tr></table>"; // will double up the </tr> if total commands is divisible by 5. Fix.
 	return [0, avail_pkg];
+	*/
+	// TODO: don't have any arguments for this at the moment, update
+
+	// we need to go async now. (TODO: turn this into a promise to avoid this!)
+	trmnl.input_div.innerHTML = "";
+	trmnl.input_div.style.display = "none";
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'pkg/manifest.json', true);
+	xhr.onload = function(){
+		//TODO: sanity check the JSON response here first!
+		let manifest = JSON.parse(xhr.responseText);
+		let retval = "Version <font class='cmd-feedback'>"+manifest.version+"</font> (last build: <font class='cmd-feedback'>"+manifest.lastbuild+"</font>)";
+		retval += "<br />Description: <i>"+manifest.description+"</i><hr /><table><tr>";
+		retval += "<th>Identifier</th>";
+		retval += "<th>Name</th>";
+		retval += "<th>Version</th>";
+		retval += "<th>Description</th>";
+		retval += "</tr>";
+		for(var app in manifest.apps){
+			retval += "<tr><td class='cmd-feedback' ";
+			if(manifest.apps[app].tag in trmnl.base){ // app is installed already
+				retval += " style='opacity: 0.5; font-style: oblique;' title='"+manifest.apps[app].name+" is installed'";
+			}
+			retval += ">"+manifest.apps[app].tag+"</td><td>"+manifest.apps[app].name+"</td><td>"+manifest.apps[app].version+"</td><td><i>"+manifest.apps[app].description+"</i></td></tr>";
+		}
+		retval += "</table>";
+		trmnl.output(retval);
+		trmnl.input_div.style.display = "block";
+	}
+	xhr.onerror = function(err){
+		console.log(err);
+		trmnl.error("Couldn't retrieve list of packages");
+		trmnl.input_div.style.display = "block";
+	}
+	xhr.send(null);
+	return [0, "Retrieving pkg list"];
 };
-core.pkg.help = '<b>pkg</b> command: list available programs for install (cannot work in local mode)';
+core.pkg.help = '<b>pkg</b> command: list available programs for install';
 /*---- RANDCOL ----*/
 core.randcol = function(args,trmnl){
 	return [0, '#' + ("000000" + Math.random().toString(16).slice(2, 8).toUpperCase()).slice(-6)];

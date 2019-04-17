@@ -198,7 +198,7 @@ Terminal.prototype.update_autocomplete = function(prog){
 	}
 	this[prog].autocomplete = this[prog].autocomplete.sort();
 }
-Terminal.prototype.parse_command = function(cmd,printing){
+Terminal.prototype.parse_command = function(cmd,printing = true){
 	// should do the actual parsing with regex. Check out http://regexlib.com/Search.aspx?k=command+line&c=-1&m=-1&ps=20&AspxAutoDetectCookieSupport=1 for ideas.
 	if(cmd == '!!'){ // as per bash.
 		cmd = this.cmd_hist[this.cmd_hist.length-1];
