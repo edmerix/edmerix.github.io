@@ -4,7 +4,7 @@ pkgs.notebook = function(args,trmnl){
 	trmnl.next_prompt = 'NOTEBOOK>';
 	return 0;
 };
-pkgs.notebook.help = "<b>notebook</b> program: use to navigate your locally stored notes.";
+pkgs.notebook.help = "<b>notebook</b> program: use to navigate your locally stored @{notes}.";
 
 /*****
 The window override bit: (use this to write functions that divert to a separate prompt window within the terminal)

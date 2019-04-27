@@ -12,6 +12,9 @@
 // "installed" with the builtin install command, though they won't
 // be available at "startup"
 
+// Use @{functionName arguments} in outputs/help sections to auto-create
+// clickable links to automatically run it in the current terminal
+
 const core = {};
 
 /*---- ARGLIST ----*/
@@ -43,7 +46,7 @@ core.bg = function(args,trmnl){
 	trmnl.update_colors();
 	return 0;
 };
-core.bg.help = '<b>bg</b> command: change the background color to a specified hexadecimal color code<br />Use <i>bg reset</i> to return to default (not the default of current theme)';
+core.bg.help = '<b>bg</b> command: change the background color to a specified hexadecimal color code<br />Use @{bg reset} to return to default (not the default of current theme)';
 /*---- BITCONV ----*/
 core.bitconv = function(args,trmnl){
 	if(args.length != 2){
@@ -374,7 +377,7 @@ core.install = function(args,trmnl){
 	}
 	return [0, retval];
 };
-core.install.help = "<b>install</b> command: install the specified program(s)<br /><small>(Use <b>pkg</b> command to list available programs)<br />Accepts flags for collections of functions. Currently only --basic/-b for my commonly used ones</small>";
+core.install.help = "<b>install</b> command: install the specified program(s)<br /><small>(Use <b>@{pkg}</b> command to list available programs)<br />Accepts flags for collections of functions. Currently only --basic/-b for my commonly used ones</small>";
 /*---- KILL ----*/
 core.kill = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
@@ -603,7 +606,7 @@ core.mlb = function(args,trmnl){
 
 	return [0, "<i>Querying MLB gamelist...</i>"];
 };
-core.mlb.help = '<b>mlb</b> command: pass in the 2 or 3 digit code for a MLB team to see live info about any game being played today<br />Pass in a date to check games from a different day, e.g. 4/12/19';
+core.mlb.help = '<b>mlb</b> command: pass in the 2 or 3 digit code for a MLB team to see live info about any game being played today<br />Pass in a date to check games from a different day, e.g. 4/12/19\ne.g. @{mlb nyy} or @{mlb sf 4/18/19}';
 /*---- NOTE ----*/
 core.note = function(args,trmnl){
 	// use localStorage for notes. Need to getItem first to append note to the array of notes.
@@ -628,7 +631,7 @@ core.note = function(args,trmnl){
 	localStorage.setItem("notes",notes);
 	return [0, "New note created. You now have "+tot_notes+" notes stored"];
 };
-core.note.help = '<b>note</b> command: make a new note. Use <b>notes</b> command to read notes<br /><b>notebook</b> program allows for more advanced navigation of notes.<br />N.B. that notes are local to the machine, not across multiple terminal sessions on different devices.<br />Cloud notes will be added soon.';
+core.note.help = '<b>note</b> command: make a new note. Use <b>@{notes}</b> command to read notes<br /><b>@{notebook}</b> program allows for more advanced navigation of notes.<br />N.B. that notes are local to the machine, not across multiple terminal sessions on different devices.<br />Cloud notes will be added soon.';
 /*---- NOTES ----*/
 core.notes = function(args,trmnl){
 	// need to update the below to work with notes[n].text, notes[n].c and notes[n].m instead
@@ -701,7 +704,7 @@ core.nsxload = function(args,trmnl){
 		return [0, "Recording will require "+load+" GB  per hour ("+Math.ceil(load*24)+" GB per day)"];
 	}
 };
-core.nsxload.help = '<b>nsxload</b> command: calculates how many gigabytes will be created per hour/day for specified<br />number of electrodes and sampling rate with BlackRock nsx files<br />Specify number of electrodes by pre- or post-fixing with "ch"<br />e.g. nsxload 16ch 30k <i>or</i> nsxload 2000 ch64 (i.e. any order for arguments or "ch")';
+core.nsxload.help = '<b>nsxload</b> command: calculates how many gigabytes will be created per hour/day for specified<br />number of electrodes and sampling rate with BlackRock nsx files<br />Specify number of electrodes by pre- or post-fixing with "ch"<br />e.g. @{nsxload 16ch 30k} <i>or</i> @{nsxload 2000 ch64} (i.e. any order for arguments or "ch")';
 /*---- PKG ----*/
 core.pkg = function(args,trmnl){
 	/*
@@ -794,7 +797,7 @@ core.showcol = function(args,trmnl){
 	}
 	return [0, '<font style="color: '+args[0]+'">'+args[0]+'<font>'];
 };
-core.showcol.help = '<b>showcol</b> command: print the given hexadecimal color code in its color';
+core.showcol.help = '<b>showcol</b> command: print the given hexadecimal color code in its color. Try piping from randcol, i.e. @{randcol | showcol}';
 /*---- SUBWAY ----*/
 core.subway = function(args,trmnl){
 	if(stations == -1 || (Object.keys(stations).length === 0 && sellers.constructor === Object)){
@@ -911,12 +914,12 @@ core.subway = function(args,trmnl){
 
 	return [0, "Fetching MTA subway data..."];
 };
-core.subway.help = 'Subway status. Needs a station name as argument, and if there are multiple stations with that name,';
-core.subway.help += '<br />a subway line should be the second argument to differentiate.';
-core.subway.help += '<br />All stations now work, but the naming can be quirky...';
-core.subway.help += '<br />The station name should correspond to the official MTA name for that station, and replace spaces with underscores.';
-core.subway.help += '<br />Note that station names are auto-abbreviated at the first hyphen or slash, which simplifies, but also causes odd ones';
-core.subway.help += '<br />e.g. 47-50 Sts - Rockefeller Ctr becomes just "47"';
+core.subway.help = 'Subway status. Needs a station name as argument, and if there are multiple stations with that name,\n\
+a subway line should be the second argument to differentiate.\n\
+All stations now work, but the naming can be quirky...\n\
+The station name should correspond to the official MTA name for that station, and replace spaces with underscores.\n\
+Note that station names are auto-abbreviated at the first hyphen or slash, which simplifies, but also causes odd ones\n\
+e.g. 47-50 Sts - Rockefeller Ctr becomes just "47"';
 /*---- THEME ----*/
 core.theme = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
@@ -996,7 +999,7 @@ core.transwait = function(args,trmnl){
 	}
 	return [0, delay+' left'];
 };
-core.transwait.help = '<b>transwait</b> command: calculate how long a transfer will take<br />Requires 2 input arguments, the rate and the amount to transfer. Note that calculation is bit/byte specific using b/B notation!<br />e.g. <i>transwait 12.34GB 123Mbps</i><br />(Arguments can come in either order. Only <u>B</u>yte vs <u>b</u>it is case sensitive.)';
+core.transwait.help = '<b>transwait</b> command: calculate how long a transfer will take<br />Requires 2 input arguments, the rate and the amount to transfer. Note that calculation is bit/byte specific using b/B notation!<br />e.g. @{transwait 12.34GB 123Mbps}\n(Arguments can come in either order. Only <u>B</u>yte vs <u>b</u>it is case sensitive.)';
 /*---- VERSION ----*/
 core.version = function(args,trmnl){
 	return [0, "<span class=\"cmd-feedback\">emerix terminal v"+trmnl.version+"<br /><i>Release date: "+trmnl.releaseDate+"</i></span>"]
@@ -1062,7 +1065,7 @@ core.weather = function(args,trmnl){
 
 	return [0, "loading weather data..."]
 };
-core.weather.help = '<b>weather</b> command: get forecast for a given ZIP code<br />e.g. "weather 10025"<br />Defaults to displaying results for next 5 hours, use -f or --full flag to display all results"';
+core.weather.help = '<b>weather</b> command: get forecast for a given ZIP code<br />e.g. "@{weather 10025}"<br />Defaults to displaying results for next 5 hours, use -f or --full flag to display all results"';
 /*---- WHOAMI ----*/
 core.whoami = function(args,trmnl){
 	/* this is the static version of the site. No ajax to php files.
