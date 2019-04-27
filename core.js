@@ -374,7 +374,7 @@ core.install = function(args,trmnl){
 	}
 	return [0, retval];
 };
-core.install.help = "<b>install</b> command: install the specified program<br /><small>(Use <b>pkg</b> command to list available programs)<br />Accepts flags for collections of functions. Currently only --basic/-b for my commonly used ones</small>";
+core.install.help = "<b>install</b> command: install the specified program(s)<br /><small>(Use <b>pkg</b> command to list available programs)<br />Accepts flags for collections of functions. Currently only --basic/-b for my commonly used ones</small>";
 /*---- KILL ----*/
 core.kill = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
@@ -769,14 +769,12 @@ core.science = function(args,trmnl){
 			quick_release = true;
 		}
 	}
-	trmnl.linesep();
-	trmnl.output("Ed is currently a Post-Doctoral Research Scientist at <a target='_blank' href='https://www.cuimc.columbia.edu'>Columbia University Medical Center</a> in the <a target='_blank' href='http://www.columbianeurology.org'>Dept. of Neurology</a>");
-	trmnl.output("His research focuses on the activity of populations of single neurons in epilepsy patients during seizures,<br />especially the activity of individual inhibitory cells at seizure onset, and alterations to firing patterns<br />in what's known as the '<i>post-ictal</i>' period.");
-	trmnl.linesep();
-	trmnl.output("Click to go to his <a target='_blank' href='https://scholar.google.com/citations?user=PnKpxtIAAAAJ&hl=en&oi=ao'>Google Scholar page</a>, <a target='_blank' href='https://www.ncbi.nlm.nih.gov/pubmed/?term=(merricks+em%5Bauthor%5D)'>publications</a>, <a target='_blank' href='https://github.com/edmerix/'>GitHub</a>, or <a target='_blank' href='https://www.researchgate.net/profile/Edward_Merricks'>ResearchGate</a>");
-	trmnl.output("He has code to open <a target='_blank' href='https://github.com/edmerix/openNSx-swift'>NSx neural data files in Swift</a>, do the <a target='_blank' href='https://github.com/edmerix/SplitMerge'>manual stage of spike sorting</a>, or<br /><a target='_blank' href='https://github.com/edmerix/NeuroClass'>analyze populations of single unit data</a>, among others (ask for more).");
-	trmnl.output("There have been a lot of questions about spike sorting through time recently...");
-	trmnl.output("Click <a href='SpikeSorting' target='_blank'>here</a> for a (very) quick overview of spike sorting through time");
+	trmnl.output("@__Ed is currently a Post-Doctoral Research Scientist at <a target='_blank' href='https://www.cuimc.columbia.edu'>Columbia University Medical Center</a> in the <a target='_blank' href='http://www.columbianeurology.org'>Dept. of Neurology</a>\n\
+	His research focuses on the activity of populations of single neurons in epilepsy patients during seizures,<br />especially the activity of individual inhibitory cells at seizure onset, and alterations to firing patterns<br />in what's known as the '<i>post-ictal</i>' period.\
+	@__Click to go to his <a target='_blank' href='https://scholar.google.com/citations?user=PnKpxtIAAAAJ&hl=en&oi=ao'>Google Scholar page</a>, <a target='_blank' href='https://www.ncbi.nlm.nih.gov/pubmed/?term=(merricks+em%5Bauthor%5D)'>publications</a>, <a target='_blank' href='https://github.com/edmerix/'>GitHub</a>, or <a target='_blank' href='https://www.researchgate.net/profile/Edward_Merricks'>ResearchGate</a>\n\
+	He has code to open <a target='_blank' href='https://github.com/edmerix/openNSx-swift'>NSx neural data files in Swift</a>, do the <a target='_blank' href='https://github.com/edmerix/SplitMerge'>manual stage of spike sorting</a>, or<br /><a target='_blank' href='https://github.com/edmerix/NeuroClass'>analyze populations of single unit data</a>, among others (ask for more).\
+	@__There have been a lot of questions about spike sorting through time recently...\n\
+	Click <a href='SpikeSorting' target='_blank'>here</a> for a (very) quick overview of spike sorting through time");
 
 	if(!quick_release){
 		trmnl.program = "science";

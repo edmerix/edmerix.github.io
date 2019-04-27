@@ -358,7 +358,7 @@ Terminal.prototype.parse_command = function(cmd,printing = true){
 		}
     }
 }
-Terminal.prototype.linesep = function(){
+Terminal.prototype.linesep = function(){ // note, can now just use @__ (@ and 2 underscores) in the output to auto-add this
 	let line = document.createElement("div");
 	line.classList.add("output-line");
 	line.innerHTML = "<hr />";
@@ -366,6 +366,19 @@ Terminal.prototype.linesep = function(){
 };
 Terminal.prototype.output = function(output,prompted){
     var out, outprompt, outline;
+	// parse out clickable function shortcuts in the output:
+	const ID = this.ID;
+	output = output.replace(/\@\{.+?\}/g, function(match){ // match anything between @{...} in a non-greedy fashion
+		let cmd = match.replace('@{','');
+		cmd = cmd.replace('}','');
+		// can't say I love using onclick:
+		return '<span class="cmd-shortcut cmd-feedback" title="Click to run \''+cmd+'\' in this terminal..." onclick="javascript:terminal['+ID+'].parse_command(\''+cmd+'\',terminal['+ID+']);">'+cmd+'</span>';
+	});
+	// parse the <hr/> requests
+	output = output.replace(/@__/g,'<hr />');
+	// parse the newlines:
+	output = output.replace(/\n/g,'<br />');
+
     if(prompted){
         var now = new Date(),
             prmpt = this.prompt,

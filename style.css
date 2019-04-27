@@ -100,7 +100,7 @@ input {
     user-select: none;
 }
 .cmd-input {
-    -webkit-box-flex: 1;    
+    -webkit-box-flex: 1;
 }
 .cmd-input input {
     background: transparent;
@@ -113,7 +113,7 @@ input {
     width: 100%;
 }
 #cmd-history .cmd-err {
-    /*color: #e85555; This has been moved to an inline style in the head, to allow for dynamic changes */ 
+    /*color: #e85555; This has been moved to an inline style in the head, to allow for dynamic changes */
 }
 #cmd-history .cmd-feedback {
 	/*color: #9CF; This has been moved to an inline style in the head, to allow for dynamic changes */
@@ -183,4 +183,7 @@ input {
 }
 .no-margin {
 	margin: 0;
+}
+.cmd-shortcut:hover {
+	font-style: italic;
 }
