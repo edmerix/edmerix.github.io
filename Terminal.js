@@ -327,7 +327,7 @@ Terminal.prototype.parse_command = function(cmd,printing = true){
 									this.parse_command(this.pipe_function+"("+response[1]+")",0);
 									// use bracket notation to avoid spaces in output breaking the arguments. But this means we need to sanitize commas out of the output (done above hastily, but need to debug.)
 								}else{
-									this.output(response[1],0);
+									who.output(response[1],0);
 								}
 							}
 							// success.
@@ -435,7 +435,7 @@ Terminal.prototype.error = function(precursor,val){
 	out = out.replace(/@__/g,'<hr />');
 	// parse the newlines:
 	out = out.replace(/\n/g,'<br />');
-	
+
 	outdiv = document.createElement("div");
 	outdiv.classList.add("cmd-err");
 	outdiv.innerHTML = "ERROR: "+out;

@@ -299,17 +299,17 @@ core.help = function(args,trmnl){
 				}
 			}
 		}
-		avail_commands += '</tr></table>'; // will double up the </tr> if total commands is divisible by 5. Fix.
-		avail_commands += '</span>Use help <i>function name</i> for more info';
-		avail_commands += '<br /><small>Commands can be:<br /><ul>';
-		avail_commands += '<li>piped to one another with | (e.g. randcol | showcol)</li>';
-		avail_commands += '<li>run sequentially (if the previous command was successful) with &&';
-		avail_commands += '<li>pushed to a different terminal by appending its ID after :: anywhere in the arguments, which can be repeated multiple times</li>';
-		avail_commands += '<li>repeated multiple times with !<i>n</i> anywhere in the arguments, where <i>n</i> is the number of times to run the command</li>';
-		avail_commands += '<li>the previous command can be re-run with !!</li>';
-		avail_commands += '</ul>';
-		avail_commands += 'e.g. To open 3 extra terminals once session is installed, run: session -& !3';
-		avail_commands += '<br />and to install the basic package to all terminals run: install -b0123</small>';
+		avail_commands += '</tr></table>\
+		</span>Use help <i>function name</i> for more info\n\
+		<small>Commands can be:<br /><ul>\
+		<li>piped to one another with | (e.g. randcol | showcol)</li>\
+		<li>run sequentially (if the previous command was successful) with &&\
+		<li>pushed to a different terminal by appending its ID after :: anywhere in the arguments, which can be repeated multiple times</li>\
+		<li>repeated multiple times with !<i>n</i> anywhere in the arguments, where <i>n</i> is the number of times to run the command</li>\
+		<li>the previous command can be re-run with !!</li>\
+		</ul>\
+		e.g. To open 3 extra terminals once session is installed, run: session -& !3\n\
+		and to install the basic package to all terminals run: install -b0123</small>';
 
 		return [0, avail_commands];
 	}else{
