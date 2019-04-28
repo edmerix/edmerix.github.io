@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		Note there are some cool things that aren\'t installed by default... Use @{pkg} command to see available packages\n\
 		Try @{install session}, followed by @{session}, then @{theme orange}\n\
 		After that, try out @{install tedit}, then @{tedit} for a (super) minimal text editor.\n\
-		When in tedit, hit cmd/ctrl+~ to open the console, and type <span class="cmd-feedback">save</span> to save your file.@__\
+		When in tedit, hit cmd/ctrl+~ to open the console, and type ![save] to save your file.@__\
 		If you made it this far, perhaps check out my <a href="https://www.github.com/edmerix" target="_blank">GitHub</a>');
     }
 	// load local settings here

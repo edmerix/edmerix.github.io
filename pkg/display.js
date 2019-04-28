@@ -17,4 +17,8 @@ pkgs.display = function(args,trmnl){
 	}
 	return [0, "<img src='"+args[0]+"' style='max-width: "+mw+"vw; max-height: "+mh+"vh; opacity: "+alpha+";' onError='this.remove();terminal["+trmnl.ID+"].error(\""+args[0]+" does not appear to be an image...\");'/>"];
 };
-pkgs.display.help = "<b>display</b> command displays an image at the address specified as the first argument.<br />Optional following arguments are values for maximum width, height and the alpha (opacity) of the image:<br /><i>w</i>,<i>h</i>, and <i>a</i> respectively<br />e.g. to display an image at address \"test.png\" with maximum width of 50% the window, at 70% opacity, type:<br />display test.png 50w 0.7a";
+pkgs.display.help = "<b>display</b> command displays an image at the address specified as the first argument.\n\
+Optional following arguments are values for maximum width, height and the alpha (opacity) of the image:\n\
+<i>w</i>,<i>h</i>, and <i>a</i> respectively\n\
+e.g. to display an image at address \"test.png\" with maximum width of 50% the window, at 70% opacity, type:\n\
+@{display test.png 50w 0.7a}";

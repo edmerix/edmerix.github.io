@@ -186,4 +186,5 @@ input {
 }
 .cmd-shortcut:hover {
 	font-style: italic;
+	opacity: 0.7;
 }

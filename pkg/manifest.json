@@ -53,6 +53,13 @@
             "tag": "tedit",
             "description": "Text EDITor (WIP)",
             "help": ""
+        },
+        "video": {
+            "name": "Video Player",
+            "version": "0.1",
+            "tag": "video",
+            "description": "Play videos at remote addresses",
+            "help": ""
         }
     }
 }

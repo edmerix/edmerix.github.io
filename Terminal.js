@@ -374,6 +374,12 @@ Terminal.prototype.output = function(output,prompted){
 		// can't say I love using onclick:
 		return '<span class="cmd-shortcut cmd-feedback" title="Click to run \''+cmd+'\' in this terminal..." onclick="javascript:terminal['+ID+'].parse_command(\''+cmd+'\',terminal['+ID+']);">'+cmd+'</span>';
 	});
+	// parse the feedback highlights:
+	output = output.replace(/\!\[.+?\]/g, function(match){ // match anything between ![...] in a non-greedy fashion
+		match = match.replace('![','').replace(']','');
+		// can't say I love using onclick:
+		return '<span class="cmd-feedback">'+match+'</span>';
+	});
 	// parse the <hr/> requests
 	output = output.replace(/@__/g,'<hr />');
 	// parse the newlines:

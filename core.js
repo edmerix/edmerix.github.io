@@ -185,9 +185,9 @@ core.colconv = function(args,trmnl){
 			rgb = "rgb("+r+","+g+","+b+")";
 			mat = "["+(r/255).toFixed(4)+","+(g/255).toFixed(4)+","+(b/255).toFixed(4)+"]";
 			output += "<span style=\"color: "+hex+"\" title=\""+args[a]+"\">"+args[a]+"</span> is:<br />";
-			if(coltype != "hex") output += "&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"cmd-feedback\">"+hex+"</span> as a hexadecimal code<br />";
-			if(coltype != "rgb") output += "&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"cmd-feedback\">"+rgb+"</span> as an rgb code<br />";
-			if(coltype != "mat") output += "&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"cmd-feedback\">"+mat+"</span> as a MATLAB style code<br />";
+			if(coltype != "hex") output += "&nbsp;&nbsp;&nbsp;&nbsp;!["+hex+"] as a hexadecimal code<br />";
+			if(coltype != "rgb") output += "&nbsp;&nbsp;&nbsp;&nbsp;!["+rgb+"] as an rgb code<br />";
+			if(coltype != "mat") output += "&nbsp;&nbsp;&nbsp;&nbsp;!["+mat+"] as a MATLAB style code<br />";
 		}
 	}
 	return [0, output];
@@ -282,7 +282,7 @@ core.exit.help = '<b>exit</b> the current terminal window. Useful when using ses
 /*---- HELP ----*/
 core.help = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){ // 'help' on its own auto finds all the base commands and lists them
-		var avail_commands = 'Available commands:<hr /><span class="cmd-feedback"><table><tr>';
+		var avail_commands = 'Available commands:<hr />![<table><tr>';
 		if(trmnl.base.hasOwnProperty('autocomplete')){ // make use of the autocomplete data if it has been populated
 			for(var c = 0; c < trmnl.base.autocomplete.length; c++){
 				avail_commands += '<td>'+trmnl.base.autocomplete[c]+'</td>';
@@ -299,8 +299,8 @@ core.help = function(args,trmnl){
 				}
 			}
 		}
-		avail_commands += '</tr></table>\
-		</span>Use help <i>function name</i> for more info\n\
+		avail_commands += '</tr></table>]\
+		Use help <i>function name</i> for more info\n\
 		<small>Commands can be:<br /><ul>\
 		<li>piped to one another with | (e.g. randcol | showcol)</li>\
 		<li>run sequentially (if the previous command was successful) with &&\
@@ -584,7 +584,7 @@ core.mlb = function(args,trmnl){
 					break;
 					// no need for default, it just sticks to what it already is
 			}
-			retVal = "<font class='cmd-feedback'><b>LIVE</b></font>: "+state+" of the "+game.status.inning+"<sup>";
+			retVal = "![<b>LIVE</b>]: "+state+" of the "+game.status.inning+"<sup>";
 			switch(parseFloat(game.status.inning)){
 				case 1:
 					retVal += "st";
@@ -600,8 +600,8 @@ core.mlb = function(args,trmnl){
 			}
 			retVal += "</sup>";
 			if(battingTeam) retVal += " (<i>"+battingTeam+"</i>)";
-			retVal += "<br /><small>(<i>"+game.away_win+"-"+game.away_loss+"</i>)</small> <b>"+game.away_team_name+"</b> <font class='cmd-feedback'>"+game.linescore.r.away+"</font> - ";
-			retVal += "<font class='cmd-feedback'>"+game.linescore.r.home+"</font> <b>"+game.home_team_name+"</b> <small>(<i>"+game.home_win+"-"+game.home_loss+"</i>)</small>";
+			retVal += "<br /><small>(<i>"+game.away_win+"-"+game.away_loss+"</i>)</small> <b>"+game.away_team_name+"</b> !["+game.linescore.r.away+"] - ";
+			retVal += "!["+game.linescore.r.home+"] <b>"+game.home_team_name+"</b> <small>(<i>"+game.home_win+"-"+game.home_loss+"</i>)</small>";
 			// is anyone on base?
 			let bases = ["<sub>&#x25C7;</sub>","<sup>&#x25C7;</sup>","<sub>&#x25C7;</sub>"]
 			if(game.runners_on_base.hasOwnProperty("runner_on_1b")){
@@ -630,7 +630,7 @@ core.mlb = function(args,trmnl){
 			retVal += "Game status: warmup. Gettin' ready...";
 		}else if(game.status.status == "Final" || game.status.status == "Game Over"){
 			retVal = "<b>FINAL</b>:<br />";
-			retVal += "<small>(<i>"+game.away_win+"-"+game.away_loss+"</i>)</small> "+game.away_team_name+" <font class='cmd-feedback'>"+game.linescore.r.away+"</font> - <font class='cmd-feedback'>"+game.linescore.r.home+"</font> "+game.home_team_name+"<small> (<i>"+game.home_win+"-"+game.home_loss+"</i>)</small>";
+			retVal += "<small>(<i>"+game.away_win+"-"+game.away_loss+"</i>)</small> "+game.away_team_name+" !["+game.linescore.r.away+"] - !["+game.linescore.r.home+"] "+game.home_team_name+"<small> (<i>"+game.home_win+"-"+game.home_loss+"</i>)</small>";
 			retVal += "<br />"+scoreBoard;
 		}else{
 			retVal = "Unknown game state: "+game.status.status;
@@ -702,7 +702,7 @@ core.notes = function(args,trmnl){
 			//c_format += ("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2);
 			n_format = getSnippet(notes[n].note,35);
 			if(n_format.length != notes[n].note.length) n_format += "...";
-			output += "<tr><td>[<span class=\"cmd-feedback\">"+n+"</span>] -> </td><td>"+n_format+"</td><td><i>"+c_format+"</i></td><td><i>"+m_format+"</i></td></tr>";
+			output += "<tr><td>[!["+n+"]] -> </td><td>"+n_format+"</td><td><i>"+c_format+"</i></td><td><i>"+m_format+"</i></td></tr>";
 		}
 		output += "</table>";
 		return [0, output];
@@ -749,22 +749,7 @@ core.nsxload = function(args,trmnl){
 core.nsxload.help = '<b>nsxload</b> command: calculates how many gigabytes will be created per hour/day for specified<br />number of electrodes and sampling rate with BlackRock nsx files<br />Specify number of electrodes by pre- or post-fixing with "ch"<br />e.g. @{nsxload 16ch 30k} <i>or</i> @{nsxload 2000 ch64} (i.e. any order for arguments or "ch")';
 /*---- PKG ----*/
 core.pkg = function(args,trmnl){
-	/*
-	const res = ['display','localstore','nano','notebook','session','tedit'];
-	let avail_pkg = 'Available programs to install:<hr /><span class="cmd-feedback"><table><tr>';
-	for(let c = 0; c < res.length; c++){
-		avail_pkg += '<td><span ';
-		if(trmnl.base.hasOwnProperty(res[c])){
-			avail_pkg += "style='opacity: 0.5; font-style: oblique;' title='"+res[c]+" is already installed'";
-		}
-		avail_pkg += '>'+res[c]+'</span></td>';
-		if((c+1)%6 == 0 && c != 1) avail_pkg += '</tr><tr>';
-	}
-	avail_pkg += "</tr></table>"; // will double up the </tr> if total commands is divisible by 5. Fix.
-	return [0, avail_pkg];
-	*/
 	// TODO: don't have any arguments for this at the moment, update
-
 	// we need to go async now. (TODO: turn this into a promise to avoid this!)
 	trmnl.input_div.innerHTML = "";
 	trmnl.input_div.style.display = "none";
@@ -774,7 +759,7 @@ core.pkg = function(args,trmnl){
 	xhr.onload = function(){
 		//TODO: sanity check the JSON response here first!
 		let manifest = JSON.parse(xhr.responseText);
-		let retval = "Version <font class='cmd-feedback'>"+manifest.version+"</font> (last build: <font class='cmd-feedback'>"+manifest.lastbuild+"</font>)";
+		let retval = "Version !["+manifest.version+"] (last build: !["+manifest.lastbuild+"])";
 		retval += "<br />Description: <i>"+manifest.description+"</i><hr /><table><tr>";
 		retval += "<th>Identifier</th>";
 		retval += "<th>Name</th>";
@@ -900,7 +885,7 @@ core.subway = function(args,trmnl){
 				if(res.updated == null){
 					trmnl.output("Currently no information for "+res.data[0].name+" subway station",0);
 				}else{
-					var output = "<span class='cmd-feedback'>"+res.data[0].name+" subway station:</span><br />";
+					var output = "!["+res.data[0].name+" subway station:]<br />";
 					output += "<table><tr><th>Uptown &#9650;</th><th>Downtown &#9660;</th></tr>";
 					var upt = [],
 						downt = [],
@@ -1074,7 +1059,7 @@ core.var = function(args,trmnl){
 core.var.help = '<b>var</b> keyword is used to assign pervasive (machine-specific) variables, e.g. @{var foo=bar}';
 /*---- VERSION ----*/
 core.version = function(args,trmnl){
-	return [0, "<span class=\"cmd-feedback\">emerix terminal v"+trmnl.version+"<br /><i>Release date: "+trmnl.releaseDate+"</i></span>"]
+	return [0, "![emerix terminal v"+trmnl.version+"<br /><i>Release date: "+trmnl.releaseDate+"</i>]"]
 };
 core.version.help = "<b>version</b> command shows details about the current version of the emerix terminal";
 /*---- WEATHER ----*/
@@ -1105,7 +1090,7 @@ core.weather = function(args,trmnl){
 	xhr.onload = function(){
 		try{ // normally we should check if piping is true, but the weather table is just gonna async print.
 			let res = this.response;
-			let weather = "<span class=\"cmd-feedback\">Weather data for "+res.city.name+", "+res.city.country+":</span><br /><table>";
+			let weather = "![Weather data for "+res.city.name+", "+res.city.country+":]<br /><table>";
 			weather += "<tr><th>Date</th><th>Hour</th><th>Condition</th><th>Temp</th><th>Cloudiness</th><th>Humidity</th></tr>";
 			let count_to = 5;
 			if(longprint){
@@ -1188,7 +1173,7 @@ core.workspace = function(args,trmnl){
 	let output = "You have "+Object.keys(vars).length+" variables:<br /><table>";
 	for(let key in vars){
 		if(key != null){
-			output += "<tr><td><span class=\"cmd-feedback\">"+key+"</span></td><td>-></td><td>"+vars[key]+"</td></tr>";
+			output += "<tr><td>!["+key+"]</td><td>-></td><td>"+vars[key]+"</td></tr>";
 		}
 	}
 	output += "</table>";
