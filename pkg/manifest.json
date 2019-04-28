@@ -12,6 +12,13 @@
             "description": "Show images in the terminal",
             "help": "<b>display</b> command displays an image at the address specified as the first argument.<br />Optional following arguments are values for maximum width, height and the alpha (opacity) of the image:<br /><i>w</i>,<i>h</i>, and <i>a</i> respectively<br />e.g. to display an image at address \"test.png\" with maximum width of 50% the window, at 70% opacity, type:<br />display test.png 50w 0.7a"
         },
+        "eg_program": {
+            "name": "Example empty program",
+            "version": "0.1",
+            "tag": "eg_program",
+            "description": "A blank program to explain how to code non-base programs as opposed to simple functions",
+            "help": "These helps aren't actually used at the moment, the ones in their <i>tag</i>.js files are..."
+        },
         "localstore": {
             "name": "Local Store",
             "version": "0.1x",

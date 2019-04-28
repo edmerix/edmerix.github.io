@@ -1188,7 +1188,7 @@ core.workspace = function(args,trmnl){
 	let output = "You have "+Object.keys(vars).length+" variables:<br /><table>";
 	for(let key in vars){
 		if(key != null){
-			output += "<tr><td><span class=\"cmd-feedback\">"+key+"</span> -> </td><td>"+vars[key]+"</td></tr>";
+			output += "<tr><td><span class=\"cmd-feedback\">"+key+"</span></td><td>-></td><td>"+vars[key]+"</td></tr>";
 		}
 	}
 	output += "</table>";
