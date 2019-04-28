@@ -95,6 +95,32 @@ core.bitconv = function(args,trmnl){
 	return [0, val_in+' is '+converted+' '+units_out];
 };
 core.bitconv.help = '<b>bitconv</b> command: convert between gigabytes, bits, megabits and kilobytes etc.'
+/*---- CLEAR ----*/
+core.clear = function(args,trmnl){
+	//TODO: might be cool to add the creation/modification date to the variables (like note), which would be included in workspace command.
+	if(args[0] == undefined || args[0] == ""){
+		return [1, "Need the name of at least one currently stored variable to clear from workspace.\n\
+		Use @{workspace} to see current variables"];
+	}
+	let vars = JSON.parse(localStorage.getItem("vars"));
+	if(vars == null){
+		return [0, "No variables currently stored, so not clearing anything"];
+	}
+	let name, value, pop, output = "";
+	for(let a = 0; a < args.length; a++){
+		if(vars.hasOwnProperty(args[a])){
+			delete vars[args[a]]; // eek.
+			output += "Cleared <i>"+args[a]+"</i> variable\n";
+		}else{
+			output += "Not clearing <i>"+args[a]+"</i> variable because it didn't exist\n";
+		}
+	}
+	localStorage.setItem("vars",JSON.stringify(vars));
+
+	return [0, output];
+};
+core.clear.help = '<b>clear</b> function is used to clear variables that were set with <i>var</i> keyword.\n\
+e.g. @{clear foo} (won\'t do anything unless you\'ve set a variable called "foo")';
 /*---- CLS ----*/
 core.cls = function(args,trmnl){
 	trmnl.output_div.innerHTML = "";
@@ -228,8 +254,25 @@ core.db = function(args,trmnl){
 	trmnl.program = "db";
 	trmnl.next_prompt = 'DB>';
 	return 0;
-};;
+};
 core.db.help = '<b>db</b> program';
+/*---- ECHO ----*/
+core.echo = function(args,trmnl){
+	if(args[0] == undefined || args[0] == ""){
+		return [1, "Need a variable name to print. Use @{workspace} to show current variables"];
+	}
+	const vars = JSON.parse(localStorage.getItem("vars"));
+	if(vars == null){
+		return [0, "No <i>"+args[0]+"</i> variable stored"];
+	}
+	// TODO: do some sanity checking on input here (args[0])
+	if(typeof(vars[args[0]]) === "undefined"){
+		return [1, "No <i>"+args[0]+"</i> variable stored"];
+	}
+
+	return [0, vars[args[0]]];
+};
+core.echo.help = '<b>echo</b> prints a variable to the screen. Assign variables with <i>var</i> function, e.g. @{var foo=bar}';
 /*---- EXIT ----*/
 core.exit = function(args,trmnl){
 	trmnl.exit();
@@ -316,16 +359,15 @@ core.install = function(args,trmnl){
 		}
 	}
 	if(installTo.length < 1) installTo = [trmnl.ID];
-
+	let d = new Date();
 	for(let a in args){
 		// test if it's already installed first here!
 		let app = args[a];
 		// we need to go async now.
 		trmnl.input_div.innerHTML = "";
 		trmnl.input_div.style.display = "none";
-		var d = new Date();
 
-		var xhr = new XMLHttpRequest();
+		let xhr = new XMLHttpRequest();
 		xhr.open('GET', "pkg/"+app+".js?d="+d.getTime());
 
 		xhr.onload = function(){
@@ -726,8 +768,9 @@ core.pkg = function(args,trmnl){
 	// we need to go async now. (TODO: turn this into a promise to avoid this!)
 	trmnl.input_div.innerHTML = "";
 	trmnl.input_div.style.display = "none";
+	let d = new Date();
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'pkg/manifest.json', true);
+	xhr.open('GET', 'pkg/manifest.json?d='+d.getTime(), true);
 	xhr.onload = function(){
 		//TODO: sanity check the JSON response here first!
 		let manifest = JSON.parse(xhr.responseText);
@@ -1000,6 +1043,35 @@ core.transwait = function(args,trmnl){
 	return [0, delay+' left'];
 };
 core.transwait.help = '<b>transwait</b> command: calculate how long a transfer will take<br />Requires 2 input arguments, the rate and the amount to transfer. Note that calculation is bit/byte specific using b/B notation!<br />e.g. @{transwait 12.34GB 123Mbps}\n(Arguments can come in either order. Only <u>B</u>yte vs <u>b</u>it is case sensitive.)';
+/*---- VAR ----*/
+core.var = function(args,trmnl){
+	//TODO: might be cool to add the creation/modification date to the variables (like note), which would be included in workspace command.
+	if(args[0] == undefined || args[0] == ""){
+		return [1, "Need at least one argument, with assignment, e.g. @{var foo=bar} or @{var(foo = bar, pi = 3.1415)}"];
+	}
+	let vars = JSON.parse(localStorage.getItem("vars"));
+	if(vars == null){
+		vars = {};
+	}
+	let name, value, pop, output = "";
+	for(let a = 0; a < args.length; a++){
+		pop = args[a].split('=');
+		if(pop.length < 2){
+			return [1, "Variables must be assigned when instantiated, i.e. "+args[a]+"=<i>something</i>"];
+		}
+		value = pop[pop.length-1].trim();
+		for(let n = 0; n < pop.length - 1; n++){ // for example foo=bob=bar would set foo and bob to a value of bar
+			name = pop[n].trim();
+			vars[name] = value;
+			output += name+" <i>set to</i> "+value+"\n";
+		}
+		//TODO: do some sanity checking that the variable was successfully created, and if not, alter the above output line
+	}
+	localStorage.setItem("vars",JSON.stringify(vars));
+
+	return [0, output];
+};
+core.var.help = '<b>var</b> keyword is used to assign pervasive (machine-specific) variables, e.g. @{var foo=bar}';
 /*---- VERSION ----*/
 core.version = function(args,trmnl){
 	return [0, "<span class=\"cmd-feedback\">emerix terminal v"+trmnl.version+"<br /><i>Release date: "+trmnl.releaseDate+"</i></span>"]
@@ -1106,3 +1178,20 @@ core.whoami = function(args,trmnl){
 	return [0, "Browsing as guest"]; // always, since this is the static version. Bit rubbish.
 };
 core.whoami.help = '<b>whoami</b> command: tells you who you are logged in as, if any';
+/*---- WORKSPACE ----*/
+core.workspace = function(args,trmnl){
+	// currently just auto-discards any arguments/flags
+	const vars = JSON.parse(localStorage.getItem("vars"));
+	if(vars == null){
+		return [0, "You have no variables stored"];
+	}
+	let output = "You have "+Object.keys(vars).length+" variables:<br /><table>";
+	for(let key in vars){
+		if(key != null){
+			output += "<tr><td><span class=\"cmd-feedback\">"+key+"</span> -> </td><td>"+vars[key]+"</td></tr>";
+		}
+	}
+	output += "</table>";
+	return [0, output];
+};
+core.workspace.help = '<b>workspace</b> prints all currently stored variables to the screen. Variables are pervasive and machine-specific';

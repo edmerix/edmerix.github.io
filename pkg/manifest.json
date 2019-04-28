@@ -14,35 +14,35 @@
         },
         "localstore": {
             "name": "Local Store",
-            "version": "0.1",
+            "version": "0.1x",
             "tag": "localstore",
-            "description": "Basic storage of variables in the browser's localstorage",
+            "description": "Superseded by @{var}, @{echo}, @{workspace} and @{clear} functions/keywords. <b>No longer necessary.</b>",
             "help": ""
         },
         "nano": {
             "name": "Nano Text Editor",
-            "version": "0.1",
+            "version": "0.1a",
             "tag": "nano",
             "description": "The beginnings of a nano-like text editor (WIP)",
             "help": ""
         },
         "notebook": {
             "name": "Notebook",
-            "version": "0.1",
+            "version": "0.1a",
             "tag": "notebook",
             "description": "A program to view/edit/delete your notes from the note function (WIP)",
             "help": ""
         },
         "session": {
             "name": "Session",
-            "version": "0.1",
+            "version": "1.0",
             "tag": "session",
             "description": "Manage multiple terminal sessions in one window",
             "help": ""
         },
         "tedit": {
             "name": "TEdit",
-            "version": "0.1",
+            "version": "0.2",
             "tag": "tedit",
             "description": "Text EDITor (WIP)",
             "help": ""

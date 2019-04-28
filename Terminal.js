@@ -419,11 +419,23 @@ Terminal.prototype.scrollDown = function(){
 	this.body.scrollTop = ht;
 }
 Terminal.prototype.error = function(precursor,val){
-    var out, outdiv;
+    let out, outdiv;
 	out = precursor;
     if(val != undefined && val != "" && val != null){
         out += ", '"+val+"'";
     }
+	const ID = this.ID;
+	out = out.replace(/\@\{.+?\}/g, function(match){ // match anything between @{...} in a non-greedy fashion
+		let cmd = match.replace('@{','');
+		cmd = cmd.replace('}','');
+		// can't say I love using onclick:
+		return '<span class="cmd-shortcut cmd-feedback" title="Click to run \''+cmd+'\' in this terminal..." onclick="javascript:terminal['+ID+'].parse_command(\''+cmd+'\',terminal['+ID+']);">'+cmd+'</span>';
+	});
+	// parse the <hr/> requests
+	out = out.replace(/@__/g,'<hr />');
+	// parse the newlines:
+	out = out.replace(/\n/g,'<br />');
+	
 	outdiv = document.createElement("div");
 	outdiv.classList.add("cmd-err");
 	outdiv.innerHTML = "ERROR: "+out;
