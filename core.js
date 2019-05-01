@@ -282,24 +282,24 @@ core.exit.help = '<b>exit</b> the current terminal window. Useful when using ses
 /*---- HELP ----*/
 core.help = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){ // 'help' on its own auto finds all the base commands and lists them
-		var avail_commands = 'Available commands:<hr />![<table><tr>';
+		var avail_commands = 'Available commands:<hr /><table><tr>';
 		if(trmnl.base.hasOwnProperty('autocomplete')){ // make use of the autocomplete data if it has been populated
 			for(var c = 0; c < trmnl.base.autocomplete.length; c++){
-				avail_commands += '<td>'+trmnl.base.autocomplete[c]+'</td>';
+				avail_commands += `<td>@{${trmnl.base.autocomplete[c]}}</td>`; // Oh look, I started updating the variable in strings method at last!
 				if((c+1)%6 == 0 && c != 1) avail_commands += '</tr><tr>';
 			}
 		}else{
 			var c = 0;
 			for(key in trmnl.base){
 				if(typeof(trmnl.base[key]) == 'function'){
-					avail_commands += '<td>'+key+'</td>';
+					avail_commands += `<td>@{${key}}</td>`;
 					c++;
 					if(c%6 == 0 && c != 1) avail_commands += '</tr><tr>';
 					//avail_commands += '&nbsp;&nbsp;'+key+'<br />';
 				}
 			}
 		}
-		avail_commands += '</tr></table>]\
+		avail_commands += '</tr></table>\
 		Use help <i>function name</i> for more info\n\
 		<small>Commands can be:<br /><ul>\
 		<li>piped to one another with | (e.g. @{randcol | showcol})</li>\
