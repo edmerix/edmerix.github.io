@@ -2,7 +2,7 @@
     "source": "apps",
     "description": "Available applications from edmerix.github.io base source",
     "version": "0.1",
-	"lastbuild": "2019-04-03 00:27:43",
+	"lastbuild": "2019-04-28 14:09:35",
     "manifest_version": 2,
     "apps": {
         "display": {

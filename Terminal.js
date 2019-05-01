@@ -1,8 +1,14 @@
+/* Basic output syntax options (don't need to do any):
+	Core is basic HTML
+	Mark text to be hightlighted with ![text goes here]
+	Mark text to be a specific color with #165284[text goes here] where #165284 is your hex color code
+	Mark text to be a function that can be run by clicking on it with @{function}, e.g. @{help} or @{install session}
+*/
 function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_file){
 	this.ID = cmdID;
 	this.title = "emerix";
-	this.version = 0.2;
-	this.releaseDate = "2019-04-13";
+	this.version = 0.3;
+	this.releaseDate = "2019-04-28";
 
 	this.prompt = prmpt;
 	this.base_prompt = prmpt;
@@ -199,10 +205,9 @@ Terminal.prototype.update_autocomplete = function(prog){
 	this[prog].autocomplete = this[prog].autocomplete.sort();
 }
 Terminal.prototype.parse_command = function(cmd,printing = true){
-	// should do the actual parsing with regex. Check out http://regexlib.com/Search.aspx?k=command+line&c=-1&m=-1&ps=20&AspxAutoDetectCookieSupport=1 for ideas.
-	if(cmd == '!!'){ // as per bash.
-		cmd = this.cmd_hist[this.cmd_hist.length-1];
-	}
+	//TODO: should do the actual parsing with regex. Check out http://regexlib.com/Search.aspx?k=command+line&c=-1&m=-1&ps=20 for ideas.
+	cmd = cmd.replace(/!{2}/g,this.cmd_hist[this.cmd_hist.length-1]); // this line swaps all instances of !! with the previous command
+
 	if(cmd.replace(/ /g,'') != ""){
         this.cmd_counter++;
         var cmdOut = escapeHTML(cmd);
@@ -379,6 +384,12 @@ Terminal.prototype.output = function(output,prompted){
 		match = match.replace('![','').replace(']','');
 		// can't say I love using onclick:
 		return '<span class="cmd-feedback">'+match+'</span>';
+	});
+	// parse the color requests:
+	let pop;
+	output = output.replace(/\#([0-9a-fA-f]{3})(?:[0-9a-fA-f]{3})?\[.+?]/g, function(match){
+		pop = match.split('[');
+		return '<span style="color: '+pop[0]+';">'+pop[1].replace(']','</span>');
 	});
 	// parse the <hr/> requests
 	output = output.replace(/@__/g,'<hr />');

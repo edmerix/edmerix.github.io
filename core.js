@@ -302,14 +302,14 @@ core.help = function(args,trmnl){
 		avail_commands += '</tr></table>]\
 		Use help <i>function name</i> for more info\n\
 		<small>Commands can be:<br /><ul>\
-		<li>piped to one another with | (e.g. randcol | showcol)</li>\
+		<li>piped to one another with | (e.g. @{randcol | showcol})</li>\
 		<li>run sequentially (if the previous command was successful) with &&\
 		<li>pushed to a different terminal by appending its ID after :: anywhere in the arguments, which can be repeated multiple times</li>\
 		<li>repeated multiple times with !<i>n</i> anywhere in the arguments, where <i>n</i> is the number of times to run the command</li>\
-		<li>the previous command can be re-run with !!</li>\
+		<li>the previous command can be re-run with @{!!}</li>\
 		</ul>\
-		e.g. To open 3 extra terminals once session is installed, run: session -& !3\n\
-		and to install the basic package to all terminals run: install -b0123</small>';
+		e.g. To open 3 extra terminals once session is installed, run: @{session -& !3}\n\
+		and to install the basic package to all terminals run: @{install -b0123}</small>';
 
 		return [0, avail_commands];
 	}else{
@@ -702,7 +702,11 @@ core.notes = function(args,trmnl){
 			//c_format += ("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2);
 			n_format = getSnippet(notes[n].note,35);
 			if(n_format.length != notes[n].note.length) n_format += "...";
-			output += "<tr><td>[!["+n+"]] -> </td><td>"+n_format+"</td><td><i>"+c_format+"</i></td><td><i>"+m_format+"</i></td></tr>";
+			output += "<tr";
+			if(notes[n].complete){
+				output += " style=\"text-decoration: line-through;\""
+			}
+			output += "><td>[!["+n+"]] -> </td><td>"+n_format+"</td><td><i>"+c_format+"</i></td><td><i>"+m_format+"</i></td></tr>";
 		}
 		output += "</table>";
 		return [0, output];
