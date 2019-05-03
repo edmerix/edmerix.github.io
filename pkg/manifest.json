@@ -2,7 +2,7 @@
     "source": "apps",
     "description": "Available applications from edmerix.github.io base source",
     "version": "0.1",
-	"lastbuild": "2019-04-28 14:09:35",
+	"lastbuild": "2019-05-01 14:40:23",
     "manifest_version": 2,
     "apps": {
         "display": {
@@ -11,13 +11,6 @@
             "tag": "display",
             "description": "Show images in the terminal",
             "help": "<b>display</b> command displays an image at the address specified as the first argument.<br />Optional following arguments are values for maximum width, height and the alpha (opacity) of the image:<br /><i>w</i>,<i>h</i>, and <i>a</i> respectively<br />e.g. to display an image at address \"test.png\" with maximum width of 50% the window, at 70% opacity, type:<br />display test.png 50w 0.7a"
-        },
-        "eg_program": {
-            "name": "Example empty program",
-            "version": "0.1",
-            "tag": "eg_program",
-            "description": "A blank program to explain how to code non-base programs as opposed to simple functions",
-            "help": "These helps aren't actually used at the moment, the ones in their <i>tag</i>.js files are..."
         },
         "localstore": {
             "name": "Local Store",
@@ -35,9 +28,9 @@
         },
         "notebook": {
             "name": "Notebook",
-            "version": "0.1a",
+            "version": "1.0",
             "tag": "notebook",
-            "description": "A program to view/edit/delete your notes from the note function (WIP)",
+            "description": "A program to view/edit/delete your notes from the note function",
             "help": ""
         },
         "session": {
