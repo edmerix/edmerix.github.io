@@ -92,7 +92,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 			if(code == 9){ //tab autocomplete or next screen if option held and multiple terminals open
 				if(e.altKey){
 					e.preventDefault();
-					var curID = trmnl.ID;
+					const curID = trmnl.ID;
 					newID = curID + 1;
 					while(typeof(terminal[newID]) !== "object" && newID != curID){
 						newID++;
@@ -102,18 +102,22 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 						terminal[newID].input_div.focus();
 				}else{
 					e.preventDefault();
-					var thusfar = this.value;
-					if(thusfar != ""){
-						var results = [];
-						for (var i = 0; i < trmnl[trmnl.program].autocomplete.length; i++) {
-							if (trmnl[trmnl.program].autocomplete[i].indexOf(thusfar) == 0) { //starts with correct
-								if(trmnl[trmnl.program].autocomplete[i] != thusfar){ // no need to add if identical
-									results.push(thusfar+trmnl[trmnl.program].autocomplete[i].slice(thusfar.length, trmnl[trmnl.program].autocomplete[i].length));
+					const thusfar = this.value;
+					let subfar = thusfar.split(" ");
+					subfar = subfar[subfar.length-1];
+					if(subfar != ""){
+						let results = [];
+						for(let i = 0; i < trmnl[trmnl.program].autocomplete.length; i++){
+							if(trmnl[trmnl.program].autocomplete[i].indexOf(subfar) == 0){ //starts with correct
+								if(trmnl[trmnl.program].autocomplete[i] != subfar){ // no need to add if identical
+									//results.push(thusfar+trmnl[trmnl.program].autocomplete[i].slice(thusfar.length, trmnl[trmnl.program].autocomplete[i].length));
+									results.push(trmnl[trmnl.program].autocomplete[i]);
 								}
 							}
 						}
 						if(results.length == 1){
-							trmnl.input_div.value = results[0]; // update the input if one match been found
+							//trmnl.input_div.value = results[0]; // update the input if one match been found
+							trmnl.input_div.value += results[0].slice(subfar.length, results[0].length);
 						}else if(results.length > 1 && results.length <= 20){ // list all options below, if fewer than 20
 							var tbl_out = "<hr /><table><tr>";
 							for(var r = 0; r < results.length; r++){
