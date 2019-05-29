@@ -10,6 +10,6 @@ pkgs.localstore = function(args,trmnl){
 	}
     return 0;
 };
-pkgs.localstore.help = "<b>localstore</b> command: store pervasive variables in localStorage (machine-specific).\n\
+pkgs.localstore.help = "<b>@{localstore}</b> command: store pervasive variables in localStorage (machine-specific).\n\
 Syntax requires no spaces if using whitespace-based input e.g. @{localstore foo=bar} or @{localstore(foo = bar)}\n\
 <b>Superseded by @{var} keyword and @{echo}/@{workspace}/@{clear} functions</b>";

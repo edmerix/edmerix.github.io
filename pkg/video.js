@@ -20,7 +20,7 @@ pkgs.video = function(args,trmnl){
 	//		but videos will need to wait until the promise is rejected or check manually for a 404 error.
 	return [0, "<video controls style='max-width: "+mw+"vw; max-height: "+mh+"vh; opacity: "+alpha+";'><source src='"+args[0]+"' /></video>"];
 };
-pkgs.video.help = "<b>video</b> command plays a video at the address specified as the first argument.\n\
+pkgs.video.help = "<b>@{video}</b> command plays a video at the address specified as the first argument.\n\
 Optional following arguments are values for maximum width, height and the alpha (opacity) of the image:\n\
 <i>w</i>,<i>h</i>, and <i>a</i> respectively\n\
 e.g. to display a video at address \"test.mp4\" with maximum width of 50% the window, at 70% opacity, type:\n\

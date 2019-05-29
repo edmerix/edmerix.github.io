@@ -5,16 +5,16 @@ var pkgs = pkgs || {}; // this is just in case we overwrite something, but this 
 pkgs.tedit = function(args,trmnl){
 	// sort out arguments later, and put them here.
 	var id = trmnl.ID;
-	
+
 	trmnl.active = false; // vital to stop what you type potentially propagating back to the terminal
-	
+
 	trmnl.input_div.style.display = "none";
 	trmnl.prompt_div.style.display = "none";
 	trmnl.output_div.style.display = "none";
-	
+
 	trmnl.running = trmnl.running || {};
 	trmnl.running.tedit = new TEdit(trmnl);
-	
+
 	trmnl.running.tedit.screen.onkeydown = function(e){
 		var code = e.keyCode || e.which;
 		if(e.ctrlKey || e.metaKey){
@@ -55,7 +55,7 @@ pkgs.tedit = function(args,trmnl){
 	return [0, "<span class='cmd-feedback'>Opening TEdit</span>"];
 };
 
-pkgs.tedit.help = "<b>TEdit</b>- simple Text EDITor";
+pkgs.tedit.help = "<b>@{tedit}</b> - simple Text EDITor";
 //TODO: implement "background" apps (open in new tab) Probably add an html file for apps that are background capable,
 // i.e. for this it would be "tedit.html" which allows just going to edmerix.github.io/pkg/tedit.html (though it'd be
 // nice to make it index.html within tedit. Perhaps we do that. In fact, like that, all index.html files can be
@@ -64,14 +64,14 @@ var TEdit = function(trmnl){
 	this.bg_capable = true; // if true, calling the app with "&" after opens it in a new tab as a standalone app
 	this.termID = trmnl.ID;
 	this.version = "0.0.1";
-	
+
 	this.bg = trmnl.cols.bg;
 	this.high_bg = trmnl.cols.feedback;
 	this.color = trmnl.cols.output;
 	// some settings for functionality:
 	this.savetime = 0;
 	this.modified = false; //TODO: code this stuff in
-	
+
 	// actual screen:
 	this.main = document.createElement("div");
 	this.main.setAttribute("id","tedit_"+trmnl.ID);
@@ -79,7 +79,7 @@ var TEdit = function(trmnl){
 	var styleString = "position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 14px; background: "+this.bg+";";
 	this.main.style = styleString;
 	trmnl.body.appendChild(this.main);
-	
+
 	var lineHeight = 14;
 	var pad = 2;
 
@@ -92,7 +92,7 @@ var TEdit = function(trmnl){
 	styleString += " color: "+this.color+";";
 	this.screen.style = styleString;
 	this.main.appendChild(this.screen);
-	
+
 	// title bar:
 	this.titlebar = document.createElement("div");
 	styleString = "position: absolute; top: 0; left: 0; height: "+lineHeight+"px; line-height: "+lineHeight+"px; right: 0; background: "+this.high_bg+"; color: "+this.bg+"; padding-bottom: "+pad+"px;";
@@ -100,47 +100,47 @@ var TEdit = function(trmnl){
 	this.main.appendChild(this.titlebar);
 	//TODO: update below where it says <i>New file</i> to be correct when opening a file, and remember to update this when saving
 	this.titlebar.innerHTML = "<table style='width: 100%;'><tr><td style='width: 33%;'>TEdit "+this.version+"</td><td style='width: 33%; text-align: center;'><i>New file</i></td><td style='width: 33%;'>&nbsp;</td>";
-	
+
 	// status bar:
 	this.statusbar = document.createElement("div");
 	styleString = "position: absolute; bottom: "+(2*(lineHeight+pad))+"px; left: 5px; height: "+lineHeight+"px;";
 	styleString += " line-height: "+lineHeight+"px; right: 5px; color: "+this.color+"; font-size: "+lineHeight+"px; padding-bottom: "+pad+"px;";
 	this.statusbar.style = styleString;
 	this.main.appendChild(this.statusbar);
-	
+
 	// console:
 	this.console = document.createElement("div");
 	styleString = "display: none; position: absolute; bottom: 0px; left: 0; height: "+(2*lineHeight)+"px;";
 	styleString += " line-height: "+lineHeight+"px; right: 0; color: "+this.high_bg+"; padding-bottom: "+(2*pad)+"px;";
 	this.console.style = styleString;
-	
+
 	let tbl = document.createElement("table");
 	tbl.style.width = '100%';
-	
+
 	let tr = document.createElement("tr");
-	
+
 	let tdPrompt = document.createElement("td");
 	tdPrompt.style.width = "1px";
 	tdPrompt.style.whiteSpace = "nowrap";
 	tdPrompt.innerHTML = "TEDit&gt;&gt;";
 	tr.appendChild(tdPrompt);
-	
+
 	let tdInput = document.createElement("td");
-	
+
 	this.consoleInput = document.createElement("input"); //<input id='teditconsole' style='width: 100%; background: transparent; border: none; outline: none;'/>
 	this.consoleInput.style.width = "100%";
 	this.consoleInput.style.background = "transparent";
 	this.consoleInput.style.border = "none";
 	this.consoleInput.style.outline = "none";
-	
+
 	tdInput.appendChild(this.consoleInput);
 	tr.appendChild(tdInput);
 	tbl.appendChild(tr);
-	
+
 	this.console.appendChild(tbl);
 	this.main.appendChild(this.console);
 	this.consoleActive = false;
-	
+
 	// "writeout" link (hidden):
 	this.downloadLink = document.createElement("a");
 	this.downloadLink.style = "display: none; opacity: 0;";
@@ -154,14 +154,14 @@ TEdit.prototype.exit = function(){
 	terminal[this.termID].input_div.style.display = "block";
 	terminal[this.termID].prompt_div.style.display = "block";
 	terminal[this.termID].output_div.style.display = "block";
-	
+
 	terminal[this.termID].running.tedit.main.remove();
 	delete terminal[this.termID].running.tedit
-	
+
 	terminal[this.termID].active = true;
-	
+
 	terminal[this.termID].scrollDown();
-	
+
 	terminal[this.termID].input_div.focus();
 }
 TEdit.prototype.localsave = function(){
@@ -175,7 +175,7 @@ TEdit.prototype.writeout = function(fname){
 	var textToWrite = this.screen.value;
 	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
 	var fileNameToSaveAs = fname;
-	
+
 	//var downloadLink = document.createElement("a");
 	this.downloadLink.download = fileNameToSaveAs;
 	this.downloadLink.innerHTML = "Download File";
@@ -257,7 +257,7 @@ TEdit.prototype.hideConsole = function(){
 	this.consoleInput.value = "";
 	this.screen.focus();
 };
-TEdit.prototype.statusFade = function(){ 
+TEdit.prototype.statusFade = function(){
 	// big jQuery change - the only animation thus far
 	/*
 	$(this.statusbar).stop().delay(3000).fadeOut(1000);

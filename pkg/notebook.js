@@ -70,7 +70,7 @@ pkgs.notebook = function(args,trmnl){
 	};
 	return [0, "![Opening Notebook]"];
 };
-pkgs.notebook.help = "<b>notebook</b> program: use to navigate your locally stored @{notes}.";
+pkgs.notebook.help = "<b>@{notebook}</b> program: use to navigate your locally stored @{notes}.";
 
 //TODO: I want this to be a const and to only create it if Notebook hasn't already been installed in a different terminal. Annoying.
 var Notebook = function(trmnl){

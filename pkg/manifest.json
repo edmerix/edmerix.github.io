@@ -42,7 +42,7 @@
         },
         "tedit": {
             "name": "TEdit",
-            "version": "0.2",
+            "version": "0.2a",
             "tag": "tedit",
             "description": "Text EDITor (WIP)",
             "help": ""

@@ -386,7 +386,6 @@ Terminal.prototype.output = function(output,prompted){
 	// parse the feedback highlights:
 	output = output.replace(/\!\[.+?\]/g, function(match){ // match anything between ![...] in a non-greedy fashion
 		match = match.replace('![','').replace(']','');
-		// can't say I love using onclick:
 		return '<span class="cmd-feedback">'+match+'</span>';
 	});
 	// parse the color requests:

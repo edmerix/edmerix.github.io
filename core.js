@@ -30,7 +30,7 @@ core.arglist = function(args,trmnl){
 	}
 	return [0,arglist];
 };
-core.arglist.help = '<b>arglist</b> command: prints supplied arguments to screen<br/>Can be useful in piped functions or testing your argument parsing in other functions';
+core.arglist.help = '<b>@{arglist}</b> command: prints supplied arguments to screen<br/>Can be useful in piped functions or testing your argument parsing in other functions';
 /*---- BG ----*/
 core.bg = function(args,trmnl){
 	if(args.length > 1) args = args[0];
@@ -46,7 +46,7 @@ core.bg = function(args,trmnl){
 	trmnl.update_colors();
 	return 0;
 };
-core.bg.help = '<b>bg</b> command: change the background color to a specified hexadecimal color code<br />Use @{bg reset} to return to default (not the default of current theme)';
+core.bg.help = '<b>@{bg}</b> command: change the background color to a specified hexadecimal color code<br />Use @{bg reset} to return to default (not the default of current theme)';
 /*---- BITCONV ----*/
 core.bitconv = function(args,trmnl){
 	if(args.length != 2){
@@ -94,7 +94,7 @@ core.bitconv = function(args,trmnl){
 	var converted = amt * conv_amt;
 	return [0, val_in+' is '+converted+' '+units_out];
 };
-core.bitconv.help = '<b>bitconv</b> command: convert between gigabytes, bits, megabits and kilobytes etc.'
+core.bitconv.help = '<b>@{bitconv}</b> command: convert between gigabytes, bits, megabits and kilobytes etc.'
 /*---- CLEAR ----*/
 core.clear = function(args,trmnl){
 	//TODO: might be cool to add the creation/modification date to the variables (like note), which would be included in workspace command.
@@ -119,7 +119,7 @@ core.clear = function(args,trmnl){
 
 	return [0, output];
 };
-core.clear.help = '<b>clear</b> function is used to clear variables that were set with <i>var</i> keyword.\n\
+core.clear.help = '<b>@{clear}</b> function is used to clear variables that were set with <i>var</i> keyword.\n\
 e.g. @{clear foo} (won\'t do anything unless you\'ve set a variable called "foo")';
 /*---- CLS ----*/
 core.cls = function(args,trmnl){
@@ -192,7 +192,7 @@ core.colconv = function(args,trmnl){
 	}
 	return [0, output];
 };
-core.colconv.help = '<b>colconv</b> command: supply a color code in either rgb(), hex (must include #) or [0:1,0:1,0:1] format<br/>and the same color in the other formats will be printed to screen.<br />Can supply as many colors as separate arguments as desired';
+core.colconv.help = '<b>@{colconv}</b> command: supply a color code in either rgb(), hex (must include #) or [0:1,0:1,0:1] format<br/>and the same color in the other formats will be printed to screen.<br />Can supply as many colors as separate arguments as desired';
 /*---- COLOR ----*/
 core.color = function(args,trmnl){
 	var which, col;
@@ -220,7 +220,7 @@ core.color = function(args,trmnl){
 	trmnl.update_colors();
 	return 0;
 };
-core.color.help = '<b>color</b> command: change the font color to a specified hexadecimal color code<br />Use <i>color reset</i> to return to default<br />feedback or error colors can be changed by passing in their name as first argument and the color as second';
+core.color.help = '<b>@{color}</b> command: change the font color to a specified hexadecimal color code<br />Use <i>color reset</i> to return to default<br />feedback or error colors can be changed by passing in their name as first argument and the color as second';
 /*---- COWSAY ----*/
 core.cowsay = function(args,trmnl){
 	var minL = 8, moostr = args[0], m = 0;
@@ -255,7 +255,7 @@ core.db = function(args,trmnl){
 	trmnl.next_prompt = 'DB>';
 	return 0;
 };
-core.db.help = '<b>db</b> program';
+core.db.help = '<b>@{db}</b> program';
 /*---- ECHO ----*/
 core.echo = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
@@ -272,13 +272,13 @@ core.echo = function(args,trmnl){
 
 	return [0, vars[args[0]]];
 };
-core.echo.help = '<b>echo</b> prints a variable to the screen. Assign variables with <i>var</i> function, e.g. @{var foo=bar}';
+core.echo.help = '<b>@{echo}</b> prints a variable to the screen. Assign variables with <i>var</i> function, e.g. @{var foo=bar}';
 /*---- EXIT ----*/
 core.exit = function(args,trmnl){
 	trmnl.exit();
 	return 0;
 };
-core.exit.help = '<b>exit</b> the current terminal window. Useful when using session.<br />Will result in blank screen if you exit the last terminal...';
+core.exit.help = '<b>@{exit}</b> the current terminal window. Useful when using session.<br />Will result in blank screen if you exit the last terminal...';
 /*---- HELP ----*/
 core.help = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){ // 'help' on its own auto finds all the base commands and lists them
@@ -324,7 +324,7 @@ core.help = function(args,trmnl){
 	}
 	return 0;
 };
-core.help.help = '<b>help</b> command: in-depth help for the help command needs to be written here.';
+core.help.help = '<b>@{help}</b> command: in-depth help for the help command needs to be written here.';
 /*---- HISTSIZE ----*/
 core.histsize = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
@@ -335,7 +335,7 @@ core.histsize = function(args,trmnl){
 	trmnl.cmd_hist_size = n;
 	return [0, "Set command history size to "+n];
 };
-core.histsize.help = '<b>histsize</b>: with no argument, prints current command history size to screen,<br />with exactly 1 argument – sets the number of items to store in the local storage command history';
+core.histsize.help = '<b>@{histsize}</b>: with no argument, prints current command history size to screen,<br />with exactly 1 argument – sets the number of items to store in the local storage command history';
 /*---- INSTALL ----*/
 core.install = function(args,trmnl){
 	// TODO: parse flags out of args, and set -p/--permanent flag to add the program to the local settings of permanently installed functions/programs, which will be silently auto-installed at start up.
@@ -419,7 +419,7 @@ core.install = function(args,trmnl){
 	}
 	return [0, retval];
 };
-core.install.help = "<b>install</b> command: install the specified program(s)<br /><small>(Use <b>@{pkg}</b> command to list available programs)<br />Accepts flags for collections of functions. Currently only --basic/-b for my commonly used ones</small>";
+core.install.help = "<b>@{install}</b> command: install the specified program(s)<br /><small>(Use <b>@{pkg}</b> command to list available programs)<br />Accepts flags for collections of functions. Currently only --basic/-b for my commonly used ones</small>";
 /*---- KILL ----*/
 core.kill = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
@@ -437,7 +437,7 @@ core.kill = function(args,trmnl){
 	}
 	return [0, retval];
 };
-core.kill.help = '<b>kill</b> the specified terminal window. Useful when using session.<br />Will result in blank screen if you kill the last terminal...';
+core.kill.help = '<b>@{kill}</b> the specified terminal window. Useful when using session.<br />Will result in blank screen if you kill the last terminal...';
 /*---- MATH ----*/
 core.math = function(args,trmnl){
 	trmnl.program = "math";
@@ -445,7 +445,7 @@ core.math = function(args,trmnl){
 	//trmnl.reset('MATH>');
 	return 0;
 };
-core.math.help = '<b>math</b> program';
+core.math.help = '<b>@{math}</b> program';
 /*---- MLB ----*/
 core.mlb = function(args,trmnl){
 	// TODO: add in extra arguments to allow for querying results from other days
@@ -648,7 +648,7 @@ core.mlb = function(args,trmnl){
 
 	return [0, "<i>Querying MLB gamelist...</i>"];
 };
-core.mlb.help = '<b>mlb</b> command: pass in the 2 or 3 digit code for a MLB team to see live info about any game being played today<br />Pass in a date to check games from a different day, e.g. 4/12/19\ne.g. @{mlb nyy} or @{mlb sf 4/18/19}';
+core.mlb.help = '<b>@{mlb}</b> command: pass in the 2 or 3 digit code for a MLB team to see live info about any game being played today<br />Pass in a date to check games from a different day, e.g. 4/12/19\ne.g. @{mlb nyy} or @{mlb sf 4/18/19}';
 /*---- NOTE ----*/
 core.note = function(args,trmnl){
 	// use localStorage for notes. Need to getItem first to append note to the array of notes.
@@ -673,7 +673,7 @@ core.note = function(args,trmnl){
 	localStorage.setItem("notes",notes);
 	return [0, "New note created. You now have "+tot_notes+" notes stored"];
 };
-core.note.help = '<b>note</b> command: make a new note. Use <b>@{notes}</b> command to read notes<br /><b>@{notebook}</b> program allows for more advanced navigation of notes.<br />N.B. that notes are local to the machine, not across multiple terminal sessions on different devices.<br />Cloud notes will be added soon.';
+core.note.help = '<b>@{note}</b> command: make a new note. Use <b>@{notes}</b> command to read notes<br /><b>@{notebook}</b> program allows for more advanced navigation of notes.<br />N.B. that notes are local to the machine, not across multiple terminal sessions on different devices.<br />Cloud notes will be added soon.';
 /*---- NOTES ----*/
 core.notes = function(args,trmnl){
 	// need to update the below to work with notes[n].text, notes[n].c and notes[n].m instead
@@ -723,7 +723,7 @@ core.notes = function(args,trmnl){
 	}
 	return [1, "Notes had an issue"]; // shouldn't ever reach this, but just in case
 };
-core.notes.help = '<b>notes</b> command: called with no arguments will list a snippet of all notes plus their IDs. Call <b>notes</b> with an ID to show that note in full.<br /><b>notebook</b> program allows for more advanced navigation of notes.';
+core.notes.help = '<b>@{notes}</b> command: called with no arguments will list a snippet of all notes plus their IDs. Call <b>notes</b> with an ID to show that note in full.<br /><b>notebook</b> program allows for more advanced navigation of notes.';
 /*---- NSXLOAD ----*/
 core.nsxload = function(args,trmnl){
 	if(args.length < 2 || args[0] == undefined || args[0] == "" || args[1] == undefined || args[1] == ""){
@@ -750,7 +750,7 @@ core.nsxload = function(args,trmnl){
 		return [0, "Recording will require "+load+" GB  per hour ("+Math.ceil(load*24)+" GB per day)"];
 	}
 };
-core.nsxload.help = '<b>nsxload</b> command: calculates how many gigabytes will be created per hour/day for specified<br />number of electrodes and sampling rate with BlackRock nsx files<br />Specify number of electrodes by pre- or post-fixing with "ch"<br />e.g. @{nsxload 16ch 30k} <i>or</i> @{nsxload 2000 ch64} (i.e. any order for arguments or "ch")';
+core.nsxload.help = '<b>@{nsxload}</b> command: calculates how many gigabytes will be created per hour/day for specified<br />number of electrodes and sampling rate with BlackRock nsx files<br />Specify number of electrodes by pre- or post-fixing with "ch"<br />e.g. @{nsxload 16ch 30k} <i>or</i> @{nsxload 2000 ch64} (i.e. any order for arguments or "ch")';
 /*---- PKG ----*/
 core.pkg = function(args,trmnl){
 	// TODO: don't have any arguments for this at the moment, update
@@ -789,12 +789,12 @@ core.pkg = function(args,trmnl){
 	xhr.send(null);
 	return [0, "Retrieving pkg list"];
 };
-core.pkg.help = '<b>pkg</b> command: list available programs for install';
+core.pkg.help = '<b>@{pkg}</b> command: list available programs for install';
 /*---- RANDCOL ----*/
 core.randcol = function(args,trmnl){
 	return [0, '#' + ("000000" + Math.random().toString(16).slice(2, 8).toUpperCase()).slice(-6)];
 };
-core.randcol.help = '<b>randcol</b> command: return a random hexadecimal color code';
+core.randcol.help = '<b>@{randcol}</b> command: return a random hexadecimal color code';
 /*---- SCIENCE ----*/
 core.science = function(args,trmnl){
 	var info = "",
@@ -818,7 +818,7 @@ core.science = function(args,trmnl){
 	}
 	return [0,info];
 }
-core.science.help = '<b>science</b> command: use to find some info about my scientific work.<br />science with no arguments will start the SCIENCE "program"<br />Using the argument "info" will just print the basic details to screen then return home.';
+core.science.help = '<b>@{science}</b> command: use to find some info about my scientific work.<br />science with no arguments will start the SCIENCE "program"<br />Using the argument "info" will just print the basic details to screen then return home.';
 /*---- SHOWCOL ----*/
 core.showcol = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
@@ -829,7 +829,7 @@ core.showcol = function(args,trmnl){
 	}
 	return [0, '<font style="color: '+args[0]+'">'+args[0]+'<font>'];
 };
-core.showcol.help = '<b>showcol</b> command: print the given hexadecimal color code in its color. Try piping from randcol, i.e. @{randcol | showcol}';
+core.showcol.help = '<b>@{showcol}</b> command: print the given hexadecimal color code in its color. Try piping from randcol, i.e. @{randcol | showcol}';
 /*---- SUBWAY ----*/
 core.subway = function(args,trmnl){
 	if(stations == -1 || (Object.keys(stations).length === 0 && sellers.constructor === Object)){
@@ -969,7 +969,7 @@ core.theme = function(args,trmnl){
 	trmnl.update_colors();
 	return 0;
 };
-core.theme.help = '<b>theme</b> command: change terminal to a different theme. Available themes will be populated once specified theme file has been loaded.';
+core.theme.help = '<b>@{theme}</b> command: change terminal to a different theme. Available themes will be populated once specified theme file has been loaded.';
 /*---- TRANSWAIT ----*/
 core.transwait = function(args,trmnl){
 	if(args.length != 2){
@@ -1031,7 +1031,7 @@ core.transwait = function(args,trmnl){
 	}
 	return [0, delay+' left'];
 };
-core.transwait.help = '<b>transwait</b> command: calculate how long a transfer will take<br />Requires 2 input arguments, the rate and the amount to transfer. Note that calculation is bit/byte specific using b/B notation!<br />e.g. @{transwait 12.34GB 123Mbps}\n(Arguments can come in either order. Only <u>B</u>yte vs <u>b</u>it is case sensitive.)';
+core.transwait.help = '<b>@{transwait}</b> command: calculate how long a transfer will take<br />Requires 2 input arguments, the rate and the amount to transfer. Note that calculation is bit/byte specific using b/B notation!<br />e.g. @{transwait 12.34GB 123Mbps}\n(Arguments can come in either order. Only <u>B</u>yte vs <u>b</u>it is case sensitive.)';
 /*---- VAR ----*/
 core.var = function(args,trmnl){
 	//TODO: might be cool to add the creation/modification date to the variables (like note), which would be included in workspace command.
@@ -1060,12 +1060,12 @@ core.var = function(args,trmnl){
 
 	return [0, output];
 };
-core.var.help = '<b>var</b> keyword is used to assign pervasive (machine-specific) variables, e.g. @{var foo=bar}';
+core.var.help = '<b>@{var}</b> keyword is used to assign pervasive (machine-specific) variables, e.g. @{var foo=bar}';
 /*---- VERSION ----*/
 core.version = function(args,trmnl){
 	return [0, "![emerix terminal v"+trmnl.version+"<br /><i>Release date: "+trmnl.releaseDate+"</i>]"]
 };
-core.version.help = "<b>version</b> command shows details about the current version of the emerix terminal";
+core.version.help = "<b>@{version}</b> command shows details about the current version of the emerix terminal";
 /*---- WEATHER ----*/
 core.weather = function(args,trmnl){
 	var flags = [],
@@ -1126,7 +1126,7 @@ core.weather = function(args,trmnl){
 
 	return [0, "loading weather data..."]
 };
-core.weather.help = '<b>weather</b> command: get forecast for a given ZIP code<br />e.g. "@{weather 10025}"<br />Defaults to displaying results for next 5 hours, use -f or --full flag to display all results"';
+core.weather.help = '<b>@{weather}</b> command: get forecast for a given ZIP code<br />e.g. "@{weather 10025}"<br />Defaults to displaying results for next 5 hours, use -f or --full flag to display all results"';
 /*---- WHOAMI ----*/
 core.whoami = function(args,trmnl){
 	/* this is the static version of the site. No ajax to php files.
@@ -1166,7 +1166,7 @@ core.whoami = function(args,trmnl){
 	*/
 	return [0, "Browsing as guest"]; // always, since this is the static version. Bit rubbish.
 };
-core.whoami.help = '<b>whoami</b> command: tells you who you are logged in as, if any';
+core.whoami.help = '<b>@{whoami}</b> command: tells you who you are logged in as, if any';
 /*---- WORKSPACE ----*/
 core.workspace = function(args,trmnl){
 	// currently just auto-discards any arguments/flags
@@ -1183,4 +1183,4 @@ core.workspace = function(args,trmnl){
 	output += "</table>";
 	return [0, output];
 };
-core.workspace.help = '<b>workspace</b> prints all currently stored variables to the screen. Variables are pervasive and machine-specific';
+core.workspace.help = '<b>@{workspace}</b> prints all currently stored variables to the screen. Variables are pervasive and machine-specific';
