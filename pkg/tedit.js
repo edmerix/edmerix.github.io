@@ -1,4 +1,3 @@
-//TODO: Big issue with the use of jQuery #teditconsole at present.
 //Need to populate it in a better way (as per the screen tedit item), as otherwise we cannot run simultaneous
 //instances of TEdit across screen sessions.
 var pkgs = pkgs || {}; // this is just in case we overwrite something, but this shouldn't ever be an issue.

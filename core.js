@@ -495,148 +495,164 @@ core.mlb = function(args,trmnl){
 		let n = -1;
 		if(awayTeams.indexOf(teamCode) > -1){
 			homeaway = 'away';
-			n = awayTeams.indexOf(teamCode);
+			n = [awayTeams.indexOf(teamCode)];
+			// in case of double-header:
+			awayTeams[n] = "";
+			if(awayTeams.indexOf(teamCode) > -1){
+				n.push(awayTeams.indexOf(teamCode));
+			}
 		}
 		if(homeTeams.indexOf(teamCode) > -1){
 			homeaway = 'home';
-			n = homeTeams.indexOf(teamCode);
+			n = [homeTeams.indexOf(teamCode)];
+			// in case of double-header:
+			homeTeams[n] = "";
+			if(homeTeams.indexOf(teamCode) > -1){
+				n.push(homeTeams.indexOf(teamCode));
+			}
 		}
 
-		if(homeaway == "" || n < 0){
+		if(homeaway == "" || n.length < 1){
 			trmnl.output("No game found for "+teamCode+" today");
 			trmnl.input_div.style.display = "block";
 			return;
 		}
+		for(let gn = 0; gn < n.length; gn++){
+			const game = data.game[n[gn]];
 
-		const game = data.game[n];
-
-		let scoreBoard = "";
-		if(game.hasOwnProperty("linescore") && game.linescore.hasOwnProperty("inning")){
-			let innings = "<tr><th></th>";
-			let homeScore = "<tr><td><i>"+game.home_team_name+"</i></td>";
-			let awayScore = "<tr><td><i>"+game.away_team_name+"</i></td>";
-			for(let i = 0, thisHome, thisAway; i < Math.max(9,game.linescore.inning.length); i++){
-				innings += "<th>"+(i+1)+"</th>";
-				if(game.linescore.inning.length <= i){
-					homeScore += "<td>-</td>";
-					awayScore += "<td>-</td>";
-				}else{
-					thisHome = game.linescore.inning[i].home;
-					thisAway = game.linescore.inning[i].away;
-					homeScore += "<td "
-					if(thisHome > 0) homeScore += "class='cmd-feedback'";
-					thisHome=thisHome==''?'-':thisHome;
-					homeScore += ">"+thisHome+"</td>";
-					awayScore += "<td ";
-					if(thisAway > 0) awayScore += "class='cmd-feedback'";
-					thisAway=thisAway==''?'-':thisAway;
-					awayScore += ">"+thisAway+"</td>";
+			let scoreBoard = "";
+			if(game.hasOwnProperty("linescore") && game.linescore.hasOwnProperty("inning")){
+				let innings = "<tr><th></th>";
+				let homeScore = "<tr><td><i>"+game.home_team_name+"</i></td>";
+				let awayScore = "<tr><td><i>"+game.away_team_name+"</i></td>";
+				for(let i = 0, thisHome, thisAway; i < Math.max(9,game.linescore.inning.length); i++){
+					innings += "<th>"+(i+1)+"</th>";
+					if(game.linescore.inning.length <= i){
+						homeScore += "<td>-</td>";
+						awayScore += "<td>-</td>";
+					}else{
+						thisHome = game.linescore.inning[i].home;
+						thisAway = game.linescore.inning[i].away;
+						homeScore += "<td "
+						if(thisHome > 0) homeScore += "class='cmd-feedback'";
+						thisHome=thisHome==''?'-':thisHome;
+						homeScore += ">"+thisHome+"</td>";
+						awayScore += "<td ";
+						if(thisAway > 0) awayScore += "class='cmd-feedback'";
+						thisAway=thisAway==''?'-':thisAway;
+						awayScore += ">"+thisAway+"</td>";
+					}
 				}
-			}
 
-			//TODO: the empty <th> & <td> stuff is hacky and temporary. Clean up.
-			innings += "<th></th><th>R</th><th>H</th><th>E</th>";
-			homeScore += "<td></td><td ";
-			awayScore += "<td></td><td ";
-			if(parseFloat(game.linescore.r.away) > parseFloat(game.linescore.r.home)){
-				awayScore += "class='cmd-feedback'";
-			}else if(parseFloat(game.linescore.r.home) > parseFloat(game.linescore.r.away)){
-				homeScore += "class='cmd-feedback'";
-			}
-			homeScore += ">"+game.linescore.r.home+"</td><td ";
-			awayScore += ">"+game.linescore.r.away+"</td><td ";
-			if(parseFloat(game.linescore.h.away) > parseFloat(game.linescore.h.home)){
-				awayScore += "class='cmd-feedback'";
-			}else if(parseFloat(game.linescore.h.home) > parseFloat(game.linescore.h.away)){
-				homeScore += "class='cmd-feedback'";
-			}
-			homeScore += ">"+game.linescore.h.home+"</td><td ";
-			awayScore += ">"+game.linescore.h.away+"</td><td ";
-			if(parseFloat(game.linescore.e.away) > parseFloat(game.linescore.e.home)){
-				awayScore += "class='cmd-err no-margin'";
-			}else if(parseFloat(game.linescore.e.home) > parseFloat(game.linescore.e.away)){
-				homeScore += "class='cmd-err no-margin'";
-			}
-			homeScore += ">"+game.linescore.e.home+"</td>";
-			awayScore += ">"+game.linescore.e.away+"</td>";
+				//TODO: the empty <th> & <td> stuff is hacky and temporary. Clean up.
+				innings += "<th></th><th>R</th><th>H</th><th>E</th>";
+				homeScore += "<td></td><td ";
+				awayScore += "<td></td><td ";
+				if(parseFloat(game.linescore.r.away) > parseFloat(game.linescore.r.home)){
+					awayScore += "class='cmd-feedback'";
+				}else if(parseFloat(game.linescore.r.home) > parseFloat(game.linescore.r.away)){
+					homeScore += "class='cmd-feedback'";
+				}
+				homeScore += ">"+game.linescore.r.home+"</td><td ";
+				awayScore += ">"+game.linescore.r.away+"</td><td ";
+				if(parseFloat(game.linescore.h.away) > parseFloat(game.linescore.h.home)){
+					awayScore += "class='cmd-feedback'";
+				}else if(parseFloat(game.linescore.h.home) > parseFloat(game.linescore.h.away)){
+					homeScore += "class='cmd-feedback'";
+				}
+				homeScore += ">"+game.linescore.h.home+"</td><td ";
+				awayScore += ">"+game.linescore.h.away+"</td><td ";
+				if(parseFloat(game.linescore.e.away) > parseFloat(game.linescore.e.home)){
+					awayScore += "class='cmd-err no-margin'";
+				}else if(parseFloat(game.linescore.e.home) > parseFloat(game.linescore.e.away)){
+					homeScore += "class='cmd-err no-margin'";
+				}
+				homeScore += ">"+game.linescore.e.home+"</td>";
+				awayScore += ">"+game.linescore.e.away+"</td>";
 
-			innings += "</tr>";
-			homeScore += "</tr>";
-			awayScore += "</tr>";
+				innings += "</tr>";
+				homeScore += "</tr>";
+				awayScore += "</tr>";
 
-			scoreBoard = "<table>"+innings+awayScore+homeScore+"</table>";
+				scoreBoard = "<table>"+innings+awayScore+homeScore+"</table>";
+			}
+			retVal = "";
+			if(n.length > 1){
+				retVal += `<small><i>Game ${gn+1} of ${n.length} today:</i></small><br />`;
+			}
+			if(game.status.status == "In Progress"){
+				let state = game.status.inning_state;
+				let battingTeam = false;
+				switch(state){
+					case "Top":
+						state = "&#x2191;"
+						battingTeam = game.away_team_name+ " batting";
+						break;
+					case "Bottom":
+						state = "&#x2193;"
+						battingTeam = game.home_team_name+ " batting";
+						break;
+					case "Middle":
+						state = "&#x21C6;";
+						break;
+						// no need for default, it just sticks to what it already is
+				}
+				retVal += "![<b>LIVE</b>]: "+state+" of the "+game.status.inning+"<sup>";
+				switch(parseFloat(game.status.inning)){
+					case 1:
+						retVal += "st";
+						break;
+					case 2:
+						retVal += "nd";
+						break;
+					case 3:
+						retVal += "rd";
+						break;
+					default:
+						retVal += "th";
+				}
+				retVal += "</sup>";
+				if(battingTeam) retVal += " (<i>"+battingTeam+"</i>)";
+				retVal += "<br /><small>(<i>"+game.away_win+"-"+game.away_loss+"</i>)</small> <b>"+game.away_team_name+"</b> !["+game.linescore.r.away+"] - ";
+				retVal += "!["+game.linescore.r.home+"] <b>"+game.home_team_name+"</b> <small>(<i>"+game.home_win+"-"+game.home_loss+"</i>)</small>";
+				// is anyone on base?
+				let bases = ["<sub>&#x25C7;</sub>","<sup>&#x25C7;</sup>","<sub>&#x25C7;</sub>"]
+				if(game.runners_on_base.hasOwnProperty("runner_on_1b")){
+					bases[2] = "<sub class='cmd-feedback' title='"+game.runners_on_base.runner_on_1b.last+" on 1st'>&#x25c6;</sub>";
+				}
+				if(game.runners_on_base.hasOwnProperty("runner_on_2b")){
+					bases[1] = "<sup class='cmd-feedback' title='"+game.runners_on_base.runner_on_2b.last+" on 2nd'>&#x25c6;</sup>";
+				}
+				if(game.runners_on_base.hasOwnProperty("runner_on_3b")){
+					bases[0] = "<sub class='cmd-feedback' title='"+game.runners_on_base.runner_on_3b.last+" on 3rd'>&#x25c6;</sub>";
+				}
+				retVal += "<br />"+bases.join("");
+				retVal += " B: "+game.status.b+" | S: "+game.status.s+" | "+game.status.o+" out";
+				retVal += "<hr />"+scoreBoard;
+				retVal += "<hr />";
+				retVal += "Pitching: <i>"+game.pitcher.last+"</i> <small>(ERA: "+game.pitcher.era+")</small>";
+				retVal += "<br />Batting: <i>"+game.batter.last+"</i> <small>(AVG: "+game.batter.avg+")</small>";
+				retVal += "<br />Play-by-play: <i>"+game.pbp.last+"</i>";
+				retVal += "<br /><small>TV: "+game.broadcast[homeaway].tv+", Radio: "+game.broadcast[homeaway].radio+"</small>";
+			}else if(game.status.status == "Preview" || game.status.status == "Pre-Game"){
+				retVal += game.away_name_abbrev+" @ "+game.home_name_abbrev+" at "+game[homeaway+'_time']+" "+game[homeaway+'_ampm']+" ("+game.venue+")";
+				retVal += "<br />"+game.home_team_name+": "+game.home_win+"-"+game.home_loss;
+				retVal += "<br />"+game.away_team_name+": "+game.away_win+"-"+game.away_loss;
+				retVal += "<br />TV: "+game.broadcast[homeaway].tv+", Radio: "+game.broadcast[homeaway].radio;
+			}else if(game.status.status == "Warmup"){
+				retVal += "Game status: warmup. Gettin' ready...";
+			}else if(game.status.status == "Final" || game.status.status == "Game Over"){
+				retVal += "<b>FINAL</b>:<br />";
+				retVal += "<small>(<i>"+game.away_win+"-"+game.away_loss+"</i>)</small> "+game.away_team_name+" !["+game.linescore.r.away+"] - !["+game.linescore.r.home+"] "+game.home_team_name+"<small> (<i>"+game.home_win+"-"+game.home_loss+"</i>)</small>";
+				retVal += "<hr />"+scoreBoard;
+			}else{
+				retVal += "Unknown game state: "+game.status.status;
+				retVal += "<br />"+scoreBoard; // just in case
+			}
+			if(gn < n.length - 1)
+				retVal += "<hr />";
+			trmnl.output(retVal);
 		}
-
-		if(game.status.status == "In Progress"){
-			let state = game.status.inning_state;
-			let battingTeam = false;
-			switch(state){
-				case "Top":
-					state = "&#x2191;"
-					battingTeam = game.away_team_name+ " batting";
-					break;
-				case "Bottom":
-					state = "&#x2193;"
-					battingTeam = game.home_team_name+ " batting";
-					break;
-				case "Middle":
-					state = "&#x21C6;";
-					break;
-					// no need for default, it just sticks to what it already is
-			}
-			retVal = "![<b>LIVE</b>]: "+state+" of the "+game.status.inning+"<sup>";
-			switch(parseFloat(game.status.inning)){
-				case 1:
-					retVal += "st";
-					break;
-				case 2:
-					retVal += "nd";
-					break;
-				case 3:
-					retVal += "rd";
-					break;
-				default:
-					retVal += "th";
-			}
-			retVal += "</sup>";
-			if(battingTeam) retVal += " (<i>"+battingTeam+"</i>)";
-			retVal += "<br /><small>(<i>"+game.away_win+"-"+game.away_loss+"</i>)</small> <b>"+game.away_team_name+"</b> !["+game.linescore.r.away+"] - ";
-			retVal += "!["+game.linescore.r.home+"] <b>"+game.home_team_name+"</b> <small>(<i>"+game.home_win+"-"+game.home_loss+"</i>)</small>";
-			// is anyone on base?
-			let bases = ["<sub>&#x25C7;</sub>","<sup>&#x25C7;</sup>","<sub>&#x25C7;</sub>"]
-			if(game.runners_on_base.hasOwnProperty("runner_on_1b")){
-				bases[2] = "<sub class='cmd-feedback' title='"+game.runners_on_base.runner_on_1b.last+" on 1st'>&#x25c6;</sub>";
-			}
-			if(game.runners_on_base.hasOwnProperty("runner_on_2b")){
-				bases[1] = "<sup class='cmd-feedback' title='"+game.runners_on_base.runner_on_2b.last+" on 2nd'>&#x25c6;</sup>";
-			}
-			if(game.runners_on_base.hasOwnProperty("runner_on_3b")){
-				bases[0] = "<sub class='cmd-feedback' title='"+game.runners_on_base.runner_on_3b.last+" on 3rd'>&#x25c6;</sub>";
-			}
-			retVal += "<br />"+bases.join("");
-			retVal += " B: "+game.status.b+" | S: "+game.status.s+" | "+game.status.o+" out";
-			retVal += "<hr />"+scoreBoard;
-			retVal += "<hr />";
-			retVal += "Pitching: <i>"+game.pitcher.last+"</i> <small>(ERA: "+game.pitcher.era+")</small>";
-			retVal += "<br />Batting: <i>"+game.batter.last+"</i> <small>(AVG: "+game.batter.avg+")</small>";
-			retVal += "<br />Play-by-play: <i>"+game.pbp.last+"</i>";
-			retVal += "<br /><small>TV: "+game.broadcast[homeaway].tv+", Radio: "+game.broadcast[homeaway].radio+"</small>";
-		}else if(game.status.status == "Preview" || game.status.status == "Pre-Game"){
-			retVal = game.away_name_abbrev+" @ "+game.home_name_abbrev+" at "+game[homeaway+'_time']+" "+game[homeaway+'_ampm']+" ("+game.venue+")";
-			retVal += "<br />"+game.home_team_name+": "+game.home_win+"-"+game.home_loss;
-			retVal += "<br />"+game.away_team_name+": "+game.away_win+"-"+game.away_loss;
-			retVal += "<br />TV: "+game.broadcast[homeaway].tv+", Radio: "+game.broadcast[homeaway].radio;
-		}else if(game.status.status == "Warmup"){
-			retVal += "Game status: warmup. Gettin' ready...";
-		}else if(game.status.status == "Final" || game.status.status == "Game Over"){
-			retVal = "<b>FINAL</b>:<br />";
-			retVal += "<small>(<i>"+game.away_win+"-"+game.away_loss+"</i>)</small> "+game.away_team_name+" !["+game.linescore.r.away+"] - !["+game.linescore.r.home+"] "+game.home_team_name+"<small> (<i>"+game.home_win+"-"+game.home_loss+"</i>)</small>";
-			retVal += "<br />"+scoreBoard;
-		}else{
-			retVal = "Unknown game state: "+game.status.status;
-			retVal += "<br />"+scoreBoard; // just in case
-		}
-		trmnl.output(retVal);
 		trmnl.input_div.style.display = "block";
 	};
 	xhr.onerror = function(err){
