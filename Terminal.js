@@ -17,6 +17,8 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.cmd_hist_pos = 0;
 	this.cmd_hist_size = 100; // limit for history storage (allows more during a session, but limits in localstorage)
 	// TODO: hist_size resets to 100 at each new load. Should be stored as a localstorage setting (as should others)
+	this.max_tab_list = 50;
+
 	this.input_div = document.getElementById(input_div);
 	this.output_div = document.getElementById(output_div);
 	this.prompt_div = document.getElementById(prompt_div);
@@ -104,31 +106,43 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 					e.preventDefault();
 					const thusfar = this.value;
 					let subfar = thusfar.split(" ");
+					let cmdIn = subfar[0];
 					subfar = subfar[subfar.length-1];
-					if(subfar != ""){
-						let results = [];
-						for(let i = 0; i < trmnl[trmnl.program].autocomplete.length; i++){
-							if(trmnl[trmnl.program].autocomplete[i].indexOf(subfar) == 0){ //starts with correct
-								if(trmnl[trmnl.program].autocomplete[i] != subfar){ // no need to add if identical
+
+					let results = [];
+					let options = trmnl[trmnl.program].autocomplete;
+					if(typeof(trmnl[trmnl.program][cmdIn]) == "function"){
+						if(typeof(trmnl[trmnl.program][cmdIn].autocomplete) == "function"){
+							options = trmnl[trmnl.program][cmdIn].autocomplete(trmnl,subfar);
+						}else{
+							options = []; // don't autcomplete anything if the command doesn't give options
+						}
+					}
+					if(subfar == ""){
+						results = options;
+					}else{
+						for(let i = 0; i < options.length; i++){
+							if(options[i].indexOf(subfar) == 0){ //starts with correct
+								if(options[i] != subfar){ // no need to add if identical
 									//results.push(thusfar+trmnl[trmnl.program].autocomplete[i].slice(thusfar.length, trmnl[trmnl.program].autocomplete[i].length));
-									results.push(trmnl[trmnl.program].autocomplete[i]);
+									results.push(options[i]);
 								}
 							}
 						}
-						if(results.length == 1){
-							//trmnl.input_div.value = results[0]; // update the input if one match been found
-							trmnl.input_div.value += results[0].slice(subfar.length, results[0].length);
-						}else if(results.length > 1 && results.length <= 20){ // list all options below, if fewer than 20
-							var tbl_out = "<hr /><table><tr>";
-							for(var r = 0; r < results.length; r++){
-								tbl_out += "<td>"+results[r]+"</td>";
-								if(r % 5 == 0 && r != 0 && r != results.length-1) tbl_out += "</tr>"; // never add this to last item, as it will be added below.
-							}
-							tbl_out += "</tr></table>";
-							trmnl.output(tbl_out,0);
-						}else if(results.length > 20){
-							trmnl.output(results.length+" options found: will list up to "+trmnl.max_tab_list+" items",0);
+					}
+					if(results.length == 1){
+						//trmnl.input_div.value = results[0]; // update the input if one match been found
+						trmnl.input_div.value += results[0].slice(subfar.length, results[0].length);
+					}else if(results.length > 1 && results.length <= trmnl.max_tab_list){ // list all options below, if fewer than max_tab_list
+						let tbl_out = `<hr />${results.length} autocomplete options:<table><tr>`;
+						for(let r = 0; r < results.length; r++){
+							tbl_out += "<td>"+results[r]+"</td>";
+							if((r+1) % 5 == 0 && r != results.length-1) tbl_out += "</tr>"; // never add this to last item, as it will be added below.
 						}
+						tbl_out += "</tr></table>";
+						trmnl.output(tbl_out,0);
+					}else if(results.length > trmnl.max_tab_list){
+						trmnl.output(results.length+" options found, narrow search by entering characters. This will list up to "+trmnl.max_tab_list+" items",0);
 					}
 				}
 				return false;

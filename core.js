@@ -273,6 +273,10 @@ core.echo = function(args,trmnl){
 	return [0, vars[args[0]]];
 };
 core.echo.help = '<b>@{echo}</b> prints a variable to the screen. Assign variables with <i>var</i> function, e.g. @{var foo=bar}';
+core.echo.autocomplete = () => {
+	const vars = JSON.parse(localStorage.getItem("vars"));
+	return Object.keys(vars);
+};
 /*---- EXIT ----*/
 core.exit = function(args,trmnl){
 	trmnl.exit();
@@ -420,6 +424,10 @@ core.install = function(args,trmnl){
 	return [0, retval];
 };
 core.install.help = "<b>@{install}</b> command: install the specified program(s)<br /><small>(Use <b>@{pkg}</b> command to list available programs)<br />Accepts flags for collections of functions. Currently only --basic/-b for my commonly used ones</small>";
+core.install.autocomplete = (trmnl) => {
+	//TODO: It'd be nice to list options as per pkg command here, but it requires async at the moment.
+	return [];
+};
 /*---- KILL ----*/
 core.kill = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
@@ -986,6 +994,9 @@ core.theme = function(args,trmnl){
 	return 0;
 };
 core.theme.help = '<b>@{theme}</b> command: change terminal to a different theme. Available themes will be populated once specified theme file has been loaded.';
+core.theme.autocomplete = (trmnl) => {
+	return Object.keys(trmnl.themes);
+};
 /*---- TRANSWAIT ----*/
 core.transwait = function(args,trmnl){
 	if(args.length != 2){
