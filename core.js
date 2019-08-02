@@ -329,6 +329,9 @@ core.help = function(args,trmnl){
 	return 0;
 };
 core.help.help = '<b>@{help}</b> command: in-depth help for the help command needs to be written here.';
+core.help.autocomplete = (trmnl) => {
+	return trmnl.base.autocomplete;
+};
 /*---- HISTSIZE ----*/
 core.histsize = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
