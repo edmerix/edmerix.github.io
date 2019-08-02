@@ -87,7 +87,7 @@ input {
 .input-line {
     margin-bottom: 4px;
 }
-.cmd-prompt {
+.cmd-prompt, .cmd-output {
     white-space: nowrap;
     margin-right: 5px;
     display: -webkit-box;
@@ -96,7 +96,9 @@ input {
     display: box;
     box-pack: center;
     box-orient: vertical;
-    -webkit-user-select: none;
+}
+.cmd-prompt {
+	-webkit-user-select: none;
     user-select: none;
 }
 .cmd-input {
@@ -118,19 +120,19 @@ input {
 #cmd-history .cmd-feedback {
 	/*color: #9CF; This has been moved to an inline style in the head, to allow for dynamic changes */
 }
-.cmd-prompt th {
+.cmd-output th {
 	text-align: left;
 }
-.cmd-prompt td {
+.cmd-output td {
 	padding-right: 20px;
 }
-.cmd-prompt .indented {
+.cmd-prompt .indented, .cmd-output .indented {
 	padding-left: 30px;
 }
-.cmd-prompt a {
+.cmd-output a {
 	/*color: #FFF; This has been moved to an inline style in the head, to allow for dynamic changes */
 }
-.cmd-prompt .mta {
+.cmd-output .mta {
 	display: inline-block;
 	width: 16px;
 	height: 16px;

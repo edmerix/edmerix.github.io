@@ -35,7 +35,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.cols.bg = '#000';
 
 	// Load up the themes.json file:
-	this.theme_file = theme_file;
+	this.theme_file = theme_file+"?"+Date.now();
 	this.themes = {};
 	let me = this;
 	let xhr = new XMLHttpRequest();
@@ -440,7 +440,7 @@ Terminal.prototype.output = function(output,prompted){
 		out = document.createElement("div");
 		out.classList.add("output-line");
         outprompt = document.createElement("div");
-		outprompt.classList.add("cmd-prompt");
+		outprompt.classList.add("cmd-output");
 		outprompt.innerHTML = output;
 		out.appendChild(outprompt);
 		this.output_div.appendChild(out);
@@ -516,11 +516,12 @@ Terminal.prototype.update_colors = function(){
 	this.body.style.background = this.cols.bg;
     this.input_div.style.color = this.cols.output;
     this.output_div.style.color = this.cols.output;
-    this.prompt_div.style.color = this.cols.output;
+    this.prompt_div.style.color = this.cols.prompt;
 
 	var col_setup = "";
 	for(var t in terminal){
-		col_setup += '#'+terminal[t].body.getAttribute("id")+' .cmd-prompt {color:'+terminal[t].cols.output+';}\n';
+		col_setup += '#'+terminal[t].body.getAttribute("id")+' .cmd-prompt {color:'+terminal[t].cols.prompt+';}\n';
+		col_setup += '#'+terminal[t].body.getAttribute("id")+' .cmd-output {color:'+terminal[t].cols.output+';}\n';
 		col_setup += '#'+terminal[t].body.getAttribute("id")+' .cmd-err {color:'+terminal[t].cols.error+';}\n';
 		col_setup += '#'+terminal[t].body.getAttribute("id")+' .cmd-feedback {color:'+terminal[t].cols.feedback+';}\n';
 		col_setup += '#'+terminal[t].body.getAttribute("id")+' a {color:'+terminal[t].cols.feedback+';}\n';

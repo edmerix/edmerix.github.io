@@ -846,6 +846,7 @@ core.science = function(args,trmnl){
 	return [0,info];
 }
 core.science.help = '<b>@{science}</b> command: use to find some info about my scientific work.<br />science with no arguments will start the SCIENCE "program"<br />Using the argument "info" will just print the basic details to screen then return home.';
+core.science.autocomplete = () => ["info"];
 /*---- SHOWCOL ----*/
 core.showcol = function(args,trmnl){
 	if(args[0] == undefined || args[0] == ""){
@@ -989,6 +990,7 @@ core.theme = function(args,trmnl){
 		trmnl.cols.bg = trmnl.themes[args[0]].bg;
 		trmnl.cols.error = trmnl.themes[args[0]].error;
 		trmnl.cols.output = trmnl.themes[args[0]].output;
+		trmnl.cols.prompt = trmnl.themes[args[0]].prompt;
 		trmnl.cols.feedback = trmnl.themes[args[0]].feedback;
 	}else{
 		return [1, 'unknown theme name: '+args];
