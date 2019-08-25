@@ -253,7 +253,7 @@ core.cowsay.help = 'Hmmm. Make the cow say whatever you want. (It\'s a bit buste
 core.currency = function(args,trmnl){
 	// e.g. currency USD GBP w:300 h:140 m:6 t:1 p:15
 	// where w, h, m, t and p can also be supplied as width, height, months, threshold/thr and padding respectively
-	let monthsBack = 6; // user supplied, otherwise default to 3 months.
+	let monthsBack = 3; // user supplied, otherwise default to 3 months.
 	let threshold = 1; // SD away from mean in either direction to signify a good time to transfer in particular direction
 	let currencies = ['USD','GBP'];
 	let boxWidth = 640;
