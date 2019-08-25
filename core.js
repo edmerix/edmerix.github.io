@@ -249,6 +249,210 @@ core.cowsay = function(args,trmnl){
 	return [0, mooster_cow];
 };
 core.cowsay.help = 'Hmmm. Make the cow say whatever you want. (It\'s a bit busted right now.)';
+/*---- CURRENCY ----*/
+core.currency = function(args,trmnl){
+	// e.g. currency USD GBP w:300 h:140 m:6 t:1 p:15
+	// where w, h, m, t and p can also be supplied as width, height, months, threshold/thr and padding respectively
+	let monthsBack = 6; // user supplied, otherwise default to 3 months.
+	let threshold = 1; // SD away from mean in either direction to signify a good time to transfer in particular direction
+	let currencies = ['USD','GBP'];
+	let boxWidth = 640;
+	let boxHeight = 150;
+	let padding = 15;
+	if(args.length > 0 && typeof(args[0]) !== "undefined" && args[0].indexOf(':') < 0){
+		currencies[0] = args.shift();
+	}
+	// still args[0] because we popped off the previous first one:
+	if(args.length > 0 && typeof(args[0]) !== "undefined" && args[0].indexOf(':') < 0){
+		currencies[1] = args.shift();
+	}
+	// leftover arguments after removing currency values
+	for(let a = 0; a < args.length; a++){
+		const pop = args[a].split(":");
+		switch(pop[0]){
+			case 'w':
+			case 'width':
+				boxWidth = parseFloat(pop[1]);
+				break;
+			case 'h':
+			case 'height':
+				boxHeight = parseFloat(pop[1]);
+				break;
+			case 'm':
+			case 'months':
+				monthsBack = parseInt(pop[1]);
+				break;
+			case 't':
+			case 'thr':
+			case 'threshold':
+				threshold = parseFloat(pop[1]);
+				break;
+			case 'p':
+			case 'padding':
+				padding = parseFloat(pop[1]);
+				break;
+			default:
+				return [1, `Unknown input type: ${pop[0]}`];
+		}
+	}
+
+	if(!Number.isInteger(monthsBack)){
+		return [1, 'Months value <small>(m:<i>value</i> or months:<i>value</i>)</small> must be an integer'];
+	}
+	if(!Number.isFinite(threshold)){
+		return [1, 'Threshold value <small>(t:<i>value</i>, thr:<i>value</i> or threshold:<i>value</i>)</small> must be a number'];
+	}
+	if(!Number.isFinite(boxWidth)){
+		return [1, 'Width value <small>(w:<i>value</i> or width:<i>value</i>)</small> must be a number'];
+	}
+	if(!Number.isFinite(boxHeight)){
+		return [1, 'Height value <small>(h:<i>value</i> or height:<i>value</i>)</small> must be a number'];
+	}
+	if(!Number.isFinite(padding)){
+		return [1, 'Padding value <small>(p:<i>value</i> or padding:<i>value</i>)</small> must be a number'];
+	}
+
+	const bgCol = trmnl.cols.bg; // "#353845";
+	const mnCol = trmnl.cols.feedback; //"#165284";
+	const dotCol = trmnl.cols.output; //"#ddd";
+
+	const now = new Date();
+	const past = new Date();
+	past.setMonth(now.getMonth() - monthsBack);
+
+	const date_start = past.toISOString().split('T')[0];
+	const date_end = now.toISOString().split('T')[0];
+
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', `https://api.exchangeratesapi.io/history?start_at=${date_start}&end_at=${date_end}&base=${currencies[0]}&symbols=${currencies[1]}`, true);
+	xhr.responseType = 'json';
+	xhr.onload = function(){
+	    const data = xhr.response;
+	    if(!data.hasOwnProperty('rates')){
+	        trmnl.error("Data structure of response did not include rates");
+	        return;
+	    }
+	    const unorderedDates = Object.keys(data.rates);
+	    const dates = unorderedDates.sort();
+	    let values = [];
+	    for(let obj in data.rates){
+	        if(!data.rates[obj].hasOwnProperty(currencies[1])){
+	            values[dates.indexOf(obj)] = NaN;
+	        }else{
+	            values[dates.indexOf(obj)] = data.rates[obj][currencies[1]];
+	        }
+	    }
+	    const xmlns = "http://www.w3.org/2000/svg";
+
+	    const svg = document.createElementNS(xmlns, "svg");
+	    svg.setAttributeNS(null, "viewBox", `0 0 ${boxWidth} ${boxHeight}`);
+	    svg.setAttributeNS(null, "width", boxWidth);
+	    svg.setAttributeNS(null, "height", boxHeight);
+	    svg.style.display = "block";
+	    svg.style.background = bgCol;
+
+	    const meanValY = boxHeight - padding - ((boxHeight-(2*padding)) * (math.mean(values) - Math.min(...values))/(Math.max(...values)-Math.min(...values)));
+
+	    const sdShading = document.createElementNS(xmlns,"rect");
+	    sdShading.setAttribute("x",1);
+	    sdShading.setAttribute("width",boxWidth-2);
+	    const lowerBound = boxHeight - padding - ((boxHeight-(2*padding)) * ((math.mean(values)-(threshold*math.std(values))) - Math.min(...values))/(Math.max(...values)-Math.min(...values)));
+	    const upperBound = boxHeight - padding - ((boxHeight-(2*padding)) * ((math.mean(values)+(threshold*math.std(values))) - Math.min(...values))/(Math.max(...values)-Math.min(...values)));
+	    sdShading.setAttribute("y",upperBound);
+	    sdShading.setAttribute("height",lowerBound-upperBound);
+	    sdShading.style.fill = "rgba(0,0,0,0.15)";//"rgb(30,48,75)";
+	    svg.appendChild(sdShading);
+
+	    const meanLine = document.createElementNS(xmlns,"line");
+	    meanLine.setAttribute("x1",0);
+	    meanLine.setAttribute("y1",meanValY);
+	    meanLine.setAttribute("x2",boxWidth);
+	    meanLine.setAttribute("y2",meanValY);
+	    meanLine.setAttribute("stroke-linecap","round");
+	    meanLine.style.strokeWidth = 2;
+	    meanLine.style.stroke = mnCol;
+
+		let ttl = document.createElementNS(xmlns,"title");
+		ttl.innerHTML = `Mean value over ${monthsBack} months: 1 ${currencies[0]} = ${math.mean(values)} ${currencies[1]}`;
+		meanLine.appendChild(ttl);
+
+	    svg.appendChild(meanLine);
+
+	    const maxDateDiff = Math.round((now - past) / (1000*60*60*24));
+	    let polylinePts = "";
+	    for(let i = 0; i < values.length; i++){
+	        const yVal = boxHeight - padding - ((boxHeight-(2*padding)) * (values[i] - Math.min(...values))/(Math.max(...values)-Math.min(...values)));
+	        const thisDate = new Date(dates[i]);
+	        const dayDiff = Math.round((thisDate - past) / (1000*60*60*24));
+	        const xVal = padding + ((boxWidth-(2*padding)) * (dayDiff/maxDateDiff));
+	        polylinePts += `${xVal},${yVal} `;
+	        const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+	        dot.setAttribute("cx",xVal);
+	        dot.setAttribute("cy",yVal);
+	        dot.setAttribute("r",3.5);
+	        dot.style.fill = dotCol;
+	        ttl = document.createElementNS(xmlns,"title");
+	        ttl.innerHTML = `${dates[i]}: 1 ${currencies[0]} = ${values[i]} ${currencies[1]}`;
+	        dot.appendChild(ttl);
+	        svg.appendChild(dot);
+	    }
+	    const mvgLine = document.createElementNS(xmlns,"polyline");
+	    mvgLine.setAttribute("points",polylinePts);
+	    mvgLine.style.fill = "none";
+	    mvgLine.style.strokeWidth = 1;
+	    mvgLine.style.stroke = dotCol;
+	    mvgLine.style.opacity = 0.75;
+	    svg.appendChild(mvgLine);
+
+	    const difference = (values[values.length-1]-math.mean(values))/math.std(values);
+	    const abovebelow = difference > 0 ? 'above' : 'below';
+	    response = `![Current conversion rate:] 1 ${currencies[0]} = ${values[values.length-1]} ${currencies[1]} (1 ${currencies[1]} = ${1/values[values.length-1]} ${currencies[0]})<br />which is ![${Math.abs(Math.round(100*difference)/100)} SD ${abovebelow}] the mean of the last ${monthsBack} months`;
+	    if(difference >= threshold){
+			if(currencies.indexOf('USD') > -1 && currencies.indexOf('GBP') > -1){
+	        	response += "<br/>It's a good time to pay off the UK credit card, but not a good time to use it <small>(USD currently buys greater than average GBP)</small>";
+			}else{
+				response += `<br />It's a good time to convert ${currencies[0]} into ${currencies[1]}`;
+			}
+	    }else if(difference <= -threshold){
+	        if(currencies.indexOf('USD') > -1 && currencies.indexOf('GBP') > -1){
+	        	response += "<br/>It's a good time to use the credit card for USD purchases, but not a good time to pay it off <small>(GBP currently buys greater than average USD)</small>";
+			}else{
+				response += `<br />It's a good time to convert ${currencies[1]} into ${currencies[0]}`;
+			}
+	    }else{
+	        response += `<br />We're pretty close to the mean exchange rate for the past ${monthsBack} months, so it's not a significantly good time to convert in either direction`;
+	    }
+
+		trmnl.output(response,false);
+		trmnl.output(`![Past ${monthsBack} months] <small>(shading shows the threshold of ![${threshold} SDs])</small>:`,false);
+	    trmnl.output_div.appendChild(svg);
+
+	};
+	xhr.onerror = function(err){
+	    trmnl.error("Error with the connection for currency history");
+	};
+	xhr.send(null);
+	return [0, 'Checking currency history...'];
+};
+core.currency.help = `<b>@{currency}</b> command plots a graph of the conversion rate between two currencies, and suggests if
+it's a good time to convert them.
+
+Called with no arguments it defaults to USD to GBP over the past 3 months, otherwise
+specify any desired changes to these currencies as first arguments.
+The number of months to look back, the threshold for a significant deviation in value, and
+the display of the graph can be altered with arguments:
+&nbsp;&nbsp;![m:]<i>n</i> or ![months:]<i>n</i> sets the number of months to look back over to <i>n</i> months (must be an integer)
+&nbsp;&nbsp;![t:]<i>n</i>, ![thr:]<i>n</i> or ![threshold:]<i>n</i> sets the threshold to <i>n</i> SD away from the mean
+&nbsp;&nbsp;![w:]<i>n</i> or ![width:]<i>n</i> sets the graph width to <i>n</i> pixels
+&nbsp;&nbsp;![h:]<i>n</i> or ![height:]<i>n</i> sets the graph height to <i>n</i> pixels
+&nbsp;&nbsp;![p:]<i>n</i> or ![padding:]<i>n</i> sets the graph padding to <i>n</i> pixels
+
+e.g. @{currency USD EUR m:24 w:1400 t:2.5} looks at the last 2 years of conversion
+rates between US dollars and Euros, with a threshold of &plusmn;2.5 SD and a graph width of 1200 pixels
+<small>Note: uses theme colors for graph, but old graphs don't update on changing theme</small>`;
+core.currency.autocomplete = () => {
+	return []; //TODO: code this autocomplete
+};
 /*---- DB ----*/
 core.db = function(args,trmnl){
 	trmnl.program = "db";
