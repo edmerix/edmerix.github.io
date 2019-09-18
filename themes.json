@@ -27,6 +27,13 @@
         "feedback": "#00F",
         "error": "#F00"
     },
+    "darkmatter": {
+        "bg": "#14191f",
+        "output": "#aec2e0",
+        "prompt": "#6ee2ff",
+        "feedback": "#4cbbff",
+        "error": "#a20081"
+    },
     "dracula": {
         "bg": "#282A36",
         "output": "#FAFEFF",
@@ -61,6 +68,20 @@
         "prompt": "#5864ff",
         "feedback": "#632b9f",
         "error": "#c40035"
+    },
+    "music_green": {
+        "bg": "#00303e",
+        "output": "#f8f8f2",
+        "prompt": "#66d9ef",
+        "feedback": "#a6e22e",
+        "error": "#ec007c"
+    },
+    "music_yellow": {
+        "bg": "#00303e",
+        "output": "#f8f8f2",
+        "prompt": "#66d9ef",
+        "feedback": "#efe158",
+        "error": "#ec007c"
     },
     "oldschool": {
         "bg": "#000",
@@ -103,5 +124,12 @@
         "prompt": "#FFF",
         "feedback": "#81a2be",
         "error": "#cc6666"
+    },
+    "wildcherry": {
+        "bg": "#2b1f32",
+        "output": "#e15d97",
+        "prompt": "#9b5fe0",
+        "feedback": "#35ba66",
+        "error": "#fed888"
     }
 }
