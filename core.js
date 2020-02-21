@@ -1059,9 +1059,15 @@ core.showcol = function(args,trmnl){
 	if(!/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(args[0])){
 		return [1, args[0]+" is not a valid hexadecimal color code"];
 	}
-	return [0, '<font style="color: '+args[0]+'">'+args[0]+'<font>'];
+	return [0, args[0]+'['+args[0]+']'];
 };
 core.showcol.help = '<b>@{showcol}</b> command: print the given hexadecimal color code in its color. Try piping from randcol, i.e. @{randcol | showcol}';
+/*---- STARTUP ----*/
+core.startup = function(args,trmnl){
+	return [0, 'Currently coding this one'];
+
+};
+core.startup.help = '<b>@{startup}</b> command will set all supplied arguments to run at each startup on this machine. @{startup} with no arguments lists the current startup commands';
 /*---- SUBWAY ----*/
 core.subway = function(args,trmnl){
 	if(stations == -1 || (Object.keys(stations).length === 0 && sellers.constructor === Object)){
@@ -1186,6 +1192,8 @@ Note that station names are auto-abbreviated at the first hyphen or slash, which
 e.g. 47-50 Sts - Rockefeller Ctr becomes just "47"';
 /*---- THEME ----*/
 core.theme = function(args,trmnl){
+	let flags = [];
+	[args,flags] = trmnl.parse_flags(args);
 	if(args[0] == undefined || args[0] == ""){
 		return [1, "need a theme name to change to"];
 	}
@@ -1196,13 +1204,17 @@ core.theme = function(args,trmnl){
 		trmnl.cols.output = trmnl.themes[args[0]].output;
 		trmnl.cols.prompt = trmnl.themes[args[0]].prompt;
 		trmnl.cols.feedback = trmnl.themes[args[0]].feedback;
+		if(flags.indexOf('p') > -1 || flags.indexOf('permanent') > -1){
+			localStorage.setItem("theme",`"${args[0]}"`);
+		}
 	}else{
 		return [1, 'unknown theme name: '+args];
 	}
 	trmnl.update_colors();
 	return 0;
 };
-core.theme.help = '<b>@{theme}</b> command: change terminal to a different theme. Available themes will be populated once specified theme file has been loaded.';
+core.theme.help = `<b>@{theme}</b> command: change terminal to a different theme. Available themes will be populated once specified theme file has been loaded.
+Use -p or --permanent flag to set the chosen theme as the default for this machine`;
 core.theme.autocomplete = (trmnl) => {
 	return Object.keys(trmnl.themes);
 };

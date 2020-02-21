@@ -28,49 +28,16 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.piping = false; 		// used to "pipe" command outputs to another command ("|" symbol)
 	this.pipe_function = null;	// what command to pass the output to if "piping" (assigned automatically with whatever is after the | symbol)
 
+	this.defaultTheme = "dracula"; // overridden by user's local settings in this.loadLocalContent();
 	this.cols = {};
 	this.cols.output = '#FFF';
 	this.cols.feedback = '#9CF';
 	this.cols.error = '#E85555';
 	this.cols.bg = '#000';
 
-	// Load up the themes.json file:
-	this.theme_file = theme_file+"?"+Date.now();
-	this.themes = {};
-	let me = this;
-	let xhr = new XMLHttpRequest();
-	xhr.open('GET', me.theme_file, true);
-	xhr.onload = function(){
-		const themes = JSON.parse(this.responseText);
-		me.themes = themes;
+	this.loadThemes(theme_file);
 
-		let theme_help = "<b>THEME</b> command: change terminal to a different theme. Available themes are: <hr /><table><tr>";
-		let c = 0;
-		for(let t in themes){
-			theme_help += "<td class='cmd-feedback'>"+t+"</td>";
-			c++;
-			if(c%6 == 0 && c != 1) theme_help += '</tr><tr>';
-		}
-		theme_help += "</tr></table>";
-		me.base.theme.help = theme_help;
-		me.parse_command('theme dracula',0); // put this in temporarily as my current favorite theme
-	};
-	xhr.onerror = function(err){
-		me.output("<span class='cmd-feedback'>Couldn't load the themes file, only default theme available.</span>"); // why didn't I make terminal.feedback a method?!
-		console.log(err);
-	}
-	xhr.send(null);
-
-	// load locally stored command history, if present (localstorage, i.e. computer-specific)
-	var localhist = JSON.parse(localStorage.getItem("history"));
-	if(localhist !== null){
-		// check if it's the appropriate data and format for this.cmd_hist and apply it if so
-		if(localhist.constructor === Array){ // it's an array...
-			if(localhist.every(function(i){ return typeof i === "string" })){ // they're all strings :)
-				this.cmd_hist = localhist;
-			}
-		}
-	}
+	this.loadLocalContent();
 
 	var trmnl = this;
 	// set up clicking within terminal to move focus to input:
@@ -104,9 +71,13 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 						terminal[newID].input_div.focus();
 				}else{
 					e.preventDefault();
-					const thusfar = this.value;
+					let thusfar = this.value;
+					if(thusfar.indexOf('|') > -1){ // if we're piping a command, run autocomplete on last command
+						const cmdPop = thusfar.split('|');
+						thusfar = cmdPop[cmdPop.length-1];
+					}
 					let subfar = thusfar.split(" ");
-					let cmdIn = subfar[0];
+					const cmdIn = subfar[0];
 					subfar = subfar[subfar.length-1];
 
 					let results = [];
@@ -209,6 +180,12 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	/***** AUTOCOMPLETES: *****/
 	for(var a = 0; a < auto_progs.length; a++){
 		this.update_autocomplete(auto_progs[a]);
+	}
+
+	/**** Run the startup items, if any exist: ****/
+	for(let item in this.startUpItems){
+		//this.base[item]() // Hold up, we need to work out an input format:
+		// Probably pass arguments in startup command like this: "startup theme[darkmatter] currency version arglist[these,are,arguments,--and,-flags]"
 	}
 }
 /* PROTOTYPES */
@@ -528,6 +505,66 @@ Terminal.prototype.update_colors = function(){
 	}
 	document.getElementById('dynamic-cols').innerHTML = col_setup;
 	// I do not like the feel of the method above (with the inline style in the head), but it allows for future elements to have their css altered also.
+}
+Terminal.prototype.loadLocalContent = function(){
+	// All of these are localstorage, i.e. computer-specific
+	// load locally stored command history, if present:
+	const localhist = JSON.parse(localStorage.getItem("history"));
+	if(localhist !== null){
+		// check if it's the appropriate data and format for this.cmd_hist and apply it if so
+		if(localhist.constructor === Array){ // it's an array...
+			if(localhist.every(function(i){ return typeof i === "string" })){ // they're all strings :)
+				this.cmd_hist = localhist;
+			}
+		}
+	}
+	// load startup items, if present, and run them:
+	const startups = JSON.parse(localStorage.getItem("startup"));
+	this.startUpItems = [];
+	if(startups !== null){
+		if(startups.constructor === Array){
+			if(startups.every(function(i){ return typeof i === "string" })){ // they're all strings :)
+				this.startUpItems = startups;
+			}
+		}
+	}
+	// check if the user has a default theme:
+	const defaultTheme = JSON.parse(localStorage.getItem("theme"));
+	if(defaultTheme !== null && typeof(defaultTheme) === "string"){
+		this.defaultTheme = defaultTheme;
+	}
+};
+Terminal.prototype.loadThemes = function(theme_file){
+	//TODO: make a loading bar for the terminal and don't allow access until this completes or has an error (in which case, no themes)
+	// Load up the themes.json file:
+	this.theme_file = theme_file+"?"+Date.now();
+	this.themes = {};
+	let me = this;
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', me.theme_file, true);
+	xhr.onload = function(){
+		const themes = JSON.parse(this.responseText);
+		me.themes = themes;
+
+		let theme_help = "<b>THEME</b> command: change terminal to a different theme. Available themes are: <hr /><table><tr>";
+		let c = 0;
+		for(let t in themes){
+			theme_help += "<td class='cmd-feedback'>"+t+"</td>";
+			c++;
+			if(c%6 == 0 && c != 1) theme_help += '</tr><tr>';
+		}
+		theme_help += "</tr></table>";
+		theme_help += "Use -p or --permanent flag to set the chosen theme as the default for this machine";
+		me.base.theme.help = theme_help;
+		// Apply user's permanent theme:
+		//me.base.theme(me.defaultTheme,me); // Not working...
+		me.parse_command(`theme ${me.defaultTheme}`,0); // the above doesn't work but this does. //TODO: look into this.
+	};
+	xhr.onerror = function(err){
+		me.output("<span class='cmd-feedback'>Couldn't load the themes file, only default theme available.</span>"); // why didn't I make terminal.feedback a method?!
+		console.log(err);
+	}
+	xhr.send(null);
 }
 //TODO: start using the below xhrPromise method!
 // New method to use to replace all xhr calls that hide and re-show the terminal:
