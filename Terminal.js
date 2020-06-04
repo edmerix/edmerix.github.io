@@ -8,7 +8,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.ID = cmdID;
 	this.title = "emerix";
 	this.version = 0.3;
-	this.releaseDate = "2019-04-28";
+	this.releaseDate = "2019-04-28 {override: 2020-06-04}";
 
 	this.prompt = prmpt;
 	this.base_prompt = prmpt;
@@ -202,6 +202,29 @@ Terminal.prototype.update_autocomplete = function(prog){
 Terminal.prototype.parse_command = function(cmd,printing = true){
 	//TODO: should do the actual parsing with regex. Check out http://regexlib.com/Search.aspx?k=command+line&c=-1&m=-1&ps=20 for ideas.
 	cmd = cmd.replace(/!{2}/g,this.cmd_hist[this.cmd_hist.length-1]); // this line swaps all instances of !! with the previous command
+	if(dont_be_an_asshole && cmd.split(" ")[0] != "theme"){
+		if(cmd != 'n' && cmd != 'N'){
+			this.output('Thanks! Directing you to the Black Lives Matter donation website now.');
+			setTimeout(function(){
+		    	window.location.href = "https://secure.actblue.com/donate/ms_blm_homepage_2019";
+			}, 1000);
+		}else{
+			this.output('I\'m always open to learning the best way to donate. If you know a better charity, please let me know.');
+			this.output('\n<b>Please also consider the following:</b>');
+			this.output("<a href='https://www.naacpldf.org' target='_blank'>NAACP</a>");
+			this.output("<a href='https://www.aclu.org' target='_blank'>ACLU</a>");
+			this.output("<a href='https://www.blackvisionsmn.org' target='_blank'>Black Visions Collective</a>");
+			this.output("<a href='https://colorofchange.org' target='_blank'>Color of Change</a>");
+			this.output("<a href='https://www.joincampaignzero.org/#vision/' target='_blank'>Campagin Zero</a>");
+			this.output("<a href='https://secure.everyaction.com/zae4prEeKESHBy0MKXTIcQ2' target='_blank'>Reclaim the Block</a>");
+			this.output("<a href='https://www.nlg-npap.org' target='_blank'>Nation Police Accountability Project</a>");
+			this.output("<a href='https://secure.actblue.com/donate/bail_funds_george_floyd' target='_blank'>Split a donation across bail funds, mutual aid funds, and racial justice organizers</a>");
+			setTimeout(function(){ boot();}, 500);
+		}
+		this.input_div.value = "";
+		dont_be_an_asshole = false; // hopefully they donated...
+		return;
+	}
 
 	if(cmd.replace(/ /g,'') != ""){
         this.cmd_counter++;
