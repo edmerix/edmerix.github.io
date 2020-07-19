@@ -1,5 +1,4 @@
 const greeting = true;
-let dont_be_an_asshole = true;
 
 let terminal = [],
 	instances;
@@ -14,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 	update_positions();
 
-	terminal[instances].output("\n<b><u>A necessary update to society has been found</u>.\nWould you like to donate to <a href='https://secure.actblue.com/donate/ms_blm_homepage_2019'>Black Lives Matter</a> now?</b> [<b>Y</b>,n]");
+	//terminal[instances].output("\n<b><u>A necessary update to society has been found</u>.\nWould you like to donate to <a href='https://secure.actblue.com/donate/ms_blm_homepage_2019'>Black Lives Matter</a> now?</b> [<b>Y</b>,n]");
 
 	// load local settings here
 	/*
@@ -43,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		console.log("Couldn't load subway station data, subway function will not work");
 	}
 	xhr.send(null);
+	boot();
 });
 
 function boot(){
