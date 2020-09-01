@@ -85,6 +85,29 @@ programs.science.protected = {};
 programs.science.protected.fallback = function(cmd,fn,args,trmnl){
 	return [1, "Unknown command for the SCIENCE section: "+fn];
 }
+programs.science.erdos = function(args,trmnl){
+	let silly = `The <a href="https://en.wikipedia.org/wiki/Erd&odblac;s_number" target="_blank">![Erd&odblac;s number]</a> is the number of co-authors separating a scientist and epic mathematician Paul Erd&odblac;s
+	<small><i>(It's the inspiration for <a href="https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon" target="_blank">Six Degrees of Kevin Bacon</a>)</i></small>
+
+	Ed's <i>Erd&odblac;s number</i> is ![3]: (using earliest publications between co-authors)`;
+	silly += '<ol class="inset">\
+		<li><b>![Paul Erd&odblac;s]</b> and <b>Boris Aranov</b> published together in <i>Combinatorica</i> in <a href="https://doi.org/10.1007/BF01215345" target="_blank">1994</a></li>\
+		<li><b>Boris Aranov</b> and <b>Catherine A. Schevon</b> published together in <i>SIAM Journal on Computing</i> in <a href="https://doi.org/10.1137/S0097539793253371" target="_blank">1997</a></li>\
+		<li><b>Catherine A. Schevon</b> and <b>![Edward M. Merricks]</b> published together in <i>Brain</i> in <a href="https://doi.org/10.1093/brain/awv208" target="_blank">2015</a></li>\
+	</ol>';
+	silly += `\nThis scrapes him into the top 15.2% of people with Erd&odblac;s numbers according to <a href="https://oakland.edu/enp/trivia/" target="_blank">Oakland University</a>...
+	@__Similarly, his "<i>Einstein number</i>" is ![5], following the same route a little further:`;
+	silly += '<ol class="inset">\
+		<li><b>![Albert Einstein]</b> and <b>Ernst Gabor Straus</b> published together in <i>Rev. Mod. Phys.</i> in <a href="https://doi.org/10.1103/RevModPhys.17.120" target="_blank">1945</a></li>\
+		<li><b>Ernst Gabor Straus</b> and <b>Paul Erd&odblac;s</b> published together in <i>Discrete Math.</i> in <a href="https://doi.org/10.1016/0012-365X(82)90187-X" target="_blank">1982</a></li>\
+		<li><b>Paul Erd&odblac;s</b> and <b>Boris Aranov</b> published together in <i>Combinatorica</i> in <a href="https://doi.org/10.1007/BF01215345" target="_blank">1994</a></li>\
+		<li><b>Boris Aranov</b> and <b>Catherine A. Schevon</b> published together in <i>SIAM Journal on Computing</i> in <a href="https://doi.org/10.1137/S0097539793253371" target="_blank">1997</a></li>\
+		<li><b>Catherine A. Schevon</b> and <b>![Edward M. Merricks]</b> published together in <i>Brain</i> in <a href="https://doi.org/10.1093/brain/awv208" target="_blank">2015</a></li>\
+	</ol>';
+
+	silly += `\n<b>Overall, it doesn't really mean anything, but here we are.</b>`;
+	return [0, silly];
+}
 programs.science.exit = function(args,trmnl){
 	trmnl.program = "base";
 	trmnl.next_prompt = trmnl.base_prompt;
@@ -161,7 +184,7 @@ programs.science.papers = function(args,trmnl){
 	papers += '</div>';
 	papers += '</div>';
 	papers += '<div class="citation">';
-	papers += '<div class="cite-title"><a href="https://academic.oup.com/brain/article-abstract/138/10/2891/2468703" target="_blank">Single unit action potentials in humans and the effect of seizure activity</a></div>';
+	papers += '<div class="cite-title"><a href="https://doi.org/10.1093/brain/awv208" target="_blank">Single unit action potentials in humans and the effect of seizure activity</a></div>';
 	papers += '<div class="cite-authors"><b>Edward M Merricks</b>, Elliot H Smith, Guy M McKhann, Robert R Goodman, Lisa M Bateman, Ronald G Emerson, Catherine A Schevon, Andrew J Trevelyan</div>';
 	papers += '<div class="cite-metadata">';
 	papers += '<span class="cite-journal">(2015) Brain </span>';

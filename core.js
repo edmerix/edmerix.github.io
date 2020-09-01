@@ -1040,9 +1040,12 @@ core.science = function(args,trmnl){
 			quick_release = true;
 		}
 	}
+	/*
+<div itemscope itemtype="https://schema.org/Person"><a itemprop="sameAs" content="https://orcid.org/0000-0001-8172-3152" href="https://orcid.org/0000-0001-8172-3152" target="orcid.widget" rel="me noopener noreferrer" style="vertical-align:top;"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" style="width:1em;margin-right:.5em;" alt="ORCID iD icon">https://orcid.org/0000-0001-8172-3152</a></div>
+	*/
 	trmnl.output("@__Ed is currently a Post-Doctoral Research Scientist at <a target='_blank' href='https://www.cuimc.columbia.edu'>Columbia University Medical Center</a> in the <a target='_blank' href='http://www.columbianeurology.org'>Dept. of Neurology</a>\n\
 	His research focuses on the activity of populations of single neurons in epilepsy patients during seizures,<br />especially the activity of individual inhibitory cells at seizure onset, and alterations to firing patterns<br />in what's known as the '<i>post-ictal</i>' period.\
-	@__Click to go to his <a target='_blank' href='https://scholar.google.com/citations?user=PnKpxtIAAAAJ&hl=en&oi=ao'>Google Scholar page</a>, <a target='_blank' href='https://www.ncbi.nlm.nih.gov/pubmed/?term=(merricks+em%5Bauthor%5D)'>publications</a>, <a target='_blank' href='https://github.com/edmerix/'>GitHub</a>, or <a target='_blank' href='https://www.researchgate.net/profile/Edward_Merricks'>ResearchGate</a>\n\
+	@__Click to go to his <a target='_blank' href='https://scholar.google.com/citations?user=PnKpxtIAAAAJ&hl=en&oi=ao'>Google Scholar page</a>, <a target='_blank' href='https://www.ncbi.nlm.nih.gov/pubmed/?term=(merricks+em%5Bauthor%5D)'>publications</a>, <a target='_blank' href='https://github.com/edmerix/'>GitHub</a>, <a target='_blank' href='https://www.researchgate.net/profile/Edward_Merricks'>ResearchGate</a>, or <a target='_blank' href='https://orcid.org/0000-0001-8172-3152'><img src='https://orcid.org/sites/default/files/images/orcid_16x16.png' style='width:1em;margin-right:.5em;'' alt='ORCID iD icon'>ORCiD</a>\n\
 	He has code to open <a target='_blank' href='https://github.com/edmerix/openNSx-swift'>NSx neural data files in Swift</a>, do the <a target='_blank' href='https://github.com/edmerix/SplitMerge'>manual stage of spike sorting</a>, or<br /><a target='_blank' href='https://github.com/edmerix/NeuroClass'>analyze populations of single unit data</a>, among others (ask for more).\
 	@__There have been a lot of questions about spike sorting through time recently...\n\
 	Click <a href='SpikeSorting' target='_blank'>here</a> for a (very) quick overview of spike sorting through time");

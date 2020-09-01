@@ -21,7 +21,7 @@ hr {
 	border-color: #888;
 	opacity: 0.1;
 }
-ul {
+ul, ol {
 	margin-top: 0;
 	margin-bottom: 0;
 }
