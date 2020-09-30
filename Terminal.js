@@ -368,27 +368,29 @@ Terminal.prototype.output = function(output,prompted){
     var out, outprompt, outline;
 	// parse out clickable function shortcuts in the output:
 	const ID = this.ID;
-	output = output.replace(/\@\{.+?\}/g, function(match){ // match anything between @{...} in a non-greedy fashion
-		let cmd = match.replace('@{','');
-		cmd = cmd.replace('}','');
-		// can't say I love using onclick:
-		return '<span class="cmd-shortcut cmd-feedback" title="Click to run \''+cmd+'\' in this terminal..." onclick="javascript:terminal['+ID+'].parse_command(\''+cmd+'\',terminal['+ID+']);">'+cmd+'</span>';
-	});
-	// parse the feedback highlights:
-	output = output.replace(/\!\[.+?\]/g, function(match){ // match anything between ![...] in a non-greedy fashion
-		match = match.replace('![','').replace(']','');
-		return '<span class="cmd-feedback">'+match+'</span>';
-	});
-	// parse the color requests:
-	let pop;
-	output = output.replace(/\#([0-9a-fA-f]{3})(?:[0-9a-fA-f]{3})?\[.+?]/g, function(match){
-		pop = match.split('[');
-		return '<span style="color: '+pop[0]+';">'+pop[1].replace(']','</span>');
-	});
-	// parse the <hr/> requests
-	output = output.replace(/@__/g,'<hr />');
-	// parse the newlines:
-	output = output.replace(/\n/g,'<br />');
+	if(this.program == 'base' || this.program == 'science'){
+		output = output.replace(/\@\{.+?\}/g, function(match){ // match anything between @{...} in a non-greedy fashion
+			let cmd = match.replace('@{','');
+			cmd = cmd.replace('}','');
+			// can't say I love using onclick:
+			return '<span class="cmd-shortcut cmd-feedback" title="Click to run \''+cmd+'\' in this terminal..." onclick="javascript:terminal['+ID+'].parse_command(\''+cmd+'\',terminal['+ID+']);">'+cmd+'</span>';
+		});
+		// parse the feedback highlights:
+		output = output.replace(/\!\[.+?\]/g, function(match){ // match anything between ![...] in a non-greedy fashion
+			match = match.replace('![','').replace(']','');
+			return '<span class="cmd-feedback">'+match+'</span>';
+		});
+		// parse the color requests:
+		let pop;
+		output = output.replace(/\#([0-9a-fA-f]{3})(?:[0-9a-fA-f]{3})?\[.+?]/g, function(match){
+			pop = match.split('[');
+			return '<span style="color: '+pop[0]+';">'+pop[1].replace(']','</span>');
+		});
+		// parse the <hr/> requests
+		output = output.replace(/@__/g,'<hr />');
+		// parse the newlines:
+		output = output.replace(/\n/g,'<br />');
+	}
 
     if(prompted){
         var now = new Date(),

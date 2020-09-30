@@ -217,14 +217,14 @@ programs.science.help = function(args,trmnl){
 	if(trmnl.science.hasOwnProperty('autocomplete')){
 		// make use of the autocomplete data if it has been populated
 		for(var c = 0; c < trmnl.science.autocomplete.length; c++){
-			avail_commands += '<td>'+trmnl.science.autocomplete[c]+'</td>';
+			avail_commands += '<td>@{'+trmnl.science.autocomplete[c]+'}</td>';
 			if((c+1)%6 == 0 && c != 1) avail_commands += '</tr><tr>';
 		}
 	}else{
 		var c = 0;
 		for(key in trmnl.science){
 			if(typeof(trmnl.science[key]) == 'function'){
-				avail_commands += '<td>'+key+'</td>';
+				avail_commands += '<td>@{'+key+'}</td>';
 				c++;
 				if(c%6 == 0 && c != 1) avail_commands += '</tr><tr>';
 				//avail_commands += '&nbsp;&nbsp;'+key+'<br />';
