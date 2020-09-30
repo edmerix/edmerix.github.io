@@ -96,6 +96,9 @@ input {
     display: box;
     box-pack: center;
     box-orient: vertical;
+	overflow-wrap: break-word;
+	white-space: pre-line;
+	word-wrap: break-word;
 }
 .cmd-prompt {
 	-webkit-user-select: none;
