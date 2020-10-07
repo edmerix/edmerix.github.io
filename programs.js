@@ -157,6 +157,14 @@ programs.science.papers = function(args,trmnl){
 	papers += '</div>';
 	papers += '</div>';
 	papers += '<div class="citation">';
+	papers += '<div class="cite-title"><a href="https://www.biorxiv.org/content/10.1101/2020.09.30.321687v1.abstract" target="_blank">Hierarchical integration across multiple timescales in human auditory cortex</a></div>';
+	papers += '<div class="cite-authors">Sam V Norman-Haignere, Laura K Long, Orrin Devinsky, Werner Doyle, Ifeoma Irobunda, <b>Edward M Merricks</b>, Neil A Feldstein, Guy M McKhann, Catherine A Schevon, Adeen Flinker, Nima Mesgarani</div>';
+	papers += '<div class="cite-metadata">';
+	papers += '<span class="cite-journal">(2020) biorxiv, </span>';
+	papers += '<span class="cite-volume">pre-print </span>';
+	papers += '<span class="cite-issue"><a target="_blank" href="https://doi.org/10.1101/2020.09.30.321687">doi.org/10.1101/2020.09.30.321687</a></span>';
+	papers += '</div>';
+	papers += '<div class="citation">';
 	papers += '<div class="cite-title"><a href="https://www.physiology.org/doi/abs/10.1152/jn.00392.2019" target="_blank">Role of paroxysmal depolarization in focal seizure activity</a></div>';
 	papers += '<div class="cite-authors">Andrew K Tryba<sup>*</sup>, <b>Edward M Merricks</b><sup>*</sup>, Somin Lee, Tuan Pham, SungJun Cho, Douglas R Nordli Jr, Tahra L Eissa, Robert R Goodman, Guy M McKhann Jr, Ronald G Emerson, Catherine A Schevon, Wim van Drongelen</div>';
 	papers += '<div class="cite-metadata">';
