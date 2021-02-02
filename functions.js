@@ -64,7 +64,7 @@ function boot(){
 		Try @{install session}, followed by @{session}, then @{theme orange}\n\
 		After that, try out @{install tedit}, then @{tedit} for a (super) minimal text editor.\n\
 		When in tedit, hit cmd/ctrl+~ to open the console, and type ![save] to save your file.@__\
-		If you made it this far, perhaps check out my <a href="https://www.github.com/edmerix" target="_blank">GitHub</a>');
+		If you made it this far, perhaps check out my <a href="https://www.github.com/edmerix" target="_blank">GitHub</a>, where all the <a href="https://www.github.com/edmerix/edmerix.github.io" target="_blank">code for this pseudo-terminal</a> is available');
     }
 }
 
