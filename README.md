@@ -17,4 +17,4 @@ It is entirely class-based, so multiple terminals can run side-by-side with thei
 - Weather forecast is making use of [OpenWeatherMap API](https://api.openweathermap.org)
 - MLB live scores and data are using [MLB's shared data](https://gd2.mlb.com/components/game/mlb/)
 - Math functionality is courtesy of [Math.js](https://mathjs.org)
-- Currency conversion is using [exchangeratesapi](https://exchangeratesapi.io)
+- Currency conversion is using [exchangerate.host](https://exchangerate.host)
