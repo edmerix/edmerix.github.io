@@ -324,7 +324,8 @@ core.currency = function(args,trmnl){
 	const date_end = now.toISOString().split('T')[0];
 
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', `https://api.exchangeratesapi.io/history?start_at=${date_start}&end_at=${date_end}&base=${currencies[0]}&symbols=${currencies[1]}`, true);
+    
+	xhr.open('GET', `https://api.exchangerate.host/timeseries?start_date=${date_start}&end_date=${date_end}&base=${currencies[0]}&symbols=${currencies[1]}`, true);
 	xhr.responseType = 'json';
 	xhr.onload = function(){
 	    const data = xhr.response;
