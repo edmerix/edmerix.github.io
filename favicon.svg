@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+	<style>
+	    path.ecomponent {
+	      	fill: #060049;
+	    }
+		path.mcomponent {
+			fill: #283d66;
+		}
+
+	    @media (prefers-color-scheme: dark) {
+				path.ecomponent {
+					fill: #C8DBF0;
+				}
+				path.mcomponent {
+					fill: #A8BBD0;
+				}
+	    }
+	</style>
+	<path id="E-slanted" class="ecomponent" d="M12.75 0.5 L278.25 0.5 260.25 57.5 70.75 57.5 70.75 144.5 233.25 144.5 217.25 201.5 70.75 201.5 70.75 297.5 337.25 297.5 337.25 354.5 12.75 354.5 Z" fill-opacity="1" stroke="none"/>
+	<path id="M" class="mcomponent" d="M69.5 37.5 L167.004 37.5 229.25 253.5 292.335 37.5 389 37.5 389 391.5 336.685 391.5 336.685 97.5 335.846 97.5 250.699 371.5 207.801 371.5 122.654 97.5 121.815 97.5 121.815 391.5 69.5 391.5 Z" fill-opacity="1" stroke="none"/>
+	<g id="Blockers">
+		<path id="E-up-middle" class="ecomponent" d="M137 145 L201 145 215 201 152 201 Z" fill-opacity="1" stroke="none"/>
+		<path id="Shadow-block-2" class="ecomponent" d="M189 145 L215 145 217 201 207 201 Z" fill-opacity="1" stroke="none"/>
+		<path id="Shadow-block-1" class="ecomponent" d="M123 145 L140 145 157 201 123 201 Z" fill-opacity="1" stroke="none"/>
+		<path id="E-up-body" class="ecomponent" d="M70 298 L122.598 298 123 354 70 354 Z" fill-opacity="1" stroke="none"/>
+		<path id="E-up-tail" class="ecomponent" d="M337 298 L344 298 364 354 337 354 Z" fill-opacity="1" stroke="none"/>
+		<path id="Shadow-block-3" class="ecomponent" d="M47 298 L70 298 70 354 47 354 Z" fill-opacity="1" stroke="none"/>
+		<path id="Shadow-block-4" class="ecomponent" d="M121 298 L144 298 144 354 121 354 Z" fill-opacity="1" stroke="none"/>
+		<path id="Shadow-block-5" class="ecomponent" d="M286 298 L337 298 337 354 286 354 Z" fill-opacity="1" stroke="none"/>
+	</g>
+</svg>
