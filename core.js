@@ -426,7 +426,9 @@ core.currency = function(args,trmnl){
 
 		trmnl.output(response,false);
 		trmnl.output(`![Past ${monthsBack} months] <small>(shading shows the threshold of ![${threshold} SDs])</small>:`,false);
+		trmnl.output(`<small>&uarr;&nbsp;${currencies[0]} buys more ${currencies[1]}</small>`);
 	    trmnl.output_div.appendChild(svg);
+		trmnl.output(`<small>&darr;&nbsp;${currencies[1]} buys more ${currencies[0]}</small>`);
 
 	};
 	xhr.onerror = function(err){
