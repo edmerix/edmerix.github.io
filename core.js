@@ -666,6 +666,7 @@ core.math = function(args,trmnl){
 core.math.help = '<b>@{math}</b> program';
 /*---- MLB ----*/
 core.mlb = function(args,trmnl){
+    return [0, "<i>MLB API has changed, update in progress...</i>"];
 	// TODO: add in extra arguments to allow for querying results from other days
 	if(typeof(args[0]) === "undefined" || args[0] == ""){
 		return [1, "Need to specify a team to look up (2 or 3 digit code)"];
