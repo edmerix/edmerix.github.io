@@ -156,6 +156,7 @@ programs.science.publications = function(args,trmnl){
 			papers += '<span class="cite-volume">6 </span>';
 			papers += '<span class="cite-issue">(1) 317</span>';
 		papers += '</div>';
+	papers += '</div>';
 	papers += '<div class="citation">';
 		papers += '<div class="cite-title"><a href="https://doi.org/10.1093/brain/awac291" target="_blank">Distinct signatures of loss of consciousness in focal impaired awareness versus tonic-clonic seizures</a></div>';
 		papers += '<div class="cite-authors">Elsa Juan, Urszula Górska, Csaba Kozma, Cynthia Papantonatos, Tom Bugnon, Colin Denis, Vaclav Kremen, Greg Worrell, Aaron F Struck, Lisa M Bateman, <b>Edward M Merricks</b>, Hal Blumenfeld, Giulio Tononi, Catherine Schevon, Melanie Boly</div>';
@@ -164,6 +165,7 @@ programs.science.publications = function(args,trmnl){
 			papers += '<span class="cite-volume">146 </span>';
 			papers += '<span class="cite-issue">(1) 109–123</span>';
 		papers += '</div>';
+	papers += '</div>';
 	papers += '<div class="citation">';
 		papers += '<div class="cite-title"><a href="https://doi.org/10.1093/brain/awac168" target="_blank">Single unit analysis and wide-field imaging reveal alterations in excitatory and inhibitory neurons in glioma</a></div>';
 		papers += '<div class="cite-authors">Brian JA Gill<sup>*</sup>, Farhan A Khan<sup>*</sup>, Alexander R Goldberg<sup>*</sup>, <b>Edward M Merricks</b><sup>*</sup>, Xiaoping Wu, Alexander A Sosunov, Tejaswi D Sudhakar, Athanassios Dovas, Wudu Lado, Andrew J Michalak, Jia Jie Teoh, Jyun-you Liou, Wayne N Frankel, Guy M McKhann, Peter Canoll, Catherine A Schevon</div>';
@@ -172,6 +174,7 @@ programs.science.publications = function(args,trmnl){
 			papers += '<span class="cite-volume">145 </span>';
 			papers += '<span class="cite-issue">(10) 3666–3680</span><div><sup>*</sup> = co-first authors</div>';
 		papers += '</div>';
+	papers += '</div>';
 	papers += '<div class="citation">';
 		papers += '<div class="cite-title"><a href="https://doi.org/10.1523/JNEUROSCI.0338-22.2022" target="_blank">Multiple sources of fast traveling waves during human seizures: resolving a controversy</a></div>';
 		papers += '<div class="cite-authors">Emily D Schlafly, François A Marshall, <b>Edward M Merricks</b>, Uri T Eden, Sydney S Cash, Catherine A Schevon, Mark A Kramer</div>';
@@ -180,6 +183,7 @@ programs.science.publications = function(args,trmnl){
 			papers += '<span class="cite-volume">42 </span>';
 			papers += '<span class="cite-issue">(36) 6966–6982</span>';
 		papers += '</div>';
+	papers += '</div>';
 	papers += '<div class="citation">';
 		papers += '<div class="cite-title"><a href="https://doi.org/10.1038/s41562-021-01261-y" target="_blank">Multiscale temporal integration organizes hierarchical computation in human auditory cortex</a></div>';
 		papers += '<div class="cite-authors">Sam V Norman-Haignere, Laura K Long, Orrin Devinsky, Werner Doyle, Ifeoma Irobunda, <b>Edward M Merricks</b>, Neil A Feldstein, Guy M McKhann, Catherine A Schevon, Adeen Flinker, Nima Mesgarani</div>';
@@ -188,6 +192,7 @@ programs.science.publications = function(args,trmnl){
 			papers += '<span class="cite-volume">6 </span>';
 			papers += '<span class="cite-issue">(3) 455–469</span>';
 		papers += '</div>';
+	papers += '</div>';
 	papers += '<div class="citation">';
 		papers += '<div class="cite-title"><a href="https://doi.org/10.7554/eLife.73541" target="_blank">Human interictal epileptiform discharges are bidirectional traveling waves echoing ictal discharges</a></div>';
 		papers += '<div class="cite-authors">Elliot H Smith, Jyun-you Liou, <b>Edward M Merricks</b>, Tyler Davis, Kyle Thomson, Bradley Greger, Paul House, Ronald G Emerson, Robert Goodman, Guy M McKhann, Sameer Sheth, Catherine Schevon, John D Rolston</div>';
@@ -196,6 +201,7 @@ programs.science.publications = function(args,trmnl){
 			papers += '<span class="cite-volume">11 </span>';
 			papers += '<span class="cite-issue">e73541</span>';
 		papers += '</div>';
+	papers += '</div>';
 	papers += '<div class="citation">';
 		papers += '<div class="cite-title"><a href="https://doi.org/10.1523/JNEUROSCI.0417-20.2020" target="_blank">Neuronal firing and waveform alterations through ictal recruitment in humans</a></div>';
 		papers += '<div class="cite-authors"><b>Edward M Merricks</b>, Elliot H Smith, Ronald G Emerson, Lisa M Bateman, Guy M McKhann, Robert R Goodman, Sameer A Sheth, Bradley Greger, Paul A House, Andrew J Trevelyan, Catherine A Schevon</div>';
