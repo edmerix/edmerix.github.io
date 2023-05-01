@@ -988,7 +988,7 @@ core.nsxload = function(args,trmnl){
 core.nsxload.help = '<b>@{nsxload}</b> command: calculates how many gigabytes will be created per hour/day for specified<br />number of electrodes and sampling rate with BlackRock nsx files<br />Specify number of electrodes by pre- or post-fixing with "ch"<br />e.g. @{nsxload 16ch 30k} <i>or</i> @{nsxload 2000 ch64} (i.e. any order for arguments or "ch")';
 /*---- PAPERS ----*/
 core.papers = function(args,trmnl){
-	return trmnl.science.papers();
+	return trmnl.science.publications();
 };
 core.papers.help = '<b>@{papers}</b> command: list my publications (inherited from @{science} program)';
 /*---- PKG ----*/
