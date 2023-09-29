@@ -324,13 +324,15 @@ core.currency = function(args,trmnl){
 	const date_end = now.toISOString().split('T')[0];
 
 	let xhr = new XMLHttpRequest();
-
-	xhr.open('GET', `https://api.exchangerate.host/timeseries?start_date=${date_start}&end_date=${date_end}&base=${currencies[0]}&symbols=${currencies[1]}`, true);
+	xhr.open('GET', `https://api.apilayer.com/exchangerates_data/timeseries?start_date=${date_start}&end_date=${date_end}&base=${currencies[0]}&symbols=${currencies[1]}`, true);
 	xhr.responseType = 'json';
+    xhr.setRequestHeader('apikey','2aVOc6x280DGTa1fg9tnVlc31W5cztW3');
 	xhr.onload = function(){
 	    const data = xhr.response;
+
 	    if(!data.hasOwnProperty('rates')){
-	        trmnl.error("Data structure of response did not include rates");
+	        trmnl.error("Data structure of response did not include rates. Check console.");
+            console.log(data);
 	        return;
 	    }
 	    const unorderedDates = Object.keys(data.rates);
@@ -435,6 +437,7 @@ core.currency = function(args,trmnl){
 	    trmnl.error("Error with the connection for currency history");
 	};
 	xhr.send(null);
+    
 	return [0, 'Checking currency history...'];
 };
 core.currency.help = `<b>@{currency}</b> command plots a graph of the conversion rate between two currencies, and suggests if
