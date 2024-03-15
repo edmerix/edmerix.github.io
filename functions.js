@@ -54,7 +54,7 @@ function boot(){
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|/');
 
         terminal[instances].output('Ed is a scientist in the Department of Neurology at Columbia University Medical Center. He also sometimes does art, and plays a bit of music.\n\
-		To find out more about the science, try its command below ("@{science info}").\n\
+		To find out more about the science, try its command below ("@{science info}"), or to quickly see a list of peer-reviewed papers enter "@{papers}"\n\
 		To get more help, type "@{help}" and hit enter. <small>(Highlighted commands here can also be clicked to run them...)</small>@__\
 		Note there are some cool things that aren\'t installed by default... Use @{pkg} command to see available packages\n\
 		Try @{install session}, followed by @{session}, then @{theme orange}\n\
