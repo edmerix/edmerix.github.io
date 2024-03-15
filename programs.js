@@ -120,6 +120,7 @@ programs.science.projects = function(args,trml){
 	blurb += "<ul class='inset'>";
 		blurb += "<li>Inhibitory interneurons have been insinuated in ictal propagation - we're showing that's like suggesting fire-fighters cause fires.</li>";
 		blurb += "<li>We're examining the exact role of fast-spiking interneurons after the seizure starts, but prior to its local arrival, and how this relates to brain structure</li>";
+	        blurb += "<li>![Update!]: Pre-print from this project is now available on <a target=\"blank\" href=\"https://doi.org/10.1101/2024.01.26.24301821\">medRχiv</a> and is currently under review!</li>";
 	blurb += "</ul>";
 	blurb += "<div class='cmd-feedback inset'>The effect of seizures on individual neurons</div>";
 	blurb += "<ul class='inset'>";
@@ -136,7 +137,7 @@ programs.science.projects = function(args,trml){
 	blurb += "<ul class='inset'>";
 		blurb += "<li>Invasive recordings using microelectrodes are necessarily rare, but allow us to translate findings to more accessible recording methods</li>";
 		blurb += "<li>We're investigating how specific markers of brain being recruited to a seizure can be picked up with standard ECoG electrodes, using ≤ 250 Hz signals</li>";
-		blurb += "<li>![Update!]: Pre-print from this project is now available on <a target=\"blank\" href=\"https://doi.org/10.1101/2023.03.06.23286778\">medRχiv</a>!</li>";
+		blurb += "<li>![Update!]: This project is now published at <a target=\"blank\" href=\"https://doi.org/10.1093/brain/awad262\">Brain</a>!</li>";
 	blurb += "</ul>";
 	blurb += "<div class='cmd-feedback inset'>Tracking of neuron identities over days to weeks</div>";
 	blurb += "<ul class='inset'>";
