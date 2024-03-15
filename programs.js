@@ -150,6 +150,15 @@ programs.science.projects = function(args,trml){
 programs.science.publications = function(args,trmnl){
 	let papers = "<b>Publications <i>(listing peer-reviewed only)</i>:</b>";
 	papers += '<div class="citation">';
+		papers += '<div class="cite-title"><a href="https://doi.org/10.1093/brain/awad262" target="_blank">Cell-type specific and multiscale dynamics of human focal seizures in limbic structures</a></div>';
+		papers += '<div class="cite-authors">Alexander H Agopyan-Miu<sup>*</sup>, <b>Edward M Merricks</b><sup>*</sup>, Elliot H Smith, Guy M McKhann, Sameer A Sheth, Neil A Feldstein, Andrew J Trevelyan, Catherine A Schevon</div>';
+		papers += '<div class="cite-metadata">';
+			papers += '<span class="cite-journal">(2023) Brain, </span>';
+			papers += '<span class="cite-volume">146 </span>';
+			papers += '<span class="cite-issue">(12) 5209-5223</span><div><sup>*</sup> = co-first authors</div>';
+		papers += '</div>';
+	papers += '</div>';
+	papers += '<div class="citation">';
 		papers += '<div class="cite-title"><a href="https://doi.org/10.1038/s42003-023-04696-3" target="_blank">Spatiotemporal spike-centered averaging reveals symmetry of temporal and spatial components of the spike-LFP relationship during human focal seizures</a></div>';
 		papers += '<div class="cite-authors">Somin Lee, Sarita S Deshpande, <b>Edward M Merricks</b>, Emily Schlafly, Robert Goodman, Guy M McKhann, Emad N Eskandar, Joseph R Madsen, Sydney S Cash, Michel JAM van Putten, Catherine A Schevon, Wim van Drongelen</div>';
 		papers += '<div class="cite-metadata">';
