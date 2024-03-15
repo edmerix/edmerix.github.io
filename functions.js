@@ -13,8 +13,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
 	update_positions();
 
-	//terminal[instances].output("\n<b><u>A necessary update to society has been found</u>.\nWould you like to donate to <a href='https://secure.actblue.com/donate/ms_blm_homepage_2019'>Black Lives Matter</a> now?</b> [<b>Y</b>,n]");
-
 	// load local settings here
 	/*
 	//save example:
@@ -47,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 function boot(){
 	if(greeting){
-        //WELCOME message immediate output:
+        //WELCOME message immediate output: (ridiculous use of non-breaking spaces to create the ASCII art version of my name...)
         terminal[instances].output('&nbsp;_____&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;__&nbsp;&nbsp;__&nbsp;__&nbsp;&nbsp;__&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;&nbsp;\n\
 		|&nbsp;____|__|&nbsp;|_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;_&nbsp;_&nbsp;__&nbsp;__|&nbsp;|&nbsp;&nbsp;\\/&nbsp;&nbsp;|&nbsp;&nbsp;\\/&nbsp;&nbsp;|&nbsp;___&nbsp;_&nbsp;__&nbsp;_&nbsp;__(_)&nbsp;___|&nbsp;|&nbsp;_____&nbsp;&nbsp;|&nbsp;&nbsp;_&nbsp;\\|&nbsp;|__&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;_&nbsp;\\&nbsp;&nbsp;\n\
 		|&nbsp;&nbsp;_|&nbsp;/&nbsp;_`&nbsp;\\&nbsp;\\&nbsp;/\\&nbsp;/&nbsp;/&nbsp;_`&nbsp;|&nbsp;\'__/&nbsp;_`&nbsp;|&nbsp;|\\/|&nbsp;|&nbsp;|\\/|&nbsp;|/&nbsp;_&nbsp;\\&nbsp;\'__|&nbsp;\'__|&nbsp;|/&nbsp;__|&nbsp;|/&nbsp;/&nbsp;__|&nbsp;|&nbsp;|_)&nbsp;|&nbsp;\'_&nbsp;\\&nbsp;&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;\n\
@@ -55,9 +53,7 @@ function boot(){
 		|_____\\__,_|&nbsp;\\_/\\_/&nbsp;\\__,_|_|&nbsp;&nbsp;\\__,_|_|&nbsp;&nbsp;|_|_|&nbsp;&nbsp;|_|\\___|_|&nbsp;&nbsp;|_|&nbsp;&nbsp;|_|\\___|_|\\_\\___(&nbsp;)_|&nbsp;&nbsp;&nbsp;|_|&nbsp;|_(_)____(_)\n\
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|/');
 
-        terminal[instances].output('Welcome to the geeky version of the website\n\
-		A version designed for people who aren\'t massive dweebs is soon to be uploaded.\n\
-		Ed is a scientist. He also sometimes does art, and plays a bit of music.\n\
+        terminal[instances].output('Ed is a scientist in the Department of Neurology at Columbia University Medical Center. He also sometimes does art, and plays a bit of music.\n\
 		To find out more about the science, try its command below ("@{science info}").\n\
 		To get more help, type "@{help}" and hit enter. <small>(Highlighted commands here can also be clicked to run them...)</small>@__\
 		Note there are some cool things that aren\'t installed by default... Use @{pkg} command to see available packages\n\
