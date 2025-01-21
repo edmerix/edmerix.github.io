@@ -148,7 +148,36 @@ programs.science.projects = function(args,trml){
 	return [0, blurb];
 }
 programs.science.publications = function(args,trmnl){
-	let papers = "<b>Publications <i>(listing peer-reviewed only)</i>:</b>";
+	let papers = "<b>Book chapters <i>(peer-reviewed)</i>:</b>";
+  papers += '<div class="citation">';
+		papers += '<div class="cite-title"><a href="https://doi.org/10.1093/med/9780197549469.003.0016" target="_blank">Human Single-Neuron Recordings in Epilepsy</a></div>';
+		papers += '<div class="cite-authors"><b>Edward M Merricks</b> and Catherine A Schevon</div>';
+		papers += '<div class="cite-metadata">';
+			papers += '<span class="cite-journal">(2024) in <i> Jasper\'s Basic Mechanisms of the Epilepsies, 5th edn.</span>';
+			papers += '<div class="cite-volume">eds.: Noebels, J.L., Avoli, M., Rogawski, M.A., Vezzani, A., Delgado-Escueta, A.V.</div>';
+			papers += '<div class="cite-issue">Oxford University Press</div>';
+		papers += '</div>';
+	papers += '</div>';
+
+	papers += "<b>Publications <i>(listing peer-reviewed only)</i>:</b>";
+	papers += '<div class="citation">';
+		papers += '<div class="cite-title"><a href="https://authors.elsevier.com/c/1kTSf3BtfH9Bip" target="_blank">Glioma-induced alterations in excitatory neurons are reversed by mTOR inhibition</a></div>';
+		papers += '<div class="cite-authors">Alexander R Goldberg, Athanassios Dovas, Daniela Torres, Sohani Das Sharma, Angeliki Mela, <b>Edward M Merricks</b>, Markel Olabarria, Leila Abrishami Shokooh, Hanzhi T Zhao, Corina Kotidis, Peter Calvaresi, Ashwin Viswanathan, Matei A Banu, Aida Razavilar, Tejaswi D Sudhakar, Ankita Saxena, Cole Chokran, Nelson Humala, Aayushi Mahajan, Weihao Xu, Jordan B Metz, Cady Chen, Eric A Bushong, Daniela Boassa, Mark H Ellisman, Elizabeth MC Hillman, Guy M McKhann, Brian JA Gill, Steven S Rosenfeld, Catherine A Schevon, Jeffrey N Bruce, Peter A Sims, Darcy S Peterka, Peter Canoll</div>';
+		papers += '<div class="cite-metadata">';
+			papers += '<span class="cite-journal">(2025) Neuron, </span>';
+			papers += '<span class="cite-volume"><i>in press</i> </span>';
+			papers += '<span class="cite-issue"><a href="https://doi.org/10.1016/j.neuron.2024.12.026">10.1016/j.neuron.2024.12.026</a></span>';
+		papers += '</div>';
+	papers += '</div>';
+	papers += '<div class="citation">';
+		papers += '<div class="cite-title"><a href="https://authors.elsevier.com/c/1kHhy6T90~igx" target="_blank">A selective small-molecule agonist of G protein-gated inwardly-rectifying potassium channels reduces epileptiform activity in mouse models of tumor-associated and provoked seizures</a></div>';
+		papers += '<div class="cite-authors">Robert A Rifkin, Xiaoping Wu, Brianna Pereira, Brian JA Gill, <b>Edward M Merricks</b>, Andrew J Michalak, Alexander R Goldberg, Nelson Humala, Athanassios Dovas, Ganesha Rai, Guy M McKhann, Paul A Slesinger, Peter Canoll, Catherine Schevon</div>';
+		papers += '<div class="cite-metadata">';
+			papers += '<span class="cite-journal">(2025) Neuropharmacology, </span>';
+			papers += '<span class="cite-volume">265 </span>';
+			papers += '<span class="cite-issue">110259</span>';
+		papers += '</div>';
+	papers += '</div>';
 	papers += '<div class="citation">';
 		papers += '<div class="cite-title"><a href="https://doi.org/10.1093/brain/awad262" target="_blank">Cell-type specific and multiscale dynamics of human focal seizures in limbic structures</a></div>';
 		papers += '<div class="cite-authors">Alexander H Agopyan-Miu<sup>*</sup>, <b>Edward M Merricks</b><sup>*</sup>, Elliot H Smith, Guy M McKhann, Sameer A Sheth, Neil A Feldstein, Andrew J Trevelyan, Catherine A Schevon</div>';
