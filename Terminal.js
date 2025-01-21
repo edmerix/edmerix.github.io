@@ -8,7 +8,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.ID = cmdID;
 	this.title = "emerix";
 	this.version = 0.3;
-	this.releaseDate = "2019-04-28; content-update: 2024-03-15";
+	this.releaseDate = "2019-04-28; content-update: 2025-01-21 <i>(partial)</i>";
 
 	this.prompt = prmpt;
 	this.base_prompt = prmpt;

@@ -437,7 +437,7 @@ core.currency = function(args,trmnl){
 	    trmnl.error("Error with the connection for currency history");
 	};
 	xhr.send(null);
-    
+
 	return [0, 'Checking currency history...'];
 };
 core.currency.help = `<b>@{currency}</b> command plots a graph of the conversion rate between two currencies, and suggests if
@@ -1099,7 +1099,7 @@ core.subway = function(args,trmnl){
 	stationName = stationName.split("-")[0].trim();
 	stationName = stationName.split("/")[0].trim();
 	stationName = stationName.split(" ").join("_");
-
+  console.log(stationName);
 	if(!(stationName in stations)){
 		return [1, "Couldn't find "+args[0]+" in station data. Note we use the official MTA naming, but replace spaces with underscores."]
 	}
@@ -1112,7 +1112,7 @@ core.subway = function(args,trmnl){
 
 	if(lineCode == -1){
 		if(stations[stationName]._unique.length > 1 && lineCode == -1){
-			return [1, stations[stationName]._unique.length+" different stations matched "+stationName+": please add a line number/letter to the query"]
+			return [1, stations[stationName]._unique.length+" different stations matched "+stationName+": please add the lowest line number/letter at that station to the query (all lines to be re-added shortly)"]
 		}
 		s_id = stations[stationName]._unique[0];
 	}else{
