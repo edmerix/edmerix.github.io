@@ -53,7 +53,8 @@ function boot(){
 		|_____\\__,_|&nbsp;\\_/\\_/&nbsp;\\__,_|_|&nbsp;&nbsp;\\__,_|_|&nbsp;&nbsp;|_|_|&nbsp;&nbsp;|_|\\___|_|&nbsp;&nbsp;|_|&nbsp;&nbsp;|_|\\___|_|\\_\\___(&nbsp;)_|&nbsp;&nbsp;&nbsp;|_|&nbsp;|_(_)____(_)\n\
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|/');
 
-        terminal[instances].output('Ed is a scientist in the Department of Neurology at Columbia University Medical Center. He also sometimes does art (oils, charcoals and linocut), and plays a bit of music (trumpet and bass primarily, jazz fan...).\n\
+        terminal[instances].output('Ed is a scientist in the Department of Neurology at Columbia University Medical Center.\n\
+    He also sometimes does art (oils, charcoals and linocut), and plays a bit of music (trumpet and bass primarily, jazz fan...).\n\
 		To find out more about the science, try its command below ("@{science info}"), or to quickly see a list of peer-reviewed papers enter "@{papers}"\n\
 		To get more help, type "@{help}" and hit enter. <small>(Highlighted commands here can also be clicked to run them...)</small>@__\
 		Note there are some cool things that aren\'t installed by default... Use @{pkg} command to see available packages\n\
