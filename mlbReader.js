@@ -82,7 +82,7 @@ async function mlbReader(args, trmnl) {
     }
 
     try {
-        const gameURL = `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&date=${year}-${month}-${day}&now=${forceNew}`;
+        const gameURL = `https://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&date=${year}-${month}-${day}&now=${forceNew}`;
         const response = await trmnl.xhrPromise(gameURL);
         const data = JSON.parse(response);
         let games = data.dates[0].games;
@@ -115,7 +115,7 @@ async function mlbReader(args, trmnl) {
             } else if (awayGames.includes(allGames[n])) {
                 homeaway = "away";
             }
-            const gameURL = `http://statsapi.mlb.com/${games[allGames[n]].link}`;
+            const gameURL = `https://statsapi.mlb.com/${games[allGames[n]].link}`;
             // going double nested on xhr promises now, consider re-organizing this into a separate function now that it's been split from core.js
             try {
                 const gameResponse = await trmnl.xhrPromise(gameURL);
