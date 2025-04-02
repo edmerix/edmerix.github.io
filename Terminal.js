@@ -1,5 +1,5 @@
-/* Basic output syntax options (don't need to do any):
-	Core is basic HTML
+/* Basic output syntax options (no requirement to do any):
+	Default output is basic HTML
 	Mark text to be hightlighted with ![text goes here]
 	Mark text to be a specific color with #165284[text goes here] where #165284 is your hex color code
 	Mark text to be a function that can be run by clicking on it with @{function}, e.g. @{help} or @{install session}
@@ -8,7 +8,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 	this.ID = cmdID;
 	this.title = "emerix";
 	this.version = 0.3;
-	this.releaseDate = "2019-04-28; content-update: 2025-01-21 <i>(partial)</i>";
+	this.releaseDate = "2019-04-28; content-update: 2025-04-02 <i>(partial)</i>";
 
 	this.prompt = prmpt;
 	this.base_prompt = prmpt;
@@ -199,7 +199,7 @@ Terminal.prototype.update_autocomplete = function(prog){
 	}
 	this[prog].autocomplete = this[prog].autocomplete.sort();
 }
-Terminal.prototype.parse_command = function(cmd,printing = true){
+Terminal.prototype.parse_command = async function(cmd,printing = true){
 	//TODO: should do the actual parsing with regex. Check out http://regexlib.com/Search.aspx?k=command+line&c=-1&m=-1&ps=20 for ideas.
 	cmd = cmd.replace(/!{2}/g,this.cmd_hist[this.cmd_hist.length-1]); // this line swaps all instances of !! with the previous command
 
@@ -303,11 +303,11 @@ Terminal.prototype.parse_command = function(cmd,printing = true){
 					for(let w = 0; w < whoTo.length; w++){
 						who = whoTo[w];
 						if(typeof(who[who.program][fn]) == 'function'){
-							response = who[who.program][fn](args,who);
+							response = await who[who.program][fn](args,who);
 						}else{
 							// attempt via the protected.fallback function if exists, else throw error:
 							if(typeof(who[who.program].protected.fallback) == 'function'){
-								response = who[who.program].protected.fallback(cmd,fn,args,who); // NOTE that we pass the original command here, as well as fn and args after!
+								response = await who[who.program].protected.fallback(cmd,fn,args,who); // NOTE that we pass the original command here, as well as fn and args after!
 							}else{
 								response = [1, "Unknown command "+fn];
 							}
@@ -587,6 +587,14 @@ Terminal.prototype.xhrPromise = function(url, method='GET'){
 		};
 		xhr.send(null);
 	});
+};
+Terminal.prototype.hideInput = function () {
+  this.prompt_div.style.display = "none";
+  this.input_div.style.display = "none";
+};
+Terminal.prototype.showInput = function () {
+  this.prompt_div.style.display = "block";
+  this.input_div.style.display = "block";
 };
 Terminal.prototype.exit = function(callingID){
 	var w = this.ID;
