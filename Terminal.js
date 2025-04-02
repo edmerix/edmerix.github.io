@@ -84,7 +84,7 @@ function Terminal(cmdID,prmpt,input_div,output_div,prompt_div,container,theme_fi
 					let options = trmnl[trmnl.program].autocomplete;
 					if(typeof(trmnl[trmnl.program][cmdIn]) == "function"){
 						if(typeof(trmnl[trmnl.program][cmdIn].autocomplete) == "function"){
-							options = trmnl[trmnl.program][cmdIn].autocomplete(trmnl,subfar);
+							options = trmnl[trmnl.program][cmdIn].autocomplete(trmnl,subfar,thusfar);
 						}else{
 							options = []; // don't autcomplete anything if the command doesn't give options
 						}
