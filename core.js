@@ -984,10 +984,7 @@ core.subway = function(args,trmnl){
 };
 core.subway.help = 'Subway status. Needs a station name as argument, and if there are multiple stations with that name,\n\
 a subway line should be the second argument to differentiate.\n\
-All stations now work, but the naming can be quirky...\n\
-The station name should correspond to the official MTA name for that station, and replace spaces with underscores.\n\
-Note that station names are auto-abbreviated at the first hyphen or slash, which simplifies, but also causes odd ones\n\
-e.g. 47-50 Sts - Rockefeller Ctr becomes just "47"';
+The station name should correspond to the official MTA name for that station, but replace spaces, dashes or slashes with underscores.';
 /*---- THEME ----*/
 core.theme = function(args,trmnl){
 	let flags = [];
