@@ -263,7 +263,7 @@ function printLiveGame(trmnl, data) {
         bases[2] = `<sub class='cmd-feedback' title='${currentPlay.matchup.postOnFirst.fullName} on 1st'>&#x25c6;</sub>`;
     }
     if (currentPlay.matchup.hasOwnProperty("postOnSecond")) {
-        bases[1] = `<sub class='cmd-feedback' title='${currentPlay.matchup.postOnSecond.fullName} on 2nd'>&#x25c6;</sub>`;
+        bases[1] = `<sup class='cmd-feedback' title='${currentPlay.matchup.postOnSecond.fullName} on 2nd'>&#x25c6;</sup>`;
     }
     if (currentPlay.matchup.hasOwnProperty("postOnThird")) {
         bases[0] = `<sub class='cmd-feedback' title='${currentPlay.matchup.postOnThird.fullName} on 3rd'>&#x25c6;</sub>`;
@@ -278,7 +278,7 @@ function printLiveGame(trmnl, data) {
         outmarkers[p] = "&#9679;";
     }
     trmnl.output(
-        `${bases.join("")} ${linescore.balls}&ndash;${linescore.strikes} ${outmarkers.join("")}`,
+        `<span class='mlb-widget'>${bases.join("")} ${linescore.balls}&ndash;${linescore.strikes} ${outmarkers.join("")}</span>`,
     );
 
     // print the full scoreboard:
