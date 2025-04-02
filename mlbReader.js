@@ -121,8 +121,12 @@ async function mlbReader(args, trmnl) {
                 const gameResponse = await trmnl.xhrPromise(gameURL);
                 const fullData = JSON.parse(gameResponse);
                 switch (status) {
+                    case "DI": // Postponed for inclement weather:
+                        trmnl.output(`Game was postponed due to ${games[allGames[n]].status.reason}`);
+                        break;
                     case "F": // Final
                     case "O": // Game over
+                    case "FR": // Completed early because of rain
                         let winlose = "";
                         if (games[allGames[n]].teams[homeaway].isWinner) {
                             winlose = ": ![win!]";
