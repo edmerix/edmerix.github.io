@@ -869,11 +869,10 @@ core.startup.help = '<b>@{startup}</b> command will set all supplied arguments t
 /*---- SUBWAY ----*/
 core.subway =  (args,trmnl)=>subwayParser(args, trmnl);
 core.subway.help = 'Subway status. Needs a station name as argument, and if there are multiple stations with that name,\n\
-a subway line should be the second argument to differentiate, which currently should be the lowest letter or number for that line\n\
-<small>(e.g., if 1/2/3 runs through the station, specify 1. Specifying any line will be added in a future update. If unsure, use tab autocomplete to see line options)</small>\n\
+a subway line that goes through that station should be the second argument to differentiate\n\
 The station name should correspond to the official MTA name for that station, but replace spaces, dashes or slashes with underscores.\n\
 If unsure of the station name, use tab to see autocomplete options.\n\
-After entering station name, autocomplete shows viable lines for that station.\n\
+After entering station name, autocomplete shows viable lines for stations with that name.\n\
 Example usages: @{subway times_sq} or @{subway 96_st 1}';
 core.subway.autocomplete = (trmnl,arg,fullCommand) => {
     const commandPop = fullCommand.split(" ");

@@ -68,7 +68,7 @@ async function subwayParser(args, trmnl) {
         trmnl.output(timetable);
 	}catch (err){
 	   console.log(err.message);
-	   return [1, 'Could not load subway data, check console'];
+	   return [1, 'Could not load subway data, check console. Please note that this API requires CORS to be off in your browser.'];
 	}
 	return 0; // hit no errors, return control to user
 };
