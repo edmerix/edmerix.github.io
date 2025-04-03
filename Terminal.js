@@ -355,6 +355,7 @@ Terminal.prototype.parse_command = async function(cmd,printing = true){
 		if(this.active){
 			this.input_div.style.display = "block";
 			this.prompt_div.style.display = "block";
+            this.input_div.focus();
 		}
     }
 }
