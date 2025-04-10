@@ -114,7 +114,6 @@ core.biorxiv = async function (args, trmnl) {
     const dateTo = dates[1].toISOString().split('T')[0];
 
     const url = `https://api.biorxiv.org/details/${journal}/${dateFrom}/${dateTo}/${cursor}?category=${category}`;
-    trmnl.linesep();
     trmnl.output(`Loading articles from <i>![${journal}]</i> between <i>${dateFrom}</i> and <i>${dateTo}</i>, filed under category "<i>${category}</i>"...`);
     try {
         const response = await trmnl.xhrPromise(url);
@@ -122,6 +121,7 @@ core.biorxiv = async function (args, trmnl) {
         if (data.collection.length < 1 || data.messages[0].status !== 'ok') {
             return [0, data.messages[0].status]; // TODO: maybe send this to the console and work out a different message to print to user, in case it's ever weird?
         }
+        trmnl.linesep();
         if (data.messages[0].category !== category){
             trmnl.output(`Could not find ![${category}] category at ${journal}, defaulting to all`);
         }
@@ -795,6 +795,17 @@ core.math = function(args,trmnl){
 	return 0;
 };
 core.math.help = '<b>@{math}</b> program';
+/*---- medrxiv ----*/
+core.medrxiv = async (args, trmnl) => {
+    if (args == undefined || args == ""){
+        args = ['--medrxiv'];
+    }else{
+        args.push('--medrxiv');
+    }
+    return await trmnl.base.biorxiv(args,trmnl)
+};
+core.medrxiv.help = `<b>@{medrxiv}</b> command: wrapper for biorxiv function to go directly to medrxiv results without flags.
+    See @{help biorxiv} for more information`;
 /*---- MLB ----*/
 core.mlb = (args,trmnl)=>mlbReader(args, trmnl);
 core.mlb.help = '<b>@{mlb}</b> command: pass in the 2 or 3 digit code for a MLB team to see live info about any game being played today\nPass in a date to check games from a different day, e.g. 4/12/19\ne.g. @{mlb nyy} or @{mlb sf 4/18/19}\n@{mlb list} or @{mlb ls} lists team code options';
