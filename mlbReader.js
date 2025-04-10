@@ -34,6 +34,9 @@ async function mlbReader(args, trmnl) {
         "TOR",
         "WAS",
     ];
+    if (args[0] == 'list' || args[0] == 'ls'){
+        return [0, `![Team code options]:\n${acceptable.join(', ')}`];
+    }
     let teamCode = args[0].toUpperCase();
     if (acceptable.indexOf(teamCode) < 0) {
         return [1, "Cannot find team by code " + teamCode];

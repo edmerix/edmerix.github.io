@@ -572,11 +572,14 @@ Terminal.prototype.loadThemes = function(theme_file){
 //TODO: start using the below xhrPromise method!
 // New method to use to replace all xhr calls that hide and re-show the terminal:
 // 		e.g. let response = await me.xhrPromise(url);
-Terminal.prototype.xhrPromise = function(url, method='GET'){
+Terminal.prototype.xhrPromise = function(url, method='GET', ...headers){
 	//TODO: could open this up to different responseType too (i.e. function(url, method='GET', type='json'))
 	return new Promise(function(resolve, reject){
 		let xhr = new XMLHttpRequest();
 		xhr.open(method, url, true);
+		if(headers.length > 0){
+            xhr.setRequestHeader(...headers);
+		}
 		xhr.onload = function(){
 			resolve(this.responseText);
 		};
