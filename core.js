@@ -47,6 +47,136 @@ core.bg = function(args,trmnl){
 	return 0;
 };
 core.bg.help = '<b>@{bg}</b> command: change the background color to a specified hexadecimal color code<br />Use @{bg reset} to return to default (not the default of current theme)';
+/*---- BIORXIV ----*/
+core.biorxiv = async function (args, trmnl) {
+    // coding design: if no arguments, default to all categories on biorxiv, just today
+    // optional arguments:
+    //      from (date)
+    //      to (date)
+    //      journal (biorxiv, medrxiv, etc. Use as flags, and medrxiv will be its own command that just calls this with that flag)
+    //      day, week (use as flags, i.e., --day or -d, --week or -w) (Note that --day/-d does not get processed since it defaults to that option)
+    //      max (maximum number of articles to fetch/print to screen)
+    //      category (see homepages for options, e.g., neuroscience is one for biorxiv, neurology is one for medrxiv)
+    //      --verbose, -v (print lots of details for each article)
+    //      --terse, -t (print minimal details for each article, e.g., just abbreviated title and first author)
+    // everything other than from/to dates, number of results and the category is a flag, so we can automatically work out what argument is what
+    // if two dates given, order them, if one then check for the day/week flags and then apply that amount before
+    // if no flags, default to just one day
+    // if there's a non-date non-finite (number) argument, assume it's a category.
+    // If no category found (i.e., data.messages[0].category is 'all' instead of matching the argument), then alert the user and show full results
+    // If there's a raw number argument then it's the max number of articles, which otherwise defaults to 10
+    // If both verbose and terse flags are given, then give terse output but with unabbreviated title
+    // Note that if there are >100 results (stored in data.messages[0].total) we can do another call and offset the cursor accordingly to get the rest
+    // only do that if the user has set maxResults >100 and total is >100 though, and then concatenate the results before printing
+    let maxResults = 10;
+    let journal = 'biorxiv';
+    let category = 'all';
+    let verbose = false;
+    let terse = false;
+    let cursor = 0; // only used if the user requested >100 results and data.messages[0].total is also >100
+    let dates = [];
+
+    let flags = [];
+    [args,flags] = trmnl.parse_flags(args);
+    if (flags.indexOf('medrxiv') > -1 || flags.indexOf('m') > -1) {
+        journal = 'medrxiv';
+    }
+    verbose = flags.indexOf('verbose') > -1 || flags.indexOf('v') > -1;
+    terse = flags.indexOf('terse') > -1 || flags.indexOf('t') > -1;
+    for (let a = 0; a < args.length; a++){
+        if (args[a].indexOf('/') > -1 || args[a].indexOf('-') > -1) { // try to parse it as a date
+            let dateAttempt = new Date(`${args[a]} 12:00:00`);
+            if (dateAttempt == "Invalid Date"){
+                trmnl.output(`Could not parse ${args[a]} as a date, using default instead`);
+            }else{
+                dates.push(dateAttempt);
+            }
+        }else if(isFinite(args[a])) { // parse it as the number of results requested
+            maxResults = args[a];
+        }else{ // not an obvious date or a number, try it as the category
+            category = args[a];
+        }
+    }
+    // check if dates.length is 2, if so, sort and use, otherwise check flags and sort it out
+    if (dates.length == 0) {
+        dates.push(new Date()); // use today
+    }
+    if (dates.length == 1) {
+        const date = new Date(dates[0]); // avoid passing by reference
+        if (flags.indexOf('week') > -1 || flags.indexOf('w') > -1) {
+            dates.push(new Date(date.setDate(date.getDate() - 7)));
+        }else{
+            dates.push(new Date(date.setDate(date.getDate() - 1)));
+        }
+    }
+    dates.sort((a,b)=>a.getTime() - b.getTime());
+    const dateFrom = dates[0].toISOString().split('T')[0];
+    const dateTo = dates[1].toISOString().split('T')[0];
+
+    const url = `https://api.biorxiv.org/details/${journal}/${dateFrom}/${dateTo}/${cursor}?category=${category}`;
+    trmnl.linesep();
+    trmnl.output(`Loading articles from <i>![${journal}]</i> between <i>${dateFrom}</i> and <i>${dateTo}</i>, filed under category "<i>${category}</i>"...`);
+    try {
+        const response = await trmnl.xhrPromise(url);
+        const data = JSON.parse(response);
+        if (data.collection.length < 1 || data.messages[0].status !== 'ok') {
+            return [0, data.messages[0].status]; // TODO: maybe send this to the console and work out a different message to print to user, in case it's ever weird?
+        }
+        if (data.messages[0].category !== category){
+            trmnl.output(`Could not find ![${category}] category at ${journal}, defaulting to all`);
+        }
+        trmnl.output(`![${data.messages[0].total}] articles found, showing first ![${Math.min(data.messages[0].total,maxResults)}]:`);
+        let printout = '';
+        let title = '';
+        let authors = [];
+        let authorString = '';
+        for (let a = 0; a < Math.min(maxResults, data.collection.length); a++) {
+            title = data.collection[a].title;
+            if (terse) {
+                authors = data.collection[a].authors.split(';');
+                if (authors.length <= 2){
+                    authorString = authors.join(' & ');
+                }else{
+                    authorString = `${authors[0]} <i>et al.</i>`;
+                }
+                if (!verbose && title.length > 100) {
+                    title = `${title.substring(0, 96)}...`;
+                }
+            }else{
+                authorString = data.collection[a].authors;
+            }
+            printout = `<div class="citation"><div class="cite-title"><a target='_blank' href='https://doi.org/${data.collection[a].doi}'>${title}</a></div>`;
+            printout += `<div class='cite-authors'>${authorString}</div>`;
+            if (verbose && !terse) {
+                printout += `<div class='cite-metadata'>${data.collection[a].abstract}</div>`;
+            }
+            printout += `</div>`;
+            trmnl.output(printout);
+        }
+    } catch (err) {
+        console.log(err.message);
+        return [1, 'Error loading data over API, check the console'];
+    }
+    return 0;
+};
+core.biorxiv.help = `<b>@{biorxiv}</b> command: Check articles posted to the biorxiv or medrxiv preprint servers.
+    With no arguments it will fetch details for articles posted in any category to biorxiv in the past day
+    <i>![Optional inputs]</i>:
+    <span class='inset'>1 to 2 dates: <i>dates to search between. If only providing one, it will check between that day and the one before</i></span>
+    <span class='inset'>a category <i>one of the categories from the biorxiv (or medrxiv) server</i></span>
+    <span class='inset'>the number of articles to print to the screen <i>(defaults to 10)</i></span>
+    <i>![Optional flags]</i>:
+    <span class='inset'>![--week] or ![-w]: <i>Search for the preceding week instead of one day</i></span>
+    <span class='inset'>![--medrxiv] or ![-m]: <i>Search medrxiv instead of biorxiv</i></span>
+    <span class='inset'>![--verbose] or ![-v]: <i>Print abstracts as well</i></span>
+    <span class='inset'>![--terse] or ![-t]: <i>Abbreviate titles and author lists</i></span>
+    If both verbose and terse flags are given, it will abbreviate author lists but not the titles, and not print abstracts
+    Arguments and flags can be provided in any order.
+    <i>![Examples]</i>:
+    <span class='inset'>@{biorxiv -mtw 20} will show the first 20 articles under any category from the past week at medrxiv</span>
+    <span class='inset'>@{biorxiv --terse 5 2025/01/14 2025/01/17} will search those 3 days in all categories on biorxiv, and show the first 5 in abbreviated form</span>
+    <span class='inset'>@{biorxiv 2024-01-27 neurology --medrxiv -v} will search the "neurology" category at medrxiv for January 26th, 2024 and the day before, and show abstracts</span>
+    <small>Provide the same date twice if only searching for that exact date rather than the 24 hours or week leading up to it</small>`;
 /*---- BITCONV ----*/
 core.bitconv = function(args,trmnl){
 	if(args.length != 2){
