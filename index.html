@@ -1,63 +1,447 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width">
-	<title>$></title>
+	<head>
+	    <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Edward M. Merricks, Ph.D.</title>
+		<link type="text/css" rel="stylesheet" href="guistyle.css" />
 
-	<meta name="description" content="Personal website for Edward M Merricks, Ph.D., in the form of a pseudo-terminal.">
-	<meta property="og:title" content="Edward M Merricks, Ph.D. - personal website">
-	<meta property="og:description" content="Personal website for Edward M Merricks, Ph.D., in the form of a pseudo-terminal.">
-	<meta property="og:image" content="https://edmerix.github.io/screenshots/EmerixTerminalScreenshot.png">
-	<meta property="og:locale" content="en_US">
-	<meta property="og:type" content="website">
-	<meta name="twitter:card" content="summary_large_image">
-	<meta property="og:url" content="https://edmerix.github.io">
-	<meta name="author" content="Edward M Merricks, Ph.D.">
+		<meta name="description" content="Personal website for Edward M Merricks, Ph.D.">
+		<meta property="og:title" content="Edward M Merricks, Ph.D. - personal website">
+		<meta property="og:description" content="Personal website for Edward M Merricks, Ph.D.">
+		<meta property="og:locale" content="en_US">
+		<meta property="og:type" content="website">
+		<meta name="twitter:card" content="summary_large_image">
+		<meta property="og:url" content="https://edmerix.github.io">
+		<meta name="author" content="Edward M Merricks, Ph.D.">
 
-	<link rel="icon" type="image/x-icon" href="favicon.png" />
-	<link rel="icon" type="image/svg+xml" href="favicon.svg">
-	<link rel="apple-touch-icon" href="apple-touch-icon.png">
-	<link type="text/css" rel="stylesheet" href="style.css" />
-	<style id="dynamic-cols"></style>
-</head>
-<body>
-	<center>all terminals closed</center>
-	<div id="term_0" class="termbox">
-		<div id="cmd-history_0" class="cmd-history"></div>
-		<div id="input-line_0" class="input-line">
-			<div class="cmd-prompt" id="cmd-prompt_0">$></div>
-			<div id="cmd-input_0" class="cmd-input"><input id="main-input_0" class="main-input" type="text" spellcheck="false" autocomplete="off" autofocus/></div>
-		</div>
-	</div>
-	<div id="term_1" class="termbox term_hidden">
-		<div id="cmd-history_1" class="cmd-history"></div>
-		<div id="input-line_1" class="input-line">
-			<div class="cmd-prompt" id="cmd-prompt_1">$></div>
-			<div id="cmd-input_1" class="cmd-input"><input id="main-input_1" class="main-input" type="text" spellcheck="false" autocomplete="off"/></div>
-		</div>
-	</div>
-	<div id="term_2" class="termbox term_hidden">
-		<div id="cmd-history_2" class="cmd-history"></div>
-		<div id="input-line_2" class="input-line">
-			<div class="cmd-prompt" id="cmd-prompt_2">$></div>
-			<div id="cmd-input_2" class="cmd-input"><input id="main-input_2" class="main-input" type="text" spellcheck="false" autocomplete="off"/></div>
-		</div>
-	</div>
-	<div id="term_3" class="termbox term_hidden">
-		<div id="cmd-history_3" class="cmd-history"></div>
-		<div id="input-line_3" class="input-line">
-			<div class="cmd-prompt" id="cmd-prompt_3">$></div>
-			<div id="cmd-input_3" class="cmd-input"><input id="main-input_3" class="main-input" type="text" spellcheck="false" autocomplete="off"/></div>
-		</div>
-	</div>
-
-	<script type="text/javascript" src="math.min.js"></script>
-	<script type="text/javascript" src="mlbReader.js?0"></script>
-	<script type="text/javascript" src="subwayParser.js?0"></script>
-	<script type="text/javascript" src="programs.js?0"></script>
-	<script type="text/javascript" src="core.js?0"></script>
-	<script type="text/javascript" src="Terminal.js?0"></script>
-	<script type="text/javascript" src="functions.js?0"></script>
-</body>
+		<link rel="icon" type="image/x-icon" href="favicon.png" />
+		<link rel="icon" type="image/svg+xml" href="favicon.svg">
+		<link rel="apple-touch-icon" href="apple-touch-icon.png">
+	</head>
+	<body>
+	    <menu>
+			<p><a href="#about">About</a></p>
+			<div class="separator"></div>
+			<p><a href="#science">Science</a></p>
+			<p><small><a href="#books">Chapters</a></small></p>
+			<p><small><a href="#preprints">Preprints</a></small></p>
+			<p><small><a href="#pubs">Papers</a></small></p>
+			<div class="separator"></div>
+			<p><a href="#art">Art</a></p>
+			<p><small><a href="#linocuts">Linocuts</a></small></p>
+			<p><small><a href="#paintings">Paintings</a></small></p>
+		</menu>
+		<article>
+			<img class="profile" src="imgs/me.png" />
+			<div id="spine"><b>Edward M Merricks</b><br />PhD</div>
+			<section id="about" class="lightweight">
+			    <h2 id="blurb">About me</h2>
+				<div>
+				    Ed is a <a href='#science'>research scientist</a> in the <a target='_blank' href='http://www.columbianeurology.org'>Dept. of Neurology</a> at <a target='_blank' href='https://www.cuimc.columbia.edu'>Columbia University</a>.
+					<br /><br />
+					He's originally from the UK, but is now a permanent resident in the US, having lived in NYC for close to a decade.
+					<br /><br />
+					He specializes in combining his doctoral training in <i>Systems Neuroscience</i> with undergraduate training in <i>Machine Learning</i> to uncover complex relationships in high-dimensional data. At present, this is primarily data from individual neurons recorded in epilepsy patients undergoing surgery to remove pathological tissue.
+					<br /><br />
+					Outside being a nerd who enjoys coding for fun (see <a href="terminal.html" target="_blank">the pseudo-terminal version of this site</a>!), he also:
+					<ul>
+					    <li>Does some <a href="#art">art</a> <small>(<a href="#linocuts">linocuts</a> and <a href="#paintings">paintings</a>, primarily)</small></li>
+						<li>Plays a bit of music <small>(trumpet and bass, mostly... fan of jazz)</small></li>
+						<li>Enjoys strolling around New York's parks <small>(preferably with his <a href="#pooch">dog</a>)</small></li>
+						<li>Writes short fiction <small>(but I'll spare you from that for now)</small></li>
+					</ul>
+				</div>
+			</section>
+			<hr />
+			<section>
+				<h2 id="science">Science!</h2>
+				<div class="lightweight smaller">
+					My research focuses on the activity of populations of single neurons in epilepsy patients,
+					especially how the firing patterns of individual cells play a role in seizure onset and propagation,
+					and how we might restrain seizures from spreading through cortex.
+					To do this, I maintain continuous microelectrode recordings in patients on the Epilepsy
+					Monitoring Unit at Columbia's affiliated hospital (NewYork-Presbyterian), tracking individual neurons
+				    over days to weeks in order to interrogate the neuronal firing underlying pathological activity.
+					<br /><br />
+					Beyond my primary research, I also enjoy the opportunity to collaborate with various lab groups across
+					a range of important neurological questions: from cell-type specific activity at the boundary of
+					<a href="#glioma-paper-example">brain tumors</a>, to
+					<a href="#auditory-paper-example">auditory processing of music</a>, to mechanisms underlying
+					<a href="#consciousness-paper-example">loss of consciousness.</a>
+					<br /><br />
+					For more details on all of these projects, see below for the <a href="#pubs">peer-reviewed publications</a>, <a href="#books">book chapters</a> and <a href="#preprints">pre-prints</a>, or check out my <a target="_blank" href="https://github.com/edmerix/">GitHub</a>, <a target="_blank" href="https://scholar.google.com/citations?user=PnKpxtIAAAAJ">Google Scholar profile</a> or <a target="_blank" href="https://www.researchgate.net/profile/Edward_Merricks">ResearchGate profile</a>.
+				</div>
+				<div id="sci-covers" class="smaller">
+				    <a href="https://doi.org/10.1093/brain/awad262" target="_blank" title="Click to go to Agopyan-Miu et al., 2023. (Right click to open image in a new tab for full size!)"><img src="imgs/sci/cover-Agopyan-Miu-et-al-2023.png" alt="Cover art for Agopyan-Miu et al 2023 paper in Brain" /></a>
+					<a href="https://doi.org/10.1523/JNEUROSCI.0417-20.2020" target="_blank" title="Click to go to Merricks et al., 2021. (Right click to open image in a new tab for full size!)"><img src="imgs/sci/cover-Merricks-et-al-2021.png" alt="Cover art for Merricks et al 2021 paper in JNeurosci" /></a>
+					<br /><br />
+					Depending on time available, I also enjoy making "cover art" for some of our publications. Above are a couple of examples from recent(-ish) first-author papers...
+				</div>
+			</section>
+			<section>
+			    <hr />
+			    <h2>Publications:</h2>
+                <h3 id="books"><b>Book chapters:</b></h3>
+				<div class="citation">
+				    <div class="cite-title"><a href="https://doi.org/10.1093/med/9780197549469.003.0016" target="_blank">Human Single-Neuron Recordings in Epilepsy</a></div>
+					<div class="cite-authors"><b>Edward M Merricks</b> and Catherine A Schevon</div>
+					<div class="cite-metadata">
+					    <span class="cite-journal">(2024) in <i>Jasper's Basic Mechanisms of the Epilepsies, </i></span><span class ="cite-issue">5th edn.</span>
+						<div class="cite-issue">eds.: Noebels, J.L., Avoli, M., Rogawski, M.A., Vezzani, A., Delgado-Escueta, A.V.</div>
+						<div class="cite-issue">Oxford University Press</div>
+					</div>
+				</div>
+				<hr />
+				<h3 id="preprints"><b>Pre-prints:</b></h3>
+				<div class="extra"><i>(Submitted)</i></div>
+				<div class="citation">
+					<div class="cite-title"><a href="https://www.medrxiv.org/content/10.1101/2024.01.26.24301821v1" target="_blank">Aberrant fast spiking interneuronal activity precedes seizure transitions in humans</a></div>
+					<div class="cite-authors"><b>Edward M Merricks</b>, Sarita S Deshpande, Alexander H Agopyan-Miu, Elliot H Smith, Emily D Schlafly, Guy M McKhann, Robert R Goodman, Sameer A Sheth, Bradley Greger, Paul A House, Emad N Eskandar, Joseph R Madsen, Sydney S Cash, Andrew J Trevelyan, Wim Van Drongelen, Catherine A Schevon</div>
+					<div class="cite-metadata">
+						<span class="cite-journal">(2024) medR&chi;iv, </span>
+						<span class="cite-volume">pre-print </span>
+						<span class="cite-issue"><a target="_blank" href="https://doi.org/10.1101/2024.01.26.24301821">doi.org/10.1101/2024.01.26.24301821</a></span>
+					</div>
+				</div>
+				<div class="extra"><i>(Submitted)</i></div>
+				<div class="citation">
+					<div class="cite-title"><a href="https://www.biorxiv.org/content/10.1101/2024.07.08.600416v1" target="_blank">Spectral-switching analysis reveals real-time neuronal network representations of concurrent spontaneous naturalistic behaviors in human brain</a></div>
+					<div class="cite-authors">Hongkun Zhu, Andrew J Michalak, <b>Edward M Merricks</b>, Alexander H Agopyan-Miu, Joshua Jacobs, Marla J Hamberger, Sameer A Sheth, Guy M McKhann, Neil A Feldstein, Catherine A Schevon, Elizabeth MC Hillman</div>
+					<div class="cite-metadata">
+						<span class="cite-journal">(2024) bioR&chi;iv, </span>
+						<span class="cite-volume">pre-print </span>
+						<span class="cite-issue"><a target="_blank" href="https://doi.org/10.1101/2024.07.08.600416">doi.org/10.1101/2024.07.08.600416</a></span>
+					</div>
+				</div>
+				<hr />
+				<h3 id="pubs">Peer-reviewed publications: <small>798 total citations, h-index = 12</small></h3>
+				<div class="citation numbered">
+                    <div class="cite-title"><span class="numeral">18.&nbsp;</span><a href="https://www.sciencedirect.com/science/article/pii/S2666166725000656p" target="_blank">Protocol for detecting and analyzing non-oscillatory traveling waves from high-spatiotemporal-resolution human electrophysiological recordings</a></div>
+                    <div class="cite-authors">Veronica M Zarr, Jyun-You Liou, <b>Edward M Merricks</b>, Tyler S Davis, Kyle Thomson, Bradley Greger, Paul A House, Ronald G Emerson, Robert R Goodman, Guy M McKhann, Sameer A Sheth, Catherine A Schevon, John D Rolston, Elliot H Smith</div>
+                    <div class="cite-metadata">
+                        <span class="cite-journal">(2025) STAR protocols, </span>
+                        <span class="cite-volume">6 </span>
+                        <span class="cite-issue">(1) 103659</span>
+                    </div>
+                </div>
+				<div class="citation numbered">
+                    <div class="cite-title"><span class="numeral">17.&nbsp;</span><a href="https://authors.elsevier.com/c/1kTSf3BtfH9Bip" target="_blank">Glioma-induced alterations in excitatory neurons are reversed by mTOR inhibition</a></div>
+                    <div class="cite-authors">Alexander R Goldberg, Athanassios Dovas, Daniela Torres, Sohani Das Sharma, Angeliki Mela, <b>Edward M Merricks</b>, Markel Olabarria, Leila Abrishami Shokooh, Hanzhi T Zhao, Corina Kotidis, Peter Calvaresi, Ashwin Viswanathan, Matei A Banu, Aida Razavilar, Tejaswi D Sudhakar, Ankita Saxena, Cole Chokran, Nelson Humala, Aayushi Mahajan, Weihao Xu, Jordan B Metz, Cady Chen, Eric A Bushong, Daniela Boassa, Mark H Ellisman, Elizabeth MC Hillman, Guy M McKhann, Brian JA Gill, Steven S Rosenfeld, Catherine A Schevon, Jeffrey N Bruce, Peter A Sims, Darcy S Peterka, Peter Canoll</div>
+                    <div class="cite-metadata">
+                        <span class="cite-journal">(2025) Neuron, </span>
+                        <span class="cite-volume">113 </span>
+                        <span class="cite-issue">(6) 858&ndash;875.E10</span>
+                    </div>
+                </div>
+                <div class="citation numbered">
+                    <div class="cite-title"><span class="numeral">16.&nbsp;</span><a href="https://authors.elsevier.com/c/1kHhy6T90~igx" target="_blank">A selective small-molecule agonist of G protein-gated inwardly-rectifying potassium channels reduces epileptiform activity in mouse models of tumor-associated and provoked seizures</a></div>
+                    <div class="cite-authors">Robert A Rifkin, Xiaoping Wu, Brianna Pereira, Brian JA Gill, <b>Edward M Merricks</b>, Andrew J Michalak, Alexander R Goldberg, Nelson Humala, Athanassios Dovas, Ganesha Rai, Guy M McKhann, Paul A Slesinger, Peter Canoll, Catherine Schevon</div>
+                    <div class="cite-metadata">
+                        <span class="cite-journal">(2025) Neuropharmacology, </span>
+                        <span class="cite-volume">265 </span>
+                        <span class="cite-issue">110259</span>
+                    </div>
+                </div>
+                <div class="extra"><sup>*</sup> co-first authors</div>
+                <div class="citation numbered">
+                    <div class="cite-title"><span class="numeral">15.&nbsp;</span><a href="https://doi.org/10.1093/brain/awad262" target="_blank">Cell-type specific and multiscale dynamics of human focal seizures in limbic structures</a></div>
+                    <div class="cite-authors"><u>Alexander H Agopyan-Miu<sup>*</sup>, <b>Edward M Merricks</b><sup>*</sup></u>, Elliot H Smith, Guy M McKhann, Sameer A Sheth, Neil A Feldstein, Andrew J Trevelyan, Catherine A Schevon</div>
+                    <div class="cite-metadata">
+                        <span class="cite-journal">(2023) Brain, </span>
+                        <span class="cite-volume">146 </span>
+                        <span class="cite-issue">(12) 5209-5223</span>
+                    </div>
+                </div>
+                <div class="citation numbered">
+                    <div class="cite-title"><span class="numeral">14.&nbsp;</span><a href="https://doi.org/10.1038/s42003-023-04696-3" target="_blank">Spatiotemporal spike-centered averaging reveals symmetry of temporal and spatial components of the spike-LFP relationship during human focal seizures</a></div>
+                    <div class="cite-authors">Somin Lee, Sarita S Deshpande, <b>Edward M Merricks</b>, Emily Schlafly, Robert Goodman, Guy M McKhann, Emad N Eskandar, Joseph R Madsen, Sydney S Cash, Michel JAM van Putten, Catherine A Schevon, Wim van Drongelen</div>
+                    <div class="cite-metadata">
+                        <span class="cite-journal">(2023) Communications Biology, </span>
+                        <span class="cite-volume">6 </span>
+                        <span class="cite-issue">(1) 317</span>
+                    </div>
+                </div>
+                <div class="citation numbered" id="consciousness-paper-example">
+                    <div class="cite-title"><span class="numeral">13.&nbsp;</span><a href="https://doi.org/10.1093/brain/awac291" target="_blank">Distinct signatures of loss of consciousness in focal impaired awareness versus tonic-clonic seizures</a></div>
+                    <div class="cite-authors">Elsa Juan, Urszula G&oacute;rska, Csaba Kozma, Cynthia Papantonatos, Tom Bugnon, Colin Denis, Vaclav Kremen, Greg Worrell, Aaron F Struck, Lisa M Bateman, <b>Edward M Merricks</b>, Hal Blumenfeld, Giulio Tononi, Catherine Schevon, Melanie Boly</div>
+                    <div class="cite-metadata">
+                        <span class="cite-journal">(2023) Brain, </span>
+                        <span class="cite-volume">146 </span>
+                        <span class="cite-issue">(1) 109&ndash;123</span>
+                    </div>
+                </div>
+                <div class="extra"><sup>*</sup> co-first authors</div>
+                <div class="citation numbered" id="glioma-paper-example">
+                    <div class="cite-title"><span class="numeral">12.&nbsp;</span><a href="https://doi.org/10.1093/brain/awac168" target="_blank">Single unit analysis and wide-field imaging reveal alterations in excitatory and inhibitory neurons in glioma</a></div>
+                    <div class="cite-authors"><u>Brian JA Gill<sup>*</sup>, Farhan A Khan<sup>*</sup>, Alexander R Goldberg<sup>*</sup>, <b>Edward M Merricks</b><sup>*</sup></u>, Xiaoping Wu, Alexander A Sosunov, Tejaswi D Sudhakar, Athanassios Dovas, Wudu Lado, Andrew J Michalak, Jia Jie Teoh, Jyun-you Liou, Wayne N Frankel, Guy M McKhann, Peter Canoll, Catherine A Schevon</div>
+                    <div class="cite-metadata">
+                        <span class="cite-journal">(2022) Brain, </span>
+                        <span class="cite-volume">145 </span>
+                        <span class="cite-issue">(10) 3666&ndash;3680</span>
+                    </div>
+                </div>
+                <div class="citation numbered">
+                    <div class="cite-title"><span class="numeral">11.&nbsp;</span><a href="https://doi.org/10.1523/JNEUROSCI.0338-22.2022" target="_blank">Multiple sources of fast traveling waves during human seizures: resolving a controversy</a></div>
+                    <div class="cite-authors">Emily D Schlafly, Fran&ccedil;ois A Marshall, <b>Edward M Merricks</b>, Uri T Eden, Sydney S Cash, Catherine A Schevon, Mark A Kramer</div>
+                    <div class="cite-metadata">
+                        <span class="cite-journal">(2022) Journal of Neuroscience, </span>
+                        <span class="cite-volume">42 </span>
+                        <span class="cite-issue">(36) 6966&ndash;6982</span>
+                    </div>
+                </div>
+                <div class="citation numbered" id="auditory-paper-example">
+                    <div class="cite-title"><span class="numeral">10.&nbsp;</span><a href="https://doi.org/10.1038/s41562-021-01261-y" target="_blank">Multiscale temporal integration organizes hierarchical computation in human auditory cortex</a></div>
+                    <div class="cite-authors">Sam V Norman-Haignere, Laura K Long, Orrin Devinsky, Werner Doyle, Ifeoma Irobunda, <b>Edward M Merricks</b>, Neil A Feldstein, Guy M McKhann, Catherine A Schevon, Adeen Flinker, Nima Mesgarani</div>
+                    <div class="cite-metadata">
+                        <span class="cite-journal">(2022) Nature Human Behaviour, </span>
+                        <span class="cite-volume">6 </span>
+                        <span class="cite-issue">(3) 455&ndash;469</span>
+                    </div>
+                </div>
+                <div class="citation numbered">
+                    <div class="cite-title"><span class="numeral">9.&nbsp;</span><a href="https://doi.org/10.7554/eLife.73541" target="_blank">Human interictal epileptiform discharges are bidirectional traveling waves echoing ictal discharges</a></div>
+                    <div class="cite-authors">Elliot H Smith, Jyun-you Liou, <b>Edward M Merricks</b>, Tyler Davis, Kyle Thomson, Bradley Greger, Paul House, Ronald G Emerson, Robert Goodman, Guy M McKhann, Sameer Sheth, Catherine Schevon, John D Rolston</div>
+                    <div class="cite-metadata">
+                        <span class="cite-journal">(2022) eLife, </span>
+                        <span class="cite-volume">11 </span>
+                        <span class="cite-issue">e73541</span>
+                    </div>
+                </div>
+                <div class="citation numbered">
+                    <div class="cite-title"><span class="numeral">8.&nbsp;</span><a href="https://doi.org/10.1523/JNEUROSCI.0417-20.2020" target="_blank">Neuronal firing and waveform alterations through ictal recruitment in humans</a></div>
+                    <div class="cite-authors"><b>Edward M Merricks</b>, Elliot H Smith, Ronald G Emerson, Lisa M Bateman, Guy M McKhann, Robert R Goodman, Sameer A Sheth, Bradley Greger, Paul A House, Andrew J Trevelyan, Catherine A Schevon</div>
+                    <div class="cite-metadata">
+                        <span class="cite-journal">(2021) Journal of Neuroscience, </span>
+                        <span class="cite-volume">41 </span>
+                        <span class="cite-issue">(4) 766-779</span>
+                    </div>
+                </div>
+                <div class="citation numbered">
+                    <div class="cite-title"><span class="numeral">7.&nbsp;</span><a href="https://doi.org/10.1038/s41598-020-76138-7" target="_blank">Dual mechanisms of ictal high frequency oscillations in rhythmic onset seizures</a></div>
+                    <div class="cite-authors">Elliot H Smith, <b>Edward M Merricks</b>, Jyun-You Liou, Camilla Casadei, Lucia Melloni, Daniel Friedman, Werner Doyle, Robert Goodman, Ronald Emerson, Guy McKhann, Sameer Sheth, John Rolston, Catherine Schevon</div>
+                    <div class="cite-metadata">
+                        <span class="cite-journal">(2020) Scientific Reports, </span>
+                        <span class="cite-volume">10 </span>
+                        <span class="cite-issue">(1) 1-14</span>
+                    </div>
+                </div>
+				<div class="extra"><sup>*</sup> co-first authors</div>
+				<div class="citation numbered">
+					<div class="cite-title"><span class="numeral">6.&nbsp;</span><a href="https://www.physiology.org/doi/abs/10.1152/jn.00392.2019" target="_blank">Role of paroxysmal depolarization in focal seizure activity</a></div>
+					<div class="cite-authors"><u>Andrew K Tryba<sup>*</sup>, <b>Edward M Merricks</b><sup>*</sup></u>, Somin Lee, Tuan Pham, SungJun Cho, Douglas R Nordli Jr, Tahra L Eissa, Robert R Goodman, Guy M McKhann Jr, Ronald G Emerson, Catherine A Schevon, Wim van Drongelen</div>
+					<div class="cite-metadata">
+						<span class="cite-journal">(2019) Journal of Neurophysiology, </span>
+						<span class="cite-volume">122 </span>
+						<span class="cite-issue">(5) 1861-1873</span>
+					</div>
+				</div>
+				<div class="citation numbered">
+					<div class="cite-title"><span class="numeral">5.&nbsp;</span><a href="https://www.sciencedirect.com/science/article/pii/S0969996119300038" target="_blank">Multiscale recordings reveal the dynamic spatial structure of human seizures</a></div>
+					<div class="cite-authors">Catherine A Schevon, Steven Tobochnik, Tahra Eissa, <b>Edward Merricks</b>, Brian Gill, R Ryley Parrish, Lisa M Bateman, Guy McKhann, Ronald G Emerson, Andrew J Trevelyan</div>
+					<div class="cite-metadata">
+						<span class="cite-journal">(2019) Neurobiology of Disease, </span>
+						<span class="cite-volume">127 </span>
+						<span class="cite-issue">303-311</span>
+					</div>
+				</div>
+				<div class="citation numbered">
+					<div class="cite-title"><span class="numeral">4.&nbsp;</span><a href="https://www.nature.com/articles/ncomms11098/" target="_blank">The ictal wavefront is the spatiotemporal source of discharges during spontaneous human seizures</a></div>
+					<div class="cite-authors">Elliot H Smith, Jyun-you Liou, Tyler S Davis, <b>Edward M Merricks</b>, Spencer S Kellis, Shennan A Weiss, Bradley Greger, Paul A House, Guy M McKhann II, Robert R Goodman, Ronald G Emerson, Lisa M Bateman, Andrew J Trevelyan, Catherine A Schevon</div>
+					<div class="cite-metadata">
+						<span class="cite-journal">(2016) Nature Communications</span>
+						<span class="cite-volume">7 </span>
+						<span class="cite-issue">11098</span>
+					</div>
+				</div>
+				<div class="citation numbered">
+					<div class="cite-title"><span class="numeral">3.&nbsp;</span><a href="https://academic.oup.com/brain/article-abstract/138/10/2891/2468703" target="_blank">Single unit action potentials in humans and the effect of seizure activity</a></div>
+					<div class="cite-authors"><b>Edward M Merricks</b>, Elliot H Smith, Guy M McKhann, Robert R Goodman, Lisa M Bateman, Ronald G Emerson, Catherine A Schevon, Andrew J Trevelyan</div>
+					<div class="cite-metadata">
+						<span class="cite-journal">(2015) Brain</span>
+						<span class="cite-volume">138 </span>
+						<span class="cite-issue">(10) 2891-2906</span>
+					</div>
+				</div>
+				<div class="citation numbered">
+					<div class="cite-title"><span class="numeral">2.&nbsp;</span><a href="https://journals.lww.com/clinicalneurophys/fulltext/2015/06000/The_Role_of_Inhibition_in_Epileptic_Networks.6.aspx" target="_blank">The role of inhibition in epileptic networks</a></div>
+					<div class="cite-authors">Andrew J Trevelyan, Sarah F Muldoon, <b>Edward M Merricks</b>, Claudia Racca, Kevin J Staley</div>
+					<div class="cite-metadata">
+						<span class="cite-journal">(2015) Journal of Clinical Neurophysiology</span>
+						<span class="cite-volume">32 </span>
+						<span class="cite-issue">(3) 227-234</span>
+					</div>
+				</div>
+				<div class="citation numbered">
+					<div class="cite-title"><span class="numeral">1.&nbsp;</span><a href="http://www.jneurosci.org/content/35/20/7715.short" target="_blank">The contribution of raised intraneuronal chloride to epileptic network activity</a></div>
+					<div class="cite-authors">Hannah Alfonsa, <b>Edward M Merricks</b>, Neela K Codadu, Mark O Cunningham, Karl Deisseroth, Claudia Racca, Andrew J Trevelyan</div>
+					<div class="cite-metadata">
+						<span class="cite-journal">(2015) Journal of Neuroscience</span>
+						<span class="cite-volume">35 </span>
+						<span class="cite-issue">(20) 7715-7726</span>
+					</div>
+				</div>
+			</section>
+			<hr />
+			<h2 id="art">Art</h2>
+			<section>
+				<h2 id="linocuts">Linocuts <small><small>(a selection)</small></small></h2>
+				<figure>
+					<img src="imgs/prints/subway.jpeg" alt="Linocut of NYC 1 train by E.M. Merricks"/>
+					<figcaption>
+						<b>Subway</b>
+						<br />
+						Linocut, 2021
+						<br />
+						<i>5" x 7"</i>
+					</figcaption>
+				</figure>
+				<figure>
+					<img src="imgs/prints/selfportrait.jpeg" alt="Linocut self portrait by E.M. Merricks"/>
+					<figcaption>
+						<b>Self portrait</b>
+						<br />
+						Linocut, 2021
+						<br />
+						<i>5" x 7"</i>
+					</figcaption>
+				</figure>
+				<figure>
+					<img src="imgs/prints/brooklynbridge-insitu.jpeg" alt="Linocut of the Brooklyn Bridge by E.M. Merricks"/>
+					<figcaption>
+						<b>Brooklyn Bridge</b>
+						<br />
+						Linocut, 2021
+						<br />
+						<i>7" x 5"</i>
+						<br />
+						<br />
+						<i>In production:</i>
+						<br />
+						<img src="imgs/prints/brooklynbridge-production.jpeg" alt="Linocut in progress of the Brooklyn Bridge"/>
+					</figcaption>
+				</figure>
+				<figure>
+					<img src="imgs/prints/blast.jpeg" alt="Linocut of a trumpet and plant by E.M. Merricks"/>
+					<figcaption>
+						<b>Blast!</b>
+						<br />
+						(Speed) linocut, 2025
+						<br />
+						<i>7" x 5"</i>
+					</figcaption>
+				</figure>
+			</section>
+			<section>
+				<h2 id="paintings">Paintings <small><small>(a selection)</small></small></h2>
+				<figure>
+					<img src="imgs/paintings/threegraces.jpeg" alt="Painting of the Three Graces by E.M. Merricks"/>
+					<figcaption>
+						<b>The Three Graces</b>
+						<br />
+						Acrylic on canvas, 2015
+						<br />
+						<i>40" x 30"</i>
+						<br />
+						<br />
+						<i><small>In progress:</small></i>
+						<br />
+						<img src="imgs/paintings/threegracesprogress.jpeg" alt="Painting in progress of Three Graces"/>
+					</figcaption>
+				</figure>
+				<figure>
+					<img src="imgs/paintings/mottst.jpeg" alt="Painting of view from Mott Street apartment by E.M. Merricks"/>
+					<figcaption>
+						<b>Mott Street</b>
+						<br />
+						Acrylic on canvas, 2016
+						<br />
+						<i>30" x 20"</i>
+						<br />
+						<br />
+						<i><small>Co-painted with Will!</small></i>
+					</figcaption>
+				</figure>
+				<figure>
+					<img src="imgs/paintings/smalllight.jpeg" alt="Painting of man in bed by E.M. Merricks"/>
+					<figcaption>
+						<b>A Small Light</b>
+						<br />
+						Acrylic on canvas, 2024
+						<br />
+						<i>20" x 16"</i>
+					</figcaption>
+				</figure>
+				<figure>
+					<img src="imgs/paintings/untitled-detail.jpeg" alt="Painting of carafe by E.M. Merricks"/>
+					<figcaption>
+						<b>Untitled <i>(detail)</i></b>
+						<br />
+						Acrylic on canvas, 2022
+						<br />
+						<i>~18" x 14" detail from larger work</i>
+					</figcaption>
+				</figure>
+				<figure>
+					<img src="imgs/paintings/head.jpeg" alt="Painting of sculpted head by E.M. Merricks"/>
+					<figcaption>
+						<b>Untitled</b>
+						<br />
+						Graphite on paper, 2022
+						<br />
+						<i>11.5" x 8.5"</i>
+					</figcaption>
+				</figure>
+				<figure>
+					<img src="imgs/paintings/brooklynbridge.jpeg" alt="Painting of the Brooklyn Bridge by E.M. Merricks"/>
+					<figcaption>
+						<b>Brooklyn Bridge</b>
+						<br />
+						Acrylic on canvas, 2016
+						<br />
+						<i>36" x 48"</i>
+						<br />
+						<br />
+						<i><small>Co-painted with Will!</small></i>
+						<br />
+						<br />
+						<i><small>In progress:</small></i>
+						<br />
+						<img src="imgs/paintings/brooklynbridge-progress.jpeg" alt="Painting in progress of the Brooklyn Bridge"/>
+					</figcaption>
+				</figure>
+				<figure>
+					<img src="imgs/paintings/newyork-detail.jpeg" alt="Painting of NYC by E.M. Merricks"/>
+					<figcaption>
+						<b>Crossing <i>(detail)</i></b>
+						<br />
+						Acrylic on canvas, 2015
+						<br />
+						<i>~14" x 12" detail from larger work</i>
+					</figcaption>
+				</figure>
+				<figure>
+					<img src="imgs/paintings/insitu.jpeg" alt="Painting of seated woman by E.M. Merricks"/>
+					<figcaption>
+						<b>Seated <i>(in situ)</i></b>
+						<br />
+						Charcoals and graphite on canvas, 2017
+						<br />
+						<i>40" x 30"</i>
+						<br />
+						<br />
+						<i><small>Expanded from a smaller (11.7" x 8.3") drawing by <a href="https://corneakkers.com" target="_blank""">Corn&eacute; Akkers</a></small></i>
+					</figcaption>
+				</figure>
+			</section>
+			<section>
+				<h2>Cheers all.</h2>
+				<div class="desc">
+				    <img id="pooch" src="imgs/pooch3.jpeg" alt="Photo of dog" />
+					<br />
+				    <small>&COPY; E. M. Merricks, Ph.D., 2025</small>
+				</div>
+			</section>
+		</article>
+	</body>
 </html>
