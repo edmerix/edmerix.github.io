@@ -153,7 +153,7 @@ programs.science.publications = function(args,trmnl){
 		papers += '<div class="cite-title"><a href="https://doi.org/10.1093/med/9780197549469.003.0016" target="_blank">Human Single-Neuron Recordings in Epilepsy</a></div>';
 		papers += '<div class="cite-authors"><b>Edward M Merricks</b> and Catherine A Schevon</div>';
 		papers += '<div class="cite-metadata">';
-			papers += '<span class="cite-journal">(2024) in <i> Jasper\'s Basic Mechanisms of the Epilepsies, 5th edn.</span>';
+			papers += '<span class="cite-journal">(2024) in <i> Jasper\'s Basic Mechanisms of the Epilepsies, 5th edn.</i></span>';
 			papers += '<div class="cite-volume">eds.: Noebels, J.L., Avoli, M., Rogawski, M.A., Vezzani, A., Delgado-Escueta, A.V.</div>';
 			papers += '<div class="cite-issue">Oxford University Press</div>';
 		papers += '</div>';

@@ -1,0 +1,187 @@
+html {
+	scroll-behavior: smooth;
+}
+body {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	color: #333;
+	background: #fff; /*e1e5f5, c3dacb*/
+}
+a {
+	color: #2e7ec1; /*2e7ec1, 0a713d*/
+	text-decoration: none;
+}
+a:hover {
+	color: #165284;
+}
+menu {
+    position: fixed;
+    margin: 0;
+    bottom: 0;
+    right: 0;
+    padding: 0 30px 20px 0;
+    width: 110px;
+    text-align: right;
+    background: #fff;
+    background: rgba(255,255,255,0.9);
+    z-index: 2;
+}
+menu p {
+    font-size: 0.9em;
+    line-height: 0.6em;
+}
+menu p small {
+    font-size: 0.75em;
+}
+article {
+	margin: 20px;
+}
+section {
+	margin: 0 130px 20px 10px;
+	clear: both;
+	padding: 10px;
+	background: #fff;
+}
+figure {
+	margin: 5px 10px 40px 10px;
+}
+figure img {
+	max-width: 70%;
+}
+figcaption, .extra {
+	float: right;
+	border-left: 1px solid #bfc2db;
+	font-size: 0.82em;
+}
+figcaption {
+    padding: 0 0 0 10px;
+    margin: 0 -20px 0 0;
+    width: 30%;
+}
+.extra {
+    padding: 0 10px;
+	margin: 0;
+    width: 20%;
+}
+#spine {
+    position: fixed;
+    height: 50px;
+    width: 190px;
+    top: 220px;
+    right: -40px;
+    font-size: 1.3em;
+    transform: rotate(90deg);
+}
+#about {
+	margin-top: 20px;
+	margin-bottom: 0;
+}
+.separator {
+    display: block;
+    height: 5px;
+    line-height: 5px;
+    font-size: 0.5em;
+}
+.separator::before {
+    content: '\2014';
+}
+.profile {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	width: 120px;
+	height: 120px;
+	border-radius: 100%;
+	opacity: 0.9;
+}
+.profile:hover {
+	opacity: 1;
+}
+.citation {
+	padding: 7px 15px;
+	font-size: 0.9em;
+	max-width: 75%;
+}
+.citation.numbered {
+    margin-left: 20px;
+}
+.citation .numeral {
+    display: inline-block;
+    margin-left: -24px;
+    text-align: right;
+    width: 24px;
+}
+.cite-title {
+    margin-left: -5px;
+}
+.cite-authors {
+	margin-left: 5px;
+	margin-top: 3px;
+	font-size: 0.88em;
+}
+.cite-metadata {
+	margin-left: 5px;
+	margin-top: 3px;
+	font-size: 0.82em;
+	font-style: italic;
+}
+.cite-journal {
+	font-style: normal;
+}
+.cite-journal, .cite-volume {
+	font-weight: bold;
+}
+div {
+    font-weight: 300;
+}
+h3 {
+	margin: 0;
+	font-size: 1em;
+}
+h1 {
+	margin-bottom: 10px;
+}
+#aside {
+	position: fixed;
+	top: 0;
+	right: 0;
+	font-size: 0.85em;
+	font-style: italic;
+	padding: 5px;
+	background: #fff;
+	background: rgba(238,238,255,0.7);
+	border-radius: 0 0 0 10px;
+}
+#aside:hover {
+	background: rgba(238,238,255,1);
+	box-shadow: 2px -2px 20px 5px rgba(0,0,0,0.2);
+}
+.desc {
+	font-weight: 200;
+	margin-left: 10px;
+}
+h2 {
+	margin-top: 0;
+}
+#art {
+    margin-left: 20px;
+}
+.lightweight {
+	font-weight: 200;
+	max-width: 800px;
+}
+.smaller {
+    font-size: 0.95em;
+}
+hr {
+	width: 20%;
+	border: 1px solid #ccc;
+}
+#pooch {
+    max-width: 400px;
+}
+#sci-covers img {
+    max-width: 350px;
+    padding: 40px 40px 0 40px;
+}
