@@ -1,0 +1,36 @@
+<section class="left transparent" id="panel-intro">
+	<h2>Introduction</h2>
+	<p>
+		The intracellular hallmark of epileptic activity requires action potential alterations (Goldensohn &amp; Purpura, 1963), though little evidence has been found in studies of single neurons in humans (Bower <i>et al.</i>, 2012).
+	</p>
+	<p>
+		We developed a novel spike sorting method to overcome the inability to track neurons in seizing brain (Merricks <i>et al.</i>, 2015) and analyzed a total of <b>1,239</b> single units from 41 seizures in 27 patients with medically intractable epilepsy (6 with Utah arrays, 21 with Behnke-Fried microwires) to determine extracellular correlates of these features &amp; analyze cell-type specific activity through seizures.
+	</p>
+</section>
+
+<section class="left zoomable frombottomleft" id="panel-problem">
+	<figure>
+		<img src="imgs/fig1slim.png" />
+	</figure>
+</section>
+
+<section class="right transparent-mock zoomable fromtopright" id="panel-convex">
+	<h2>Template matching with convex hulls</h2>
+	<figure>
+		<img src="vids/convhull_example.gif" />
+	</figure>
+</section>
+
+<section class="transparent paddedlines" id="pt-basic-details">
+	<ul>
+		<li>3D convex hulls are built around pre-ictal units in principal component (PC) space. Scores are calculated for the ictal waveforms based on pre-ictal PCs, and waveforms that fit within these convex hulls are added as putative matches</li>
+		<li>Outliers were removed from the tail of a chi-squared distribution for the Mahalanobis distances for each unit</li>
+		<li>Waveform match probability was calculated by the Gaussian distributions of voltage through time of the original pre-ictal units</li>
+	</ul>
+</section>
+
+<section class="zoomable frombottom" id="matchprobs">
+	<figure>
+		<img src="imgs/matchprobs_slim.png" />
+	</figure>
+</section>

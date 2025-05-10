@@ -1,0 +1,8 @@
+{
+    "name": "celltypes",
+	"title": "Interneurons and seizures",
+	"thumbnail": "imgs/menu3.png",
+	"main": "index.html",
+	"styles": "slide3.css",
+	"extra": "extra.html"
+}

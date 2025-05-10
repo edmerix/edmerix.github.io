@@ -1,0 +1,274 @@
+@font-face {
+  font-family: 'Voltaire';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Voltaire'), local('Voltaire-Regular'), url(fonts/Voltaire-Regular.otf) format('truetype');
+}
+body {
+	margin: 0;
+	padding: 0;
+	background: #29292F;/*#24252a;*/
+	color: #ccc;
+	font-family: sans-serif;
+	font-size: 16px;
+	cursor: default;
+}
+#main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: scroll;
+	transform-origin: top left;
+	transition: transform 300ms ease-in-out;
+}
+article {
+	position: absolute;
+	top: 100px;
+	left: 20px;
+	right: 350px;
+	transition: transform 400ms ease-in-out;
+}
+section {
+	margin-left: 10px;
+	/*clear: both;*/
+	padding: 10px;
+	margin-bottom: 20px;
+	background: #fff;/*#eeefd4;*/
+	color: #24252a;
+	border-radius: 5px;
+	box-shadow: 2px 3px 20px #000;
+	overflow: scroll;
+}
+section.transparent, section.transparent-mock {
+	box-shadow: none;
+	color: #ddd;
+	border-radius: 0;
+	margin: 0;
+	padding: 15px;
+	text-align: justify;
+}
+section.transparent {
+	background: none;
+}
+section.transparent-mock {
+	background: #29292F;
+}
+section.transparent h2, section.transparent-mock h2 {
+	margin-left: 0;
+}
+section img, #vid-zoom-bf img {
+	max-width: 100%;
+	max-height: 100%;
+}
+section video {
+	max-width: 90%;
+	max-height: 100%;
+}
+table {
+	border-collapse: collapse;
+	font-size: 13px;
+	width: 100%;
+}
+td, th {
+    border-right: 1px solid #777;
+	border-bottom: 1px solid #777;
+	text-align: center;
+}
+td:last-child, th:last-child {
+	border-right: 0 none;
+}
+hr {
+	width: 40%;
+	opacity: 0.4;
+	border: 1px dotted #ccc;
+	background: none;
+	margin-top: 5px;
+	margin-bottom: 0;
+}
+figure {
+	margin: 5px 10px;
+	max-width: 100%;
+	max-height: 100%;
+}
+figcaption {
+	margin: 10px 20px 0 20px;
+	max-width: 98%;
+}
+menu {
+	position: absolute;
+	right: 20px;
+	top: 10px;
+	bottom: 280px;
+	left: 83%;
+	border-left: 1px dotted #555;
+	padding-left: 20px;
+	z-index: 10;
+	transform: translateZ(2px);
+}
+menu section {
+	border: 3px solid transparent;
+	opacity: 0.6;
+	margin-bottom: 10px;
+	margin-left: 0;
+}
+menu section:hover {
+	opacity: 0.75;
+}
+menu section.active {
+	border: 3px solid red;
+	opacity: 1;
+}
+menu img {
+	max-width: 100%;
+	max-height: 130px;
+}
+h1 {
+	font-family: 'Voltaire', sans-serif;
+	margin: 0 0 0 10px;
+	font-size: 32px;
+	color: rgba(46, 144, 204, 0.79);/* rgba(204, 46, 46, 0.79); */
+	text-shadow: 3px 4px 5px #000;
+}
+h2 {
+	font-family: 'Voltaire';
+	margin: 0 0 2px 5px;
+	padding: 0;
+	font-size: 20px;
+}
+h3 {
+	font-weight: 300;
+	margin: 8px 0 0 20px;
+	font-style: italic;
+}
+#outlineHead {
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 10px;
+}
+header {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
+header img {
+	float: left;
+	max-width: 200px;
+	margin-top: 5px;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+ul, ol {
+	margin: 3px;
+	padding: 0 15px;
+}
+/* Permanently visible panels: */
+#conclusions {
+	position: absolute;
+	right: 20px;
+	bottom: 15px;
+	left: 63%;
+	font-size: 14px;
+}
+#conclusions h2 {
+	line-height: 30px;
+}
+#conclusions section {
+	background: rgba(255,255,255,0.8);
+	margin: 0;
+	padding: 0 0 0 5px;
+}
+#conclusions section:hover {
+	background: #fff;
+}
+#affils {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	font-size: 13px;
+	width: 35%;
+	z-index: 1;
+}
+#refs {
+	position: absolute;
+	bottom: 0;
+	left: 36%;
+	font-size: 13px;
+}
+#affils h2, #refs h2 {
+	font-size: 18px;
+}
+
+/* Sub-page stuff: */
+.page {
+	display: none;
+	height: 720px;
+}
+.page.active {
+	display: block;
+}
+aside {
+	position: absolute;
+}
+.extra {
+	top: 0;
+	left: 2000px;
+	width: 1550px;
+	height: inherit;
+}
+/* Panel animation stuff: */
+.zoomable {
+	position: relative;
+	z-index: 1;
+	transition: transform 300ms ease-in-out;
+}
+.zoomable:hover {
+	z-index: 5;
+	transform: scale(1.23) perspective(1px) translateZ(0);
+	backface-visibility: hidden;  
+	-webkit-filter: blur(0);
+	/*zoom: 123%;*/ /* No zoom origin :( */
+}
+.transparent.zoomable:hover, .transparent-mock.zoomable:hover  {
+	box-shadow: 4px 5px 10px #000;
+	border-radius: 5px;
+}
+.fromleft {
+	transform-origin: center left;
+}
+.fromtopleft {
+	transform-origin: top left;
+}
+.fromtop {
+	transform-origin: top center;
+}
+.frombottomleft {
+	transform-origin: bottom left;
+}
+.fromright {
+	transform-origin: center right;
+}
+.fromtopright {
+	transform-origin: top right;
+}
+.frombottomright {
+	transform-origin: bottom right;
+}
+.frombottom {
+	transform-origin: bottom center;
+}
+
+/* Default text padding styles */
+.paddedlines {
+	padding: 4px 0;
+}
+.nopad {
+	margin: 0;
+	padding: 0;
+}

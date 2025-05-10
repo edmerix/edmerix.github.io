@@ -1,0 +1,8 @@
+{
+    "name": "wavefront",
+	"title": "Ictal wavefront in humans",
+	"thumbnail": "imgs/menu2.png",
+	"main": "index.html",
+	"styles": "slide2.css",
+	"extra": "extra.html"
+}

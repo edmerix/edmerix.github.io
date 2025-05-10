@@ -1,0 +1,91 @@
+/* Main page */
+#utah-img2 {
+	position: absolute;
+	top: -80px;
+	right: 0;
+	width: 50px;
+	height: 50px;
+	background-image: url('imgs/utah.png');
+	/*box-shadow: 0 0 10px 10px #29292f inset;*/
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+#celltype-overview {
+	position: absolute;
+	top: 10px;
+	left: 25px;
+	width: 530px;
+}
+#phase-title {
+	position: absolute;
+	top: 0;
+	left: 600px;
+}
+#example-raster {
+	position: absolute;
+	top: 300px;
+	left: 35px;
+	width: 540px;
+	margin: 0;
+	padding: 1px;
+}
+#example-zoom {
+	position: absolute;
+	top: 50px;
+	left: 626px;
+	width: 450px;
+	padding: 0;
+}
+#example-xcorr {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 400px;
+}
+#vid-example-phase {
+	position: absolute;
+	top: 315px;
+	left: 612px;
+	width: 475px;
+}
+#celltype-blurb {
+	position: absolute;
+	top: 400px;
+	right: 0;
+	width: 400px;
+}
+/* Extra page */
+#example-burstiness {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 600px;
+}
+#subclass-eg {
+	position: absolute;
+	top: 380px;
+	left: 120px;
+	width: 400px;
+}
+#example-raster-2 {
+	top: 0;
+	right: 450px;
+}
+#example-raster-3 {
+	top: 0;
+	right: 0;
+}
+#example-raster-4 {
+	top: 380px;
+	right: 450px;
+}
+#example-raster-5 {
+	top: 380px;
+	right: 0;
+}
+.raster {
+	position: absolute;
+	width: 440px;
+	margin: 0;
+	padding: 5px 0;
+}

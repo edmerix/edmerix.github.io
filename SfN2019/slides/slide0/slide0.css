@@ -1,0 +1,70 @@
+/* Main page */
+#panel-intro {
+	position: absolute;
+	top: 0;
+	left: 10px;
+	padding: 0;
+	width: 35%;
+}
+#panel-convex {
+	margin-top: 0;
+	width: 910px;
+	height: auto;
+}
+#panel-problem {
+	position: absolute;
+	left: 90px;
+	top: 240px;
+	height: 570px;
+	padding: 0;
+}
+#panel-problem img {
+	height: 555px;
+}
+#pt-basic-details {
+	position: absolute;
+	left: 850px;
+	top: 530px;
+	width: 620px;
+	line-height: 20px;
+}
+#matchprobs {
+	position: absolute;
+	left: 580px;
+	top: 505px;
+	width: 220px;
+	padding: 0;
+}
+/* Extra page */
+#similarity {
+	position: absolute;
+	top: 40px;
+	left: 50px;
+	width: 450px;
+}
+#mahalmethod {
+	position: absolute;
+	top: 0;
+	left: 700px;
+	width: 270px;
+}
+#mahalmethod figcaption {
+	margin-top: 0;
+	font-size: 12px;
+	text-align: left;
+}
+#full-pt-details {
+	position: absolute;
+	top: 500px;
+	left: 10px;
+	width: 1000px;
+	height: 300px;
+	overflow-y: scroll;
+}
+.methods-details {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	height: 60%;
+	width: 450px;
+}

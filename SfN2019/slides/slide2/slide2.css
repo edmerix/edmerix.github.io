@@ -1,0 +1,51 @@
+/* Main page */
+#bf-img {
+	position: absolute;
+	top: 0;
+	right: -20px;
+	width: 140px;
+	height: 50px;
+	background-image: url('imgs/BF.png');
+	box-shadow: 0 0 8px 8px #29292f inset;
+	background-size: 100%;
+}
+#vid-spikeshape-bf {
+	position: absolute;
+	top: 30px;
+	left: 5px;
+	width: 758px;
+}
+#bf-overview {
+	position: absolute;
+	left: 5px;
+	top: 490px;
+	width: 400px;
+}
+#bf-a-pair {
+	position: absolute;
+	top: 480px;
+	left: 440px;
+	width: 580px;
+}
+#bf-b-text {
+	position: absolute;
+	left: 780px;
+	top: 80px;
+	width: 270px;
+}
+#bf-b-point {
+	position: relative;
+	top: 0;
+	left: 190px;
+	font-size: 50px;
+}
+#bf-b-vid {
+	left: 1080px;
+	top: 90px;
+	width: 450px;
+}
+/* Extra page */
+#vid-zoom-bf {
+	width: 1000px;
+	height: auto;
+}

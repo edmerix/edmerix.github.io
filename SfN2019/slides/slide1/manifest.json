@@ -1,0 +1,8 @@
+{
+    "name": "alterations",
+	"title": "Waveform changes in seizures",
+	"thumbnail": "imgs/menu1.png",
+	"main": "index.html",
+	"styles": "slide1.css",
+	"extra": "extra.html"
+}

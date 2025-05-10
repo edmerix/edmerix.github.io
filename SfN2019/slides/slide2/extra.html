@@ -1,0 +1,21 @@
+<section class="transparent">
+	<h2>Ictal recruitment at half speed</h2>
+	<figure id="vid-zoom-bf">
+		<img src="vids/BF-a-wavefront-halfspeed.gif" />
+		<figcaption></figcaption>
+	</figure>
+</section>
+<section class="noise-method">
+	<h2>Noise removal</h2>
+	<figure>
+		<img src="imgs/noiseremoval.png" />
+		<figcaption>
+			<ol>
+				<li>Waveforms were upsampled by a factor of 4</li>
+				<li>FFT of each waveform is calculated</li>
+				<li>Spikes with power > 2 SD above the mean between 2 and 3.5 kHz were deemed to be noise, as were outliers at any frequency</li>
+			</ol>
+			<center><i>(Figure showing outliers between 500 Hz and 3 kHz for illustration purposes)</i></center>
+		</figcaption>
+	</figure>
+</section>
