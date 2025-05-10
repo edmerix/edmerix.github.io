@@ -1,4 +1,10 @@
 # edmerix.github.io
+An overhaul of my personal website, for those of a less nerdy persuasion. Also nice to get a bit of art up there.
+
+The original pseudo-terminal version is still available at [edmerix.github.io/terminal.html](https://edmerix.github.io/terminal.html). Its original description is below:
+
+## edmerix pseudo-terminal
+
 My "terminal-esque" personal website. The design is based on my Terminal.js class.
 
 This is the static version of the site, and so multiple features have been removed.
