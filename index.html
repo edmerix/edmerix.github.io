@@ -24,6 +24,7 @@
 			<p><a href="#about">About</a></p>
 			<div class="separator"></div>
 			<p><a href="#science">Science</a></p>
+			<p><small><a href="#software">Software</a></small></p>
 			<p><small><a href="#books">Chapters</a></small></p>
 			<p><small><a href="#preprints">Preprints</a></small></p>
 			<p><small><a href="#pubs">Papers</a></small></p>
@@ -56,21 +57,21 @@
 			<section>
 				<h2 id="science">Science!</h2>
 				<div class="lightweight smaller">
-					My research focuses on the activity of populations of single neurons in epilepsy patients,
+					My current research focuses on the activity of populations of single neurons in epilepsy patients,
 					especially how the firing patterns of individual cells play a role in seizure onset and propagation,
 					and how we might restrain seizures from spreading through cortex.
-					To do this, I maintain continuous microelectrode recordings in patients on the Epilepsy
-					Monitoring Unit at Columbia's affiliated hospital (NewYork-Presbyterian), tracking individual neurons
-				    over days to weeks in order to interrogate the neuronal firing underlying pathological activity.
+					To do this, I maintain continuous micro-electrode recordings in patients on the Epilepsy
+					Monitoring Unit, and develop analytical methods to track individual neurons and explore their activity over days to weeks in order to interrogate the
+					neuronal firing underlying a range of pathological activities.
 					<br /><br />
-					Beyond my primary research, I also relish the opportunity to collaborate with various lab groups across
-					a range of important neurological questions: from cell-type specific activity at the boundary of
+					I also relish the opportunity to collaborate with various lab groups across
+					a range of neurological questions using my analytical methods: from cell-type specific activity at the boundary of
 					<a href="#glioma-paper-example">brain tumors</a>, to
 					<a href="#auditory-paper-example">auditory processing of music</a>, to mechanisms underlying
 					<a href="#consciousness-paper-example">loss of consciousness</a>. Outside these studies, I also enjoy
 					the opportunity to read other cutting edge research while providing academic service, averaging 25&ndash;30 peer reviews per year as of April 2025.
 					<br /><br />
-					For more details on all of these projects, see below for the <a href="#pubs">peer-reviewed publications</a>, <a href="#books">book chapters</a> and <a href="#preprints">pre-prints</a>, or check out my <a target="_blank" href="https://github.com/edmerix/">GitHub</a>, <a target="_blank" href="https://scholar.google.com/citations?user=PnKpxtIAAAAJ">Google Scholar profile</a>, <a target="_blank" href="https://www.researchgate.net/profile/Edward_Merricks">ResearchGate profile</a>, or my full <a href="CV.pdf" target="_blank">academic CV</a>.
+					For more details on all of these projects, see below for the <a href="#pubs">peer-reviewed publications</a>, <a href="#books">book chapters</a> and <a href="#preprints">pre-prints</a> or a selection of the <a href="#software">software tools I've developed</a>, or check out my <a target="_blank" href="https://github.com/edmerix/">GitHub</a>, <a target="_blank" href="https://scholar.google.com/citations?user=PnKpxtIAAAAJ">Google Scholar profile</a>, <a target="_blank" href="https://www.researchgate.net/profile/Edward_Merricks">ResearchGate profile</a>, or my full <a href="CV.pdf" target="_blank">academic CV</a>.
 				</div>
 				<div id="sci-covers" class="smaller">
 				    <a href="https://doi.org/10.1093/brain/awad262" target="_blank" title="Click to go to Agopyan-Miu et al., 2023. (Right click to open image in a new tab for full size!)"><img src="imgs/sci/cover-Agopyan-Miu-et-al-2023.png" alt="Cover art for Agopyan-Miu et al 2023 paper in Brain" /></a>
@@ -91,7 +92,11 @@
     				<br />
     				Or perhaps get a feel for when a full population of neurons are firing action potentials during a spontaneous human seizure:
                     <br />
-                    <small>(Here, each dot is a single action potential, with inhibitory activity in red and excitatory in white. For a proper breakdown of this activity see our <a href="#inhibitory-activity-paper">pre-print below</a>!)</small>
+                    <small>
+                        (Here, each dot is a single action potential, with inhibitory activity in red and excitatory in white.
+                        For a proper breakdown of this activity see our <a href="#inhibitory-activity-paper">pre-print below</a>,
+                        and example code to create this animation from scratch is also available on <a href="https://github.com/edmerix/edmerix.github.io/example_camera_flyby.m">my GitHub</a>!)
+                    </small>
     				<br />
     				<img class="wide" src="videos/phases-flyby.gif" alt="Animation of neuronal firing during a spontaneous human seizure" />
     				<br />
@@ -100,7 +105,55 @@
 			</section>
 			<section>
 			    <hr />
-			    <h2>Publications: <span class="mini"><a href="https://scholar.google.com/citations?user=PnKpxtIAAAAJ" target="_blank">811</a> total citations, h-index = <a href="https://scholar.google.com/citations?user=PnKpxtIAAAAJ" target="_blank">12</a></span></h2>
+				<h2 id="software">Software: <small><small>(a selection)</small></small></h2>
+				<div class="lightweight smaller">
+                    <a href="https://github.com/edmerix/NSxFile" target="_blank"""><div class="software-box">
+                        <h3>NSxFile</h3>
+                        <hr />
+                        <span>An object-oriented approach to loading Blackrock NSX neural data files in Matlab</span>
+                    </div></a>
+                    <a href="https://github.com/edmerix/NeuroClass" target="_blank"""><div class="software-box">
+                        <h3>NeuroClass</h3>
+                        <hr />
+                        <span>Matlab classes to maintain and analyze neuronal spike sorted data</span>
+                    </div></a>
+                    <a href="https://github.com/edmerix/PatientDB" target="_blank"""><div class="software-box">
+                        <h3>PatientDB</h3>
+                        <hr />
+                        <span>A comprehensive, entirely self-contained database for human neurological recordings</span>
+                    </div></a>
+                    <a href="https://github.com/edmerix/SplitMerge" target="_blank"""><div class="software-box">
+                        <h3>SplitMerge</h3>
+                        <hr />
+                        <span>A fast, modern GUI for the manual stage of spike sorting</span>
+                    </div></a>
+                    <a href="https://github.com/edmerix/Pres" target="_blank"""><div class="software-box">
+                        <h3>Pres</h3>
+                        <hr />
+                        <span>A JavaScript-based class for creating interactive and automated presentations</span>
+                    </div></a>
+                    <a href="https://github.com/edmerix/Merricks-et-al-JNeurosci-2021" target="_blank"""><div class="software-box">
+                        <h3>Convex hull neuron tracking</h3>
+                        <hr />
+                        <span>Relevant code from our 2021 JNeurosci paper</span>
+                    </div></a>
+                    <a href="https://github.com/edmerix/UnitSubclassify" target="_blank"""><div class="software-box">
+                        <h3>UnitSubclassify</h3>
+                        <hr />
+                        <span>A GUI for semi-automatic single neuron classification by cell type</span>
+                    </div></a>
+					<div class="break">
+    					Note that the majority of labs with whom I currently collaborate primarily use MATLAB,
+    					and so much of my recent software is written for that environment.
+                        <br />
+    					When given the chance, I also enjoy coding in Python, Swift, JavaScript,
+    					and I maintain the SQL database on our remote Linux server for patient data.
+					</div>
+				</div>
+			</section>
+			<section>
+			    <hr />
+			    <h2>Publications: <span class="mini"><a href="https://scholar.google.com/citations?user=PnKpxtIAAAAJ" target="_blank">819</a> total citations, h-index = <a href="https://scholar.google.com/citations?user=PnKpxtIAAAAJ" target="_blank">12</a></span></h2>
                 <h3 id="books"><b>Book chapters:</b></h3>
 				<div class="citation">
 				    <div class="cite-title"><a href="https://doi.org/10.1093/med/9780197549469.003.0016" target="_blank">Human Single-Neuron Recordings in Epilepsy</a></div>

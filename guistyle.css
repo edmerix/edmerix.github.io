@@ -34,6 +34,9 @@ menu p {
 menu p small {
     font-size: 0.75em;
 }
+ul {
+    margin: 0.5em;
+}
 article {
 	margin: 20px;
 }
@@ -227,4 +230,34 @@ video, .wide {
 }
 .zen-page div:hover {
     color: #999;
+}
+.software-box {
+    display: inline-block;
+    float: left;
+    padding: 10px 20px 20px 10px;
+    border: 1px solid #999;
+    border-radius: 10px;
+    margin: 1em;
+    width: 200px;
+    height: 80px;
+    box-shadow: 0 10px 20px #999;
+}
+.software-box:hover {
+    box-shadow: 0 10px 20px #555;
+}
+.software-box h3 {
+    color: #284761;
+    font-weight: 600;
+}
+.software-box span {
+    font-style: italic;
+    font-size: 0.9em;
+    color: #333;
+}
+.software-box hr {
+    border: 1px solid #ddd;
+    width: 50%;
+}
+div.break {
+    clear: both;
 }
