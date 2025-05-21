@@ -228,8 +228,12 @@ video, .wide {
     font-weight: 200;
     line-height: 1.4em;
 }
-.zen-page div:hover {
+.zen-page div:hover, .no-fade div {
     color: #999;
+}
+.zen-page .narrow {
+    width: 60%;
+    max-width: 450px;
 }
 .software-box {
     display: inline-block;
