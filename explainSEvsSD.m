@@ -1,13 +1,12 @@
 function T = explainSEvsSD(nSpace,mu,sigma,doPlot)
 % A quick function to highlight why stats should usually be reported as
-% mean ± SD in papers rather than mean ± SE (a.k.a. SEM). Effectively, as
-% observations go up, SE decreases, even while SD is stable, thereby
-% highlighting how, while the two are related, SD gives an estimate of the
-% distribution of a population, while SE gives an estimate of how
-% "accurate" our calculation of the mean of that distribution is, not
-% telling us directly what the distribution is (clearly if we know N, we
-% can work it out, but that is difficult to do from a figure that
-% erroneously plotted mean ± SE).
+% mean ± SD in papers rather than mean ± SEM. Effectively, as observations
+% go up, SEM decreases, even while SD is stable, thereby highlighting how,
+% while the two are related, SD gives an estimate of the distribution of a
+% population, while SE gives an estimate of how "accurate" our calculation
+% of the mean of that distribution is, not telling us directly what the
+% distribution is (clearly if we know N, we can work it out, but that is
+% difficult to do from a figure that erroneously plotted mean ± SEM).
 %
 % See Nagele, BJI, 2003 (doi:10.1093/bja/aeg087) for more information.
 %
@@ -65,7 +64,7 @@ disp(T);
 
 if doPlot
     figure
-    hold all
+    hold on
     m = plot(nSpace,meanVals,'linewidth',4,'color','k');
     sd = plot(nSpace,meanVals + sdVals,'linewidth',2,'color',[0.2 0.2 0.2],'linestyle','--');
     plot(nSpace,meanVals - sdVals,'linewidth',2,'color',[0.2 0.2 0.2],'linestyle','--')
